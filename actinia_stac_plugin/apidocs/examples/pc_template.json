@@ -1,0 +1,30 @@
+{
+	"id": "user_default_value",
+	"description": "test default value in actinia-module-plugin",
+	"template": {
+		"version": "1",
+		"list": [
+			{
+				"module": "r.mapcalc",
+				"id": "r.mapcalc_test",
+				"inputs": [
+					{
+						"param": "expression",
+						"comment": "output = r.mapcalc result, string; value = raster value (default=0.428), float",
+						"value": "{{ output }} = {{ value|default(0.428) }}"
+					}
+			  ]
+          },
+          {
+              "id": "r_info",
+              "module": "r.info",
+              "inputs": [
+                  {
+                      "param": "map",
+                      "value": "{{ output }}"
+                  }
+              ]
+          }
+		]
+	}
+}

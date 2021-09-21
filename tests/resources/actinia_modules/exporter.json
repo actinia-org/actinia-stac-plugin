@@ -1,0 +1,86 @@
+{
+	"categories": ["actinia", "export", "grass-module", "raster", "vector"],
+	"description": "Actinia exporter module supporting raster and vector data.",
+	"export": [{
+		"description": "The format of the output file",
+		"name": "format",
+		"optional": false,
+		"schema": {
+			"enum": ["GTiff", "GPKG", "SQLite", "GML", "GeoJSON", "ESRI_Shapefile", "CSV", "TXT", "PostgreSQL"],
+			"type": "string"
+		}
+	}, {
+		"description": "The type of the output",
+		"name": "type",
+		"optional": false,
+		"schema": {
+			"enum": ["raster", "vector", "file"],
+			"type": "string"
+		}
+	}, {
+		"description": "The database string to be used to connect to a PostgreSQL database for vector export.",
+		"name": "dbstring",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "Name for output PostgreSQL layer.",
+		"name": "output_layer",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}],
+	"id": "exporter",
+	"parameters": [{
+		"default": "False",
+		"description": "Allow output files to overwrite existing files. ",
+		"name": "overwrite",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}, {
+		"default": "False",
+		"description": "Print usage summary. ",
+		"name": "help",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}, {
+		"default": "False",
+		"description": "Verbose module output. ",
+		"name": "verbose",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}, {
+		"default": "False",
+		"description": "Quiet module output. ",
+		"name": "quiet",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}],
+	"returns": [{
+		"description": "Name of raster map to be exported by actinia. ",
+		"name": "raster",
+		"optional": true,
+		"schema": {
+			"subtype": "cell",
+			"type": "string"
+		}
+	}, {
+		"description": "Name of vector map to be exported by actinia. Name for output vector map. ",
+		"name": "vector",
+		"optional": true,
+		"schema": {
+			"subtype": "vector",
+			"type": "string"
+		}
+	}]
+}

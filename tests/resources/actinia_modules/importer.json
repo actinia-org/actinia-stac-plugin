@@ -1,0 +1,93 @@
+{
+	"categories": ["actinia", "grass-module", "import", "raster", "vector"],
+	"description": "Actinia importer module supporting raster and vector data.",
+	"id": "importer",
+	"import_descr": [{
+		"description": "The type of the input that should be downloaded and imported.",
+		"name": "type",
+		"optional": true,
+		"schema": {
+			"enum": ["raster", "vector", "landsat", "sentinel2", "postgis", "file"],
+			"type": "string"
+		}
+	}, {
+		"description": "The band of the sentinel2 scene that should be imported",
+		"name": "sentinel_band",
+		"optional": true,
+		"schema": {
+			"enum": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B09", "B10", "B11", "B12"],
+			"type": "string"
+		}
+	}, {
+		"description": "The atmospheric correction that should be applied to the landsat scene",
+		"name": "landsat_atcor",
+		"optional": true,
+		"schema": {
+			"enum": ["uncorrected", "dos1", "dos2", "dos2b", "dos3", "dos4"],
+			"type": "string"
+		}
+	}, {
+		"description": "The name of the layer that should be imported form the vector file or postGIS database",
+		"name": "vector_layer",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "The input source that may be a landsat scene name, a sentinel2 scene name, a postGIS database string, or an URL that points to an accessible raster or vector file",
+		"name": "source",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "User name and password for basic HTTP, HTTPS and FTP authentication of the source connection.",
+		"name": "basic_auth",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}],
+	"parameters": [{
+		"description": "Name of raster map to be imported by actinia. ",
+		"name": "raster",
+		"optional": true,
+		"schema": {
+			"subtype": "cell",
+			"type": "string"
+		}
+	}, {
+		"description": "Name of vector map to be imported by actinia. Or data source for direct OGR access. ",
+		"name": "vector",
+		"optional": true,
+		"schema": {
+			"subtype": "vector",
+			"type": "string"
+		}
+	}, {
+		"default": "False",
+		"description": "Print usage summary. ",
+		"name": "help",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}, {
+		"default": "False",
+		"description": "Verbose module output. ",
+		"name": "verbose",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}, {
+		"default": "False",
+		"description": "Quiet module output. ",
+		"name": "quiet",
+		"optional": true,
+		"schema": {
+			"type": "boolean"
+		}
+	}],
+	"returns": []
+}

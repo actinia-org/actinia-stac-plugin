@@ -1,0 +1,11 @@
+include LICENSE.txt README.md *.toml *.json
+
+# Tests
+include .coveragerc
+recursive-include tests *.py
+
+# Apidocs
+recursive-include apidocs/examples *.json
+recursive-include templates *.json
+recursive-include templates *.xml
+recursive-include templates *.html

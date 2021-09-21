@@ -1,0 +1,156 @@
+{
+    "id": "user_point_in_polygon",
+    "description": "Imports point and polygon and checks if point is in polygon.",
+    "template": {
+        "list": [
+            {
+                "id": "importer_1",
+                "module": "importer",
+                "inputs": [
+                    {
+                        "import_descr": {
+                            "source": "https://raw.githubusercontent.com/mmacata/pagestest/gh-pages/bonn.geojson",
+                            "type": "vector"
+                        },
+                        "param": "map",
+                        "value": "polygon"
+                    },
+                    {
+                        "import_descr": {
+                            "source": "{{ url_to_geojson_point }}",
+                            "type": "vector"
+                        },
+                        "param": "map",
+                        "value": "point"
+                    }
+                ]
+            },
+            {
+                "id": "g_region_1",
+                "module": "g.region",
+                "inputs": [
+                    {
+                        "param": "vect",
+                        "value": "polygon"
+                    }
+                ],
+                "flags": "g"
+            },
+            {
+                "id": "v_db_addcol_1",
+                "module": "v.db.addcolumn",
+                "inputs": [
+                    {
+                        "param": "map",
+                        "value": "point"
+                    },
+                    {
+                        "param": "columns",
+                        "value": "isIn int"
+                    }
+                ]
+            },
+            {
+                "id": "v_db_update_1",
+                "module": "v.db.update",
+                "inputs": [
+                    {
+                        "param": "map",
+                        "value": "point"
+                    },
+                    {
+                        "param": "column",
+                        "value": "isIn"
+                    },
+                    {
+                        "param": "value",
+                        "value": "0"
+                    }
+                ]
+            },
+            {
+                "id": "v_db_addcol_2",
+                "module": "v.db.addcolumn",
+                "inputs": [
+                    {
+                        "param": "map",
+                        "value": "polygon"
+                    },
+                    {
+                        "param": "columns",
+                        "value": "polygon int"
+                    }
+                ]
+            },
+            {
+                "id": "v_db_update_2",
+                "module": "v.db.update",
+                "inputs": [
+                    {
+                        "param": "map",
+                        "value": "polygon"
+                    },
+                    {
+                        "param": "column",
+                        "value": "polygon"
+                    },
+                    {
+                        "param": "value",
+                        "value": "1"
+                    }
+                ]
+            },
+            {
+                "id": "v_what_vect_1",
+                "module": "v.what.vect",
+                "inputs": [
+                    {
+                        "param": "map",
+                        "value": "point"
+                    },
+                    {
+                        "param": "column",
+                        "value": "isIn"
+                    },
+                    {
+                        "param": "query_map",
+                        "value": "polygon"
+                    },
+                    {
+                        "param": "query_column",
+                        "value": "polygon"
+                    }
+                ]
+            },
+            {
+                "id": "v_db_select_1",
+                "module": "v.db.select",
+                "inputs": [
+                    {
+                        "param": "map",
+                        "value": "point"
+                    },
+                    {
+                        "param": "column",
+                        "value": "isIn"
+                    }
+                ]
+            },
+            {
+                "id": "exporter_1",
+                "module": "exporter",
+                "outputs": [
+                    {
+                        "export": {
+                            "format": "GeoJSON",
+                            "type": "vector"
+                        },
+                        "param": "map",
+                        "value": "point"
+                    }
+                ]
+            }
+        ],
+        "version": "1"
+    }
+}

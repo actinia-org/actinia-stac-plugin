@@ -1,0 +1,46 @@
+{
+	"categories": ["actinia-module", "global-template"],
+	"description": "Copies vector and computes the areas in h.",
+	"id": "vector_area",
+	"parameters": [{
+		"description": "vector map(s) to be copied.  [generated from g.copy_vector] - name of map to be copied and name of new copy.",
+		"name": "name_and_copy",
+		"optional": true,
+		"schema": {
+			"subtype": "vector",
+			"type": "string"
+		}
+	}, {
+		"description": "Name of vector map. Or data source for direct OGR access.  [generated from v.db.addcolumn_map]",
+		"name": "copy",
+		"optional": false,
+		"schema": {
+			"subtype": "vector",
+			"type": "string"
+		}
+	}, {
+		"description": "Name and type of the new column(s) ('name type [,name type, ...]'). Types depend on database backend, but all support VARCHAR(), INT, DOUBLE PRECISION and DATE. Example: 'label varchar(250), value integer'.  [generated from v.db.addcolumn_columns]",
+		"name": "column",
+		"optional": false,
+		"schema": {
+			"type": "array"
+		}
+	}, {
+		"description": "Value to upload.  [generated from v.to.db_option]",
+		"name": "option",
+		"optional": false,
+		"schema": {
+			"enum": ["cat", "area", "compact", "fd", "perimeter", "length", "count", "coor", "start", "end", "sides", "query", "slope", "sinuous", "azimuth", "bbox"],
+			"type": "string"
+		}
+	}, {
+		"description": "Name of attribute column(s) to populate. Name of attribute column(s).  [generated from v.to.db_columns]",
+		"name": "column_name",
+		"optional": false,
+		"schema": {
+			"subtype": "dbcolumn",
+			"type": "array"
+		}
+	}],
+	"returns": []
+}

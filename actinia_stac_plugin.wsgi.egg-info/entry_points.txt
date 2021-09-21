@@ -1,0 +1,5 @@
+[console_scripts]
+about = actinia_stac_plugin.resources.cli:about
+name = actinia_stac_plugin.resources.cli:name
+pc2grass = actinia_stac_plugin.resources.cli:pc2grass
+

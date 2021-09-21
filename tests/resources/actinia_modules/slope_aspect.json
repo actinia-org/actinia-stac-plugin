@@ -1,0 +1,32 @@
+{
+	"categories": ["actinia-module", "global-template"],
+	"description": "Calculates slope and aspect of elevation map.",
+	"id": "slope_aspect",
+	"parameters": [{
+		"default": "FCELL",
+		"description": "Type of output aspect and slope maps. Storage type for resultant raster map.  [generated from r.slope.aspect_precision]",
+		"name": "datatype",
+		"optional": true,
+		"schema": {
+			"enum": ["CELL", "FCELL", "DCELL"],
+			"type": "string"
+		}
+	}],
+	"returns": [{
+		"description": "Name for output slope raster map.  [generated from r.slope.aspect_slope]",
+		"name": "name_of_output_slope",
+		"optional": true,
+		"schema": {
+			"subtype": "cell",
+			"type": "string"
+		}
+	}, {
+		"description": "Name for output aspect raster map.  [generated from r.slope.aspect_aspect]",
+		"name": "name_of_output_aspect",
+		"optional": true,
+		"schema": {
+			"subtype": "cell",
+			"type": "string"
+		}
+	}]
+}

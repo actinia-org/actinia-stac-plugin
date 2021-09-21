@@ -1,0 +1,53 @@
+{
+	"categories": ["actinia-module", "global-template"],
+	"description": "PC makes no sense but includes a lot of cases for testing self-description",
+	"id": "nested_modules_test",
+	"parameters": [{
+		"description": "Name of OGR datasource to be imported.  [generated from v.import_input]",
+		"name": "db_connection",
+		"optional": false,
+		"schema": {
+			"subtype": "datasource",
+			"type": "string"
+		}
+	}, {
+		"description": "OGR layer name. If not given, all available layers are imported.  [generated from v.import_layer]",
+		"name": "layer",
+		"optional": true,
+		"schema": {
+			"subtype": "datasource_layer",
+			"type": "array"
+		}
+	}, {
+		"description": "Name of raster map(s).  [generated from r.colors_map]",
+		"name": "output",
+		"optional": true,
+		"schema": {
+			"subtype": "cell",
+			"type": "array"
+		}
+	}, {
+		"description": "Expression to evaluate.  [generated from r.mapcalc_expression]",
+		"name": "B04_mosaic",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "The input source that may be a landsat scene name, a sentinel2 scene name, a postGIS database string, or an URL that points to an accessible raster or vector file [generated from import_descr_source]",
+		"name": "url_to_geojson_point",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}],
+	"returns": [{
+		"description": "Name for output slope raster map.  [generated from r.slope.aspect_slope]",
+		"name": "output_slope_name",
+		"optional": true,
+		"schema": {
+			"subtype": "cell",
+			"type": "string"
+		}
+	}]
+}

@@ -1,0 +1,18 @@
+{
+  "categories": [
+    "actinia-module", "global-template"
+  ],
+  "description": "Imports point and polygon and checks if point is in polygon.",
+  "id": "point_in_polygon",
+  "parameters": [
+    {
+      "description": "The input source that may be a landsat scene name, a sentinel2 scene name, a postGIS database string, or an URL that points to an accessible raster or vector file [generated from import_descr_source]",
+      "name": "url_to_geojson_point",
+      "optional": true,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "returns": []
+}

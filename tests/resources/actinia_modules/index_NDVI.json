@@ -1,0 +1,28 @@
+{
+	"categories": ["actinia-module", "global-template"],
+	"description": "Normalised Difference Vegetation Index (NDVI)",
+	"id": "index_NDVI",
+	"parameters": [{
+		"description": "Expression to evaluate.  [generated from r.mapcalc_expression]",
+		"name": "output",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "Expression to evaluate.  [generated from r.mapcalc_expression]",
+		"name": "nir",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "Expression to evaluate.  [generated from r.mapcalc_expression]",
+		"name": "red",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}],
+	"returns": []
+}

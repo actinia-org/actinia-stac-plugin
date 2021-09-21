@@ -1,0 +1,16 @@
+{
+    "list": [
+        {
+            "id": "8z9430qr2f0oiekpldw",
+            "module": "user_point_in_polygon",
+            "inputs": [
+                {
+                    "param": "url_to_geojson_point",
+                    "value": "https://raw.githubusercontent.com/mmacata/pagestest/gh-pages/pointInBonn.geojson"
+                }
+            ]
+        }
+    ],
+    "version": "1"
+
+}

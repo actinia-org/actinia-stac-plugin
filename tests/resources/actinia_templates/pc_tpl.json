@@ -1,0 +1,31 @@
+{
+    "id": "UUID",
+    "description": "Create test for actinia_template CRUD",
+    "template": {
+        "version": "1",
+        "list": [
+            {
+                "module": "r.composite",
+                "id": "r.composite_rgb",
+                "inputs": [
+                    {
+                        "param": "red",
+                        "value": "red"
+                    },
+                    {
+                        "param": "green",
+                        "value": "green"
+                    },
+                    {
+                        "param": "blue",
+                        "value": "blue"
+                    },
+                    {
+                        "param": "output",
+                        "value": "{{ output }}"
+                    }
+                ]
+            }
+        ]
+    }
+}

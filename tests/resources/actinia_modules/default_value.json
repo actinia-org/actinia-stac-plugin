@@ -1,0 +1,21 @@
+{
+	"categories": ["actinia-module", "global-template"],
+	"description": "test default value in actinia-module-plugin",
+	"id": "default_value",
+	"parameters": [{
+		"description": "Expression to evaluate.  [generated from r.mapcalc_expression] - output = r.mapcalc result, string; value = raster value (default=0.428), float",
+		"name": "output",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}, {
+		"description": "Expression to evaluate.  [generated from r.mapcalc_expression] - output = r.mapcalc result, string; value = raster value (default=0.428), float",
+		"name": "value",
+		"optional": true,
+		"schema": {
+			"type": "string"
+		}
+	}],
+	"returns": []
+}

@@ -1,0 +1,16 @@
+{
+	"categories": ["actinia-module", "global-template"],
+	"description": "Example PC to add possible values",
+	"id": "add_enumeration",
+	"parameters": [{
+		"description": "Name of raster map(s) to include in group.  [generated from i.group_input]",
+		"name": "classificationinput",
+		"optional": true,
+		"schema": {
+			"enum": ["B02", "B03", "B04", "B08", "ndvi"],
+			"subtype": "cell",
+			"type": "array"
+		}
+	}],
+	"returns": []
+}
