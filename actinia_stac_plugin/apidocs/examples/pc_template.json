@@ -1,6 +1,6 @@
 {
 	"id": "user_default_value",
-	"description": "test default value in actinia-module-plugin",
+	"description": "test default value in actinia-stac-plugin",
 	"template": {
 		"version": "1",
 		"list": [

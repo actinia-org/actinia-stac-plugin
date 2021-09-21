@@ -63,7 +63,7 @@ from actinia_core.models.response_models import \
      ProcessingResponseModel
 
 
-# actinia-module-plugin endpoints are included as defined in actinia_core
+# actinia-stac-plugin endpoints are included as defined in actinia_core
 # config
 create_endpoints()
 

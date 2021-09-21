@@ -1,6 +1,6 @@
-# actinia-module-plugin
+# actinia-stac-plugin
 
-You can run actinia-module-plugin as actinia-core plugin.
+You can run actinia-stac-plugin as actinia-core plugin.
 
 ## Installation
 For installation or DEV setup, see docker/README.md.

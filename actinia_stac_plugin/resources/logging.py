@@ -35,7 +35,7 @@ from pythonjsonlogger import jsonlogger
 from actinia_stac_plugin.resources.config import LOGCONFIG
 
 
-log = logging.getLogger('actinia-module-plugin')
+log = logging.getLogger('actinia-stac-plugin')
 werkzeugLog = logging.getLogger('werkzeug')
 gunicornLog = logging.getLogger('gunicorn')
 

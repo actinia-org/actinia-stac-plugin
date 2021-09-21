@@ -1,6 +1,6 @@
 {
 	"categories": ["actinia-module", "global-template"],
-	"description": "test default value in actinia-module-plugin",
+	"description": "test default value in actinia-stac-plugin",
 	"id": "default_value",
 	"parameters": [{
 		"description": "Expression to evaluate.  [generated from r.mapcalc_expression] - output = r.mapcalc result, string; value = raster value (default=0.428), float",

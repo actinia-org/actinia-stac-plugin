@@ -33,11 +33,11 @@ class CliTest(unittest.TestCase):
 
     def test_cli_name(self):
         """Test basic cli command"""
-        assert name() == "actinia-module-plugin"
+        assert name() == "actinia-stac-plugin"
 
     def test_cli_about(self):
         """Test basic cli command"""
-        text = "actinia-module-plugin"
+        text = "actinia-stac-plugin"
         text = text + "\n This package communicates via HTTP"
         text = text + "\n To start application, run "
         text = text + "\n 'python -m actinia_stac_plugin.main'"

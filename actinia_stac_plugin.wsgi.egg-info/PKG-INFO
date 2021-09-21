@@ -6,9 +6,9 @@ Home-page: https://github.com/mundialis/actinia-stac-plugin
 Author: Carmen Tawalika
 Author-email: tawalika@mundialis.de
 License: apache-2.0
-Description: # actinia-module-plugin
+Description: # actinia-stac-plugin
         
-        You can run actinia-module-plugin as actinia-core plugin.
+        You can run actinia-stac-plugin as actinia-core plugin.
         
         ## Installation
         For installation or DEV setup, see docker/README.md.

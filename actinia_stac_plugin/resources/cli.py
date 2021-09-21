@@ -32,14 +32,14 @@ import sys
 def name():
     """Print name to console
     """
-    return "actinia-module-plugin"
+    return "actinia-stac-plugin"
 
 
 def about():
-    """Print information about actinia-module-plugin to console
+    """Print information about actinia-stac-plugin to console
     """
 
-    text = "actinia-module-plugin"
+    text = "actinia-stac-plugin"
     text = text + "\n This package communicates via HTTP"
     text = text + "\n To start application, run "
     text = text + "\n 'python -m actinia_stac_plugin.main'"
