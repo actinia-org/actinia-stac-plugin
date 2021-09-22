@@ -27,6 +27,8 @@ import requests
 from actinia_core.core.common.redis_base import RedisBaseInterface
 from actinia_core.core.common.config import Configuration
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from stac_validator import stac_validator
+import re
 
 global DefaultStacConf
 
@@ -114,6 +116,36 @@ def addStac2User(jsonParameters):
         response = {"message": "Something happen, please check the stac_url or stac_id given"}
         
     return response
+
+def collectionValidation(url) -> bool:
+    stac = stac_validator.StacValidate(url)
+    stac.run()
+    valid = stac.message[0]['valid_stac']
+    type = stac.message[0]['asset_type']
+    if valid and type == "COLLECTION":
+         return True
+    else: 
+        return False
+
+def addStacValidator(json):
+    actinia_id = 'stac-id' in json
+    actinia_root = 'catalog-url' in json
+    if actinia_id and actinia_root:
+        root = json['catalog-url']
+        id = json['stac-id']
+        root_validation = collectionValidation(root)
+        name_validation = (re.match('^[a-zA-Z0-9-]*$',id))
+        if root_validation and name_validation:
+            return addStac2User(json)
+        elif not root_validation and not name_validation:
+            return {"message": "Please check the URL provided (Should be a STAC Catalog) as well as the name given (no spaces or undercore characters)."}
+        elif not root_validation:
+            return {"message": "Please check the URL provided (Should be a STAC Catalog)"}
+        elif not name_validation:
+            return {"message": "Please check the ID given (no spaces or undercore characters)."}
+
+    else:
+        return {"message": "The JSON give does not have either stac-id or catalog-url. Check the parameters provided"}
 
 def callStacCatalog(catalog: str):
     stac_dict = redis_actinia_interface.read("defaultStac")
