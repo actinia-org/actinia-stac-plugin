@@ -24,7 +24,7 @@ from flask import jsonify, make_response, request
 from flask_restful_swagger_2 import swagger
 from actinia_core.rest.resource_base import ResourceBase
 from actinia_stac_plugin.core.stac import createStacList
-#from actinia_stac_plugin.core.stac import addStac2User
+from actinia_stac_plugin.core.stac import addStac2User
 from actinia_stac_plugin.core.stac import callStacCatalog
 
 class Stac(ResourceBase):
@@ -41,9 +41,13 @@ class Stac(ResourceBase):
         
         return make_response(module_list, 200)
 
-    def post(self, json):
-
-        new_stac = {} #addStac2User(json)
+    def post(self):
+        """
+            Add a new stac to the user catalog
+        """
+        
+        json = request.get_json(force=True)
+        new_stac = addStac2User(json)
 
         return make_response(new_stac,200)
 

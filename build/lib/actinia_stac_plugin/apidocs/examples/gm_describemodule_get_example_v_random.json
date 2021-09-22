@@ -1,0 +1,156 @@
+{
+  "categories": [
+    "grass-module",
+    "level1",
+    "pointpattern",
+    "random",
+    "sampling",
+    "statistics",
+    "stratifiedrandomsampling",
+    "vector"
+  ],
+  "description": "Generates random 2D/3D vector points.",
+  "id": "v.random",
+  "parameters": {
+    "a": {
+      "description": ". Generate n points for each individual area (requires restrict parameter)",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "b": {
+      "description": "Do not build topology. Advantageous when handling a large number of points",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "cats": {
+      "description": "Category values. Example: 1,3,7-9,13",
+      "required": false,
+      "schema": {
+        "subtype": "cats",
+        "type": "string"
+      }
+    },
+    "column": {
+      "description": "Name of column for z values. Writes z values to column",
+      "required": false,
+      "schema": {
+        "subtype": "dbcolumn",
+        "type": "string"
+      }
+    },
+    "column_type": {
+      "description": ". Type of column for z values",
+      "required": false,
+      "schema": {
+        "default": "double precision",
+        "enum": [
+          "integer",
+          "double precision"
+        ],
+        "type": "string"
+      }
+    },
+    "help": {
+      "description": ". Print usage summary",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "layer": {
+      "description": "Layer number or name ('-1' for all layers). A single vector map can be connected to multiple database tables. This number determines which table to use. When used with direct OGR access this is the layer name.",
+      "required": false,
+      "schema": {
+        "default": "-1",
+        "subtype": "layer_all",
+        "type": "string"
+      }
+    },
+    "npoints": {
+      "description": ". Number of points to be created",
+      "required": true,
+      "schema": {
+        "type": "integer"
+      }
+    },
+    "output": {
+      "description": ". Name for output vector map",
+      "required": true,
+      "schema": {
+        "subtype": "vector",
+        "type": "string"
+      }
+    },
+    "overwrite": {
+      "description": ". Allow output files to overwrite existing files",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "quiet": {
+      "description": ". Quiet module output",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "restrict": {
+      "description": "Name of input vector map. Restrict points to areas in input vector",
+      "required": false,
+      "schema": {
+        "subtype": "vector",
+        "type": "string"
+      }
+    },
+    "seed": {
+      "description": ". The seed to initialize the random generator. If not set the process ID is used",
+      "required": false,
+      "schema": {
+        "type": "integer"
+      }
+    },
+    "verbose": {
+      "description": ". Verbose module output",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "where": {
+      "description": "WHERE conditions of SQL statement without 'where' keyword. Example: income < 1000 and population >= 10000",
+      "required": false,
+      "schema": {
+        "subtype": "sql_query",
+        "type": "string"
+      }
+    },
+    "z": {
+      "description": ". Create 3D output",
+      "schema": {
+        "default": "False",
+        "type": "boolean"
+      }
+    },
+    "zmax": {
+      "description": ". Maximum z height (needs -z flag or column name)",
+      "required": false,
+      "schema": {
+        "default": "0.0",
+        "type": "number"
+      }
+    },
+    "zmin": {
+      "description": ". Minimum z height (needs -z flag or column name)",
+      "required": false,
+      "schema": {
+        "default": "0.0",
+        "type": "number"
+      }
+    }
+  }
+}

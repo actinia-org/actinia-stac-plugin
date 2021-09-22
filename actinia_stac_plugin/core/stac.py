@@ -22,8 +22,6 @@ __author__ = "Anika Bettge, Carmen Tawalika"
 __copyright__ = "Copyright 2019, mundialis"
 __maintainer__ = "Anika Bettge, Carmen Tawalika"
 
-from requests.models import Response
-from actinia_stac_plugin.api.stac import StacCatalog
 import json 
 import requests
 from actinia_core.core.common.redis_base import RedisBaseInterface
@@ -59,10 +57,6 @@ def globalDefine():
     exist = redis_actinia_interface.exists("defaultStac")
 
     defaultStac = {
-            "element84": { 
-                "root": "https://earth-search.aws.element84.com/v0",
-                "href": "/api/v1/stac/Sentinel-2A"
-                },
             "landsat-8": { 
                 "root": "https://landsat-stac.s3.amazonaws.com/landsat-8-l1/catalog.json",
                 "href": "/api/v1/stac/landsat-8",
@@ -88,14 +82,20 @@ def createStacList():
     return string_respose
 
 def addStac2User(jsonParameters): 
-
+    """
+        Add the STAC Catalog to redis 
+            1. Update the catalog to the initial list GET /stac
+            2. Store the JSON as a new variable in redis
+    """
+    # Initializing Redis
+    redis_actinia = connectRedis()
     #Splitting the inputs
-    actinia_id = jsonParameters['stac_id']
-    actinia_root = jsonParameters['stac_url']
+    actinia_id = jsonParameters['stac-id']
+    actinia_root = jsonParameters['catalog-url']
     
     # Caching JSON from the STAC collection
     stac_json_collection =  requests.get(actinia_root)
-    redis_actinia_interface.create(actinia_id,actinia_root,stac_json_collection)
+    redis_actinia_interface.create(actinia_id,stac_json_collection)
     
     # Adding the item to the Default List
     defaultJson = redis_actinia_interface.read("defaultStac")
