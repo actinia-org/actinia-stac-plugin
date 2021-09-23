@@ -45,7 +45,8 @@ def setup_package():
           packages=['actinia_stac_plugin'],
           package_dir={'actinia_stac_plugin': 'actinia_stac_plugin'},
           include_package_data=True,
-          use_pyscaffold=True)
+          use_pyscaffold=True,
+          install_requires=["stac-validator>=2.2.0"])
 
 
 if __name__ == "__main__":

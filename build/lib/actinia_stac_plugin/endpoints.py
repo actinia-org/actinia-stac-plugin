@@ -52,6 +52,6 @@ def create_endpoints(flask_api):
     #     # WARNING: all content from folder "static" will be accessible!
     #     return send_from_directory(app.static_folder, filename)
 
-    apidoc.add_resource(Stac, '/stac/')
-    apidoc.add_resource(StacCatalog, '/stac/<string:stac_name>')
+    apidoc.add_resource(Stac, '/stac/collections/')
+    apidoc.add_resource(StacCatalog, '/stac/collections/<string:collection_id>')
     #apidoc.add_resource(addStac2User, '/stac/add-stac/<string:stac_url>/<string:stac_instance_id>')

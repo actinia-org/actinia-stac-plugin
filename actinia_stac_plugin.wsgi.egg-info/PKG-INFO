@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: actinia-stac-plugin.wsgi
-Version: 0.0.post0.dev3+g18aca48
+Version: 0.0.post0.dev5+g93fcc16.dirty
 Summary: A (RESTFUL) Flask application which adds module self-description and process-chain-template management and processing
 Home-page: https://github.com/mundialis/actinia-stac-plugin
 Author: Carmen Tawalika

@@ -24,8 +24,9 @@ from flask import jsonify, make_response, request
 from flask_restful_swagger_2 import swagger
 from actinia_core.rest.resource_base import ResourceBase
 from actinia_stac_plugin.core.stac import createStacList
-from actinia_stac_plugin.core.stac import addStac2User
-from actinia_stac_plugin.core.stac import callStacCatalog
+from actinia_stac_plugin.core.stac import addStacValidator
+from actinia_stac_plugin.core.stac import callStacCollection
+from actinia_stac_plugin.core.stac import deleteStacCollection
 
 class Stac(ResourceBase):
     """List and Add STAC options
@@ -47,11 +48,23 @@ class Stac(ResourceBase):
         """
         
         json = request.get_json(force=True)
-        new_stac = addStac2User(json)
+        new_stac = addStacValidator(json)
 
         return make_response(new_stac,200)
 
-class StacCatalog(ResourceBase):
+    def delete(self):
+        """
+            This function delete the STAC Catalog stored before on ID basis.
+            Arg:
+                - ID - ID/Name given to the STAC Catalog you want to delete
+        """
+
+        json = request.get_json(force=True)
+        deleted_stac = deleteStacCollection(json)
+
+        return make_response(deleted_stac,200)
+
+class StacCollecions(ResourceBase):
     """Get the Catalog STAC
     """
 
@@ -59,11 +72,11 @@ class StacCatalog(ResourceBase):
         ResourceBase.__init__(self)
 
     #@swagger.doc(modules.listModules_get_docs)
-    def get(self, stac_name):
+    def get(self, collection_id):
         """Get a list of all GRASS GIS modules.
         """
 
-        module_list = callStacCatalog(stac_name)
+        module_list = callStacCollection(collection_id)
 
         return make_response(module_list, 200)
 

@@ -1,7 +1,1 @@
-colorlog
-Flask
-Flask-Cors
-Flask-RESTful
-flask-restful-swagger-2
-python-json-logger
-xmltodict
+stac-validator>=2.2.0

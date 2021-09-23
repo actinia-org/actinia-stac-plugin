@@ -22,13 +22,13 @@ __author__ = "Anika Bettge, Carmen Tawalika"
 __copyright__ = "Copyright 2019, mundialis"
 __maintainer__ = "Anika Bettge, Carmen Tawalika"
 
-from requests.models import Response
-from actinia_stac_plugin.api.stac import StacCatalog
 import json 
 import requests
 from actinia_core.core.common.redis_base import RedisBaseInterface
 from actinia_core.core.common.config import Configuration
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from stac_validator import stac_validator
+import re
 
 global DefaultStacConf
 
@@ -53,23 +53,20 @@ def connectRedis():
 
     return redis_actinia_interface
 
-def globalDefine():
+def defaultInstance():
+    
     redis_actinia = connectRedis()
-
+     
     exist = redis_actinia_interface.exists("defaultStac")
 
     defaultStac = {
-            "element84": { 
-                "root": "https://earth-search.aws.element84.com/v0",
-                "href": "/api/v1/stac/Sentinel-2A"
-                },
-            "landsat-8": { 
+            "stac.defaultStac.rastercube.landsat-8": { 
                 "root": "https://landsat-stac.s3.amazonaws.com/landsat-8-l1/catalog.json",
-                "href": "/api/v1/stac/landsat-8",
+                "href": "/api/v1/collections/stac.defaultStac.rastercube.landsat-8",
                 },
-            "sentinel-2": { 
-                "root": "https://sentinel-stac.s3.amazonaws.com/catalog.json",
-                "href": "/api/v1/stac/sentinel-2a"
+            "stac.defaultStac.rastercube.sentinel-2": { 
+                "root": "https://sentinel-stac.s3.amazonaws.com/sentinel-2-l1c/catalog.json",
+                "href": "/api/v1/collections/stac.defaultStac.rastercube.sentinel-2"
                 }
         }
     
@@ -77,52 +74,135 @@ def globalDefine():
         return redis_actinia_interface.read("defaultStac") 
     else:
         redis_actinia_interface.create("defaultStac",defaultStac)
-
-        return redis_actinia_interface.read("defaultStac") 
-
+        return redis_actinia_interface.read("defaultStac")
+    
 def createStacList():
-    response = globalDefine()
+    redis_actinia = connectRedis()
+    stac_inventary = {}
+
+    exist = redis_actinia_interface.exists("stac_instances")
+    
+    if exist:
+        instances = redis_actinia_interface.read("stac_instances")
+        for i in instances:
+            collections = redis_actinia_interface.read(instances[i])
+            stac_inventary[instances[i]] = collections
+    else:
+        collections = defaultInstance()
+        stac_inventary["defaultStac"] = collections
+        redis_actinia_interface.create("stac_instances",{"defaultStac"})
+    
+    return stac_inventary
+
     
     string_respose = response
 
     return string_respose
 
 def addStac2User(jsonParameters): 
-
+    """
+        Add the STAC Catalog to redis 
+            1. Update the catalog to the initial list GET /stac
+            2. Store the JSON as a new variable in redis
+    """
+    # Initializing Redis
+    redis_actinia = connectRedis()
     #Splitting the inputs
-    actinia_id = jsonParameters['stac_id']
-    actinia_root = jsonParameters['stac_url']
-    
+    stac_instance_id = jsonParameters['stac-instance-id']
+    stac_collection_id = jsonParameters['stac-collection-id']
+    stac_root = jsonParameters['stac-url']
+    stac_unique_id = "stac."+ stac_instance_id +".rastercube."+ stac_collection_id
     # Caching JSON from the STAC collection
-    stac_json_collection =  requests.get(actinia_root)
-    redis_actinia_interface.create(actinia_id,actinia_root,stac_json_collection)
+    stac_json_collection =  requests.get(stac_root)
+    redis_actinia_interface.create(stac_unique_id,stac_json_collection)
     
     # Adding the item to the Default List
-    defaultJson = redis_actinia_interface.read("defaultStac")
-    defaultJson[actinia_id] = {
-        'root': actinia_root,
-        'href': 'api/v1/'+ actinia_id
-    }
-    updated = redis_actinia_interface.update("defaultStac",defaultJson)
+    try:
+        defaultJson = redis_actinia_interface.read(stac_instance_id)
+    except:
+        defaultJson = redis_actinia_interface.create(stac_instance_id,{})
+        try:
+            instances = redis_actinia_interface.read("stac_instances")
+            instances[stac_instance_id]
+        except:
+            defaultInstance()
+            instances = redis_actinia_interface.read("stac_instances")
+            instances[stac_instance_id]
+
+        defaultJson[stac_collection_id] = {
+            'root': stac_root,
+            'href': "api/v1/stac/" + stac_unique_id
+        }
+
+    updated = redis_actinia_interface.update(stac_instance_id,defaultJson)
 
     if updated:
         response = {
             "message": "The STAC Catalog has been added successfully",
-            "StacCatalogs": redis_actinia_interface.read("defaultStac")
+            "StacCatalogs": redis_actinia_interface.read(stac_instance_id)
         }
     else: 
-        response = {"message": "Something happen, please check the stac_url or stac_id given"}
+        response = {"message": "Something went wrong, please check the stac-instance-id , stac-url or stac-collection-id given"}
         
     return response
 
-def callStacCatalog(catalog: str):
-    stac_dict = redis_actinia_interface.read("defaultStac")
+def collectionValidation(url: str) -> bool:
+    stac = stac_validator.StacValidate(url)
+    stac.run()
+    valid = stac.message[0]['valid_stac']
+    type = stac.message[0]['asset_type']
+    if valid and type == "COLLECTION":
+         return True
+    else: 
+        return False
 
+def addStacValidator(json):
+    """
+        The function validate the inputs syntax and STAC validity  
+        Input:
+            - json - JSON array with the Instance ID , Collection ID and STAC URL 
+    """
+    actinia_id = 'stac-instance-id' in json
+    actinia_id = 'stac-collection-id' in json
+    actinia_root = 'stac-url' in json
+    msg = {}
+    if actinia_id and actinia_root:
+        root_validation = collectionValidation( json['stac-url'])
+        collection_validation = (re.match('^[a-zA-Z0-9-_]*$',json['stac-collection-id']))
+        instance_validation = (re.match('^[a-zA-Z0-9-_]*$',json['stac-instance-id']))
+        
+        if root_validation and instance_validation and collection_validation:
+            return addStac2User(json)
+        elif not root_validation:
+            msg["Error-root"] = {"message": "Please check the URL provided (Should be a STAC Catalog) as well as the name given (no spaces or undercore characters)."}
+        elif not collection_validation:
+            msg["Error-collection"] = {"message": "Please check the URL provided (Should be a STAC Catalog)."}
+        elif not instance_validation:
+            msg["Error-instance"] = {"message": "Please check the ID given (no spaces or undercore characters)."}
+        
+        return msg
+    else:
+        return {"message": "The JSON give does not have either stac-instance-id or stac-collection-id or stac-url . Check the parameters provided"}
+
+def callStacCollection(collection: str):
     try:
+        stac = redis_actinia_interface.read(collection)
+    except:
+        stac = {"Error":"Something went wrong, please check the collection to retrived"}
+    
+    return stac
+
+def callStacCatalog(collection: str, catalog: str):
+    try:
+        stac_dict = redis_actinia_interface.read(collection)
         stac_root_url = stac_dict[catalog]['root']
         response = requests.get(stac_root_url)
         stac = response.content
     except:
-        stac = {"Error":"Something went wrong, please check the catalog to retrived"}
+        stac = {"Error":"Something went wrong, please check the collection and catalog to retrived"}
     
     return stac
+
+def deleteStacCollection(collection : str):
+    deleted = collection
+    return deleted
