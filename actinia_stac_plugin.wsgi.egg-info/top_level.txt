@@ -1,1 +1,0 @@
-actinia_stac_plugin

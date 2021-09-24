@@ -1,1 +1,0 @@
-stac-validator>=2.2.0
