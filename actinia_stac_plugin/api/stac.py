@@ -23,10 +23,11 @@ __maintainer__ = "Anika Bettge, Carmen Tawalika"
 from flask import jsonify, make_response, request
 from flask_restful_swagger_2 import swagger
 from actinia_core.rest.resource_base import ResourceBase
-from actinia_stac_plugin.core.stac import createStacList
+from actinia_stac_plugin.core.stac import createStacItemList
 from actinia_stac_plugin.core.stac import addStacValidator
 from actinia_stac_plugin.core.stac import callStacCollection
 from actinia_stac_plugin.core.stac import deleteStac
+from actinia_stac_plugin.core.stac import createStacCollectionsList
 
 class Stac(ResourceBase):
     """List and Add STAC options
@@ -38,7 +39,7 @@ class Stac(ResourceBase):
     def get(self):
         """Get a list of all GRASS GIS modules.
         """
-        module_list = createStacList()
+        module_list = createStacItemList()
         
         return make_response(module_list, 200)
 
@@ -75,9 +76,10 @@ class StacCollecions(ResourceBase):
     def get(self, collection_id):
         """Get a list of all GRASS GIS modules.
         """
-
-        module_list = callStacCollection(collection_id)
-
+        if collection_id == "list":
+            module_list = createStacCollectionsList()
+        else:
+            module_list = callStacCollection(collection_id)
         return make_response(module_list, 200)
 
 

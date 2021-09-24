@@ -23,7 +23,7 @@ PyScaffold helps you to put up the scaffold of your new Python project.
 Learn more under: http://pyscaffold.org/
 """
 
-__author__ = "JOrge Herrera"
+__author__ = "Jorge Herrera"
 __copyright__ = "2021-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 

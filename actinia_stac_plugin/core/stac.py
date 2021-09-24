@@ -56,7 +56,6 @@ def connectRedis():
 def defaultInstance():
     
     redis_actinia = connectRedis()
-     
     exist = redis_actinia_interface.exists("defaultStac")
 
     defaultStac = {
@@ -75,8 +74,24 @@ def defaultInstance():
     else:
         redis_actinia_interface.create("defaultStac",defaultStac)
         return redis_actinia_interface.read("defaultStac")
+
+def createStacItemList():
+    redis_actinia = connectRedis()
+    exist = redis_actinia_interface.exists("stac_instances")
     
-def createStacList():
+    if not exist:
+        collections = defaultInstance()
+        redis_actinia_interface.create("stac_instances",{"defaultStac":{
+            "path": "stac.defaultStac.rastercube.<stac_collection_id>"
+        }})
+    
+    instances = redis_actinia_interface.read("stac_instances")
+
+    string_respose = instances
+    
+    return string_respose
+
+def createStacCollectionsList():
     redis_actinia = connectRedis()
     stac_inventary = {}
     exist = redis_actinia_interface.exists("stac_instances")
@@ -242,6 +257,9 @@ def deleteStacInstance(stac_instance_id:str):
     redis_actinia = connectRedis()
     try:
         redis_actinia_interface.delete(stac_instance_id)
+        instances = redis_actinia_interface.read("stac_instances")
+        del instances[stac_instance_id]
+        redis_actinia_interface.update("stac_instances",instances)
     except:
         return {"Error": "Something went wrong please that the element is well typed"}
-    return {"message": "The instance"+ stac_instance_id + "was deleted with all the collections stored inside"}
+    return {"message": "The instance --"+ stac_instance_id + "-- was deleted with all the collections stored inside"}
