@@ -64,7 +64,7 @@ class Stac(ResourceBase):
 
         return make_response(deleted_stac,200)
 
-class StacCatalog(ResourceBase):
+class StacCollecions(ResourceBase):
     """Get the Catalog STAC
     """
 

@@ -30,7 +30,7 @@ __license__ = "Apache-2.0"
 # from actinia_module_plugin.resources.logging import log
 
 from actinia_stac_plugin.api.stac import Stac
-from actinia_stac_plugin.api.stac import StacCatalog
+from actinia_stac_plugin.api.stac import StacCollecions
 
 def create_endpoints(flask_api):
 
@@ -52,6 +52,6 @@ def create_endpoints(flask_api):
     #     # WARNING: all content from folder "static" will be accessible!
     #     return send_from_directory(app.static_folder, filename)
 
-    apidoc.add_resource(Stac, '/stac/collections/')
-    apidoc.add_resource(StacCatalog, '/stac/collections/<string:collection_id>')
+    apidoc.add_resource(Stac, '/stac/')
+    apidoc.add_resource(StacCollecions, '/stac/collections/<string:collection_id>')
     #apidoc.add_resource(addStac2User, '/stac/add-stac/<string:stac_url>/<string:stac_instance_id>')

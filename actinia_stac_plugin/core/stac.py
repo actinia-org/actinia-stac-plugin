@@ -79,24 +79,24 @@ def defaultInstance():
 def createStacList():
     redis_actinia = connectRedis()
     stac_inventary = {}
-
     exist = redis_actinia_interface.exists("stac_instances")
     
     if exist:
         instances = redis_actinia_interface.read("stac_instances")
-        for i in instances:
-            collections = redis_actinia_interface.read(instances[i])
-            stac_inventary[instances[i]] = collections
+        for k,v in instances.items():
+            collections = redis_actinia_interface.read(k)
+            stac_inventary[k] = collections
     else:
         collections = defaultInstance()
         stac_inventary["defaultStac"] = collections
-        redis_actinia_interface.create("stac_instances",{"defaultStac"})
+        redis_actinia_interface.create("stac_instances",{"defaultStac":{
+            "path": "stac.defaultStac.rastercube.<stac_collection_id>"
+        }})
     
-    return stac_inventary
+    instances = redis_actinia_interface.read("stac_instances")
 
+    string_respose = stac_inventary
     
-    string_respose = response
-
     return string_respose
 
 def addStac2User(jsonParameters): 
@@ -116,29 +116,36 @@ def addStac2User(jsonParameters):
     stac_json_collection =  requests.get(stac_root)
     redis_actinia_interface.create(stac_unique_id,stac_json_collection)
     
-    # Adding the item to the Default List
-    try:
-        defaultJson = redis_actinia_interface.read(stac_instance_id)
-    except:
-        defaultJson = redis_actinia_interface.create(stac_instance_id,{})
-        try:
-            instances = redis_actinia_interface.read("stac_instances")
-            instances[stac_instance_id]
-        except:
-            defaultInstance()
-            instances = redis_actinia_interface.read("stac_instances")
-            instances[stac_instance_id]
+    
+    # Verifying the existance of the instances - Adding the item to the Default List
+    list_instances_exist = redis_actinia_interface.exists("stac_instances")
+    if not list_instances_exist:
+        defaultInstance() 
+    
+    stac_instance_exist= redis_actinia_interface.exists(stac_instance_id)
 
-        defaultJson[stac_collection_id] = {
-            'root': stac_root,
-            'href': "api/v1/stac/" + stac_unique_id
-        }
+    if not stac_instance_exist:
+        redis_actinia_interface.create(stac_instance_id,{})
 
-    updated = redis_actinia_interface.update(stac_instance_id,defaultJson)
+    defaultJson = redis_actinia_interface.read(stac_instance_id)
 
-    if updated:
+    instances_list = redis_actinia_interface.read("stac_instances")
+
+    instances_list[stac_instance_id] = {
+       "path": "stac."+ stac_instance_id+".rastercube.<stac_collection_id>"
+    }
+
+    defaultJson[stac_unique_id] = {
+        'root': stac_root,
+        'href': "api/v1/stac/" + stac_unique_id
+    }
+
+    list_of_instances_updated = redis_actinia_interface.update("stac_instances",instances_list)
+    instance_updated = redis_actinia_interface.update(stac_instance_id,defaultJson)
+
+    if instance_updated and list_of_instances_updated:
         response = {
-            "message": "The STAC Catalog has been added successfully",
+            "message": "The STAC Collection has been added successfully",
             "StacCatalogs": redis_actinia_interface.read(stac_instance_id)
         }
     else: 

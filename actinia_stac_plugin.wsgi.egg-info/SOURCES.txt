@@ -163,6 +163,7 @@ actinia_stac_plugin/resources/__pycache__/templating.cpython-38.pyc
 config/actinia-module-plugin.cfg
 config/mount/sample.ini
 dist/actinia_stac_plugin.wsgi-0.0.post0.dev3+g18aca48-py3.8.egg
+dist/actinia_stac_plugin.wsgi-0.0.post0.dev5+g93fcc16.dirty-py3.8.egg
 dist/actinia_stac_plugin.wsgi-2.2.0+g0646a27.dirty-py2.py3-none-any.whl
 dist/actinia_stac_plugin.wsgi-2.2.0+g0646a27.dirty-py3.8.egg
 dist/actinia_stac_plugin.wsgi-2.2.0+g0646a27.dirty.tar.gz
