@@ -26,7 +26,7 @@ from actinia_core.rest.resource_base import ResourceBase
 from actinia_stac_plugin.core.stac import createStacList
 from actinia_stac_plugin.core.stac import addStacValidator
 from actinia_stac_plugin.core.stac import callStacCollection
-from actinia_stac_plugin.core.stac import deleteStacCollection
+from actinia_stac_plugin.core.stac import deleteStac
 
 class Stac(ResourceBase):
     """List and Add STAC options
@@ -60,7 +60,7 @@ class Stac(ResourceBase):
         """
 
         json = request.get_json(force=True)
-        deleted_stac = deleteStacCollection(json)
+        deleted_stac = deleteStac(json)
 
         return make_response(deleted_stac,200)
 

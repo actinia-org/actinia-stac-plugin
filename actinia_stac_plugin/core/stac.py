@@ -62,11 +62,11 @@ def defaultInstance():
     defaultStac = {
             "stac.defaultStac.rastercube.landsat-8": { 
                 "root": "https://landsat-stac.s3.amazonaws.com/landsat-8-l1/catalog.json",
-                "href": "/api/v1/collections/stac.defaultStac.rastercube.landsat-8",
+                "href": "/api/v1/stac/collections/stac.defaultStac.rastercube.landsat-8",
                 },
             "stac.defaultStac.rastercube.sentinel-2": { 
                 "root": "https://sentinel-stac.s3.amazonaws.com/sentinel-2-l1c/catalog.json",
-                "href": "/api/v1/collections/stac.defaultStac.rastercube.sentinel-2"
+                "href": "/api/v1/stac/collections/stac.defaultStac.rastercube.sentinel-2"
                 }
         }
     
@@ -107,15 +107,16 @@ def addStac2User(jsonParameters):
     """
     # Initializing Redis
     redis_actinia = connectRedis()
+    
     #Splitting the inputs
     stac_instance_id = jsonParameters['stac-instance-id']
     stac_collection_id = jsonParameters['stac-collection-id']
     stac_root = jsonParameters['stac-url']
     stac_unique_id = "stac."+ stac_instance_id +".rastercube."+ stac_collection_id
+    
     # Caching JSON from the STAC collection
     stac_json_collection =  requests.get(stac_root)
     redis_actinia_interface.create(stac_unique_id,stac_json_collection)
-    
     
     # Verifying the existance of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
@@ -137,7 +138,7 @@ def addStac2User(jsonParameters):
 
     defaultJson[stac_unique_id] = {
         'root': stac_root,
-        'href': "api/v1/stac/" + stac_unique_id
+        'href': "api/v1/stac/collections/" + stac_unique_id
     }
 
     list_of_instances_updated = redis_actinia_interface.update("stac_instances",instances_list)
@@ -213,6 +214,34 @@ def callStacCatalog(collection: str, catalog: str):
     
     return stac
 
-def deleteStacCollection(collection : str):
-    deleted = collection
-    return deleted
+def deleteStac(json):
+    stac_instance_id = 'stac-instance-id' in json
+    stac_collecion_id = 'stac-collection-id' in json
+
+    if stac_instance_id and stac_collecion_id:
+        return deleteStacCollection(json['stac-instance-id'],json['stac-collection-id'])
+    elif not stac_collecion_id and stac_instance_id:
+        return deleteStacInstance(json['stac-instance-id'])
+    elif not stac_instance_id and stac_collecion_id:
+        return {"Error":"The parameter stac-instance-id is required"}
+    else:
+        return {"Error":"The parameter does not match stac-instance-id or stac-collection-id"}
+
+def deleteStacCollection(stac_instance_id:str, stac_collection_id : str):
+    redis_actinia = connectRedis()
+    try:
+        stac_instance = redis_actinia_interface.read(stac_instance_id)
+        del stac_instance[stac_collection_id]
+        redis_actinia_interface.update(stac_instance_id,stac_instance)
+    except:
+        return {"Error": "Please check that the parameters given are well typed and exist"}
+
+    return redis_actinia_interface.read(stac_instance_id)
+
+def deleteStacInstance(stac_instance_id:str):
+    redis_actinia = connectRedis()
+    try:
+        redis_actinia_interface.delete(stac_instance_id)
+    except:
+        return {"Error": "Something went wrong please that the element is well typed"}
+    return {"message": "The instance"+ stac_instance_id + "was deleted with all the collections stored inside"}
