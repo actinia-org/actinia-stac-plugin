@@ -114,6 +114,17 @@ def createStacCollectionsList():
     
     return string_respose
 
+def resolveCollectionURL(url):
+    collection_url = url
+
+    stac = stac_validator.StacValidate(url)
+    stac.run()
+    type = stac.message[0]['asset_type']
+    if type == "COLLECTION":
+            collection_url = url
+    
+    return collection_url
+
 def addStac2User(jsonParameters): 
     """
         Add the STAC Catalog to redis 
@@ -126,7 +137,7 @@ def addStac2User(jsonParameters):
     #Splitting the inputs
     stac_instance_id = jsonParameters['stac-instance-id']
     stac_collection_id = jsonParameters['stac-collection-id']
-    stac_root = jsonParameters['stac-url']
+    stac_root = resolveCollectionURL(jsonParameters['stac-url'])
     stac_unique_id = "stac."+ stac_instance_id +".rastercube."+ stac_collection_id
     
     # Caching JSON from the STAC collection

@@ -65,7 +65,7 @@ class Stac(ResourceBase):
 
         return make_response(deleted_stac,200)
 
-class StacCollecions(ResourceBase):
+class StacCollections(ResourceBase):
     """Get the Catalog STAC
     """
 
@@ -83,3 +83,12 @@ class StacCollecions(ResourceBase):
         return make_response(module_list, 200)
 
 
+class StacCollectionList(ResourceBase):
+
+    def get(self): 
+        return ""
+
+class StacInstanceList(ResourceBase):
+
+    def get(self): 
+        return ""
