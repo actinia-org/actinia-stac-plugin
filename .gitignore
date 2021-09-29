@@ -1,0 +1,13 @@
+# Distribution / packaging
+env_stac/
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+.eggs/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
