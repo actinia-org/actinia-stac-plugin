@@ -27,7 +27,8 @@ from actinia_stac_plugin.core.stac import createStacItemList
 from actinia_stac_plugin.core.stac import addStacValidator
 from actinia_stac_plugin.core.stac import callStacCollection
 from actinia_stac_plugin.core.stac import deleteStac
-from actinia_stac_plugin.core.stac import createStacCollectionsList
+from actinia_stac_plugin.core.stac import StacCollectionsList
+from actinia_stac_plugin.core.stac import getInstance
 
 class Stac(ResourceBase):
     """List and Add STAC options
@@ -73,22 +74,46 @@ class StacCollections(ResourceBase):
         ResourceBase.__init__(self)
 
     #@swagger.doc(modules.listModules_get_docs)
-    def get(self, collection_id):
+    def get(self, stac_collection_id):
         """Get a list of all GRASS GIS modules.
         """
-        if collection_id == "list":
-            module_list = createStacCollectionsList()
-        else:
-            module_list = callStacCollection(collection_id)
+        
+        module_list = callStacCollection(stac_collection_id)
         return make_response(module_list, 200)
 
 
 class StacCollectionList(ResourceBase):
 
-    def get(self): 
-        return ""
+    def __init__(self):
+        ResourceBase.__init__(self)
+
+    def get(self):
+        """Get a list of all GRASS GIS modules.
+        """
+        module_list = StacCollectionsList()
+
+        return make_response(module_list, 200)
+
+class StacInstances(ResourceBase):
+
+    def __init__(self):
+        ResourceBase.__init__(self)
+
+    def get(self, stac_instance_id):
+        """Get a list of all GRASS GIS modules.
+        """
+        module_list = getInstance(stac_instance_id)
+        
+        return make_response(module_list, 200)
 
 class StacInstanceList(ResourceBase):
 
-    def get(self): 
-        return ""
+    def __init__(self):
+        ResourceBase.__init__(self)
+
+    def get(self):
+        """Get a list of all GRASS GIS modules.
+        """
+        module_list = createStacItemList()
+        
+        return make_response(module_list, 200)

@@ -91,16 +91,18 @@ def createStacItemList():
     
     return string_respose
 
-def createStacCollectionsList():
+def StacCollectionsList():
     redis_actinia = connectRedis()
-    stac_inventary = {}
+    stac_inventary = []
     exist = redis_actinia_interface.exists("stac_instances")
     
     if exist:
         instances = redis_actinia_interface.read("stac_instances")
         for k,v in instances.items():
             collections = redis_actinia_interface.read(k)
-            stac_inventary[k] = collections
+            for i,j in collections.items():
+                stac = readStacCollection(collections,collections[i])
+                stac_inventary.append(stac)
     else:
         collections = defaultInstance()
         stac_inventary["defaultStac"] = collections
@@ -221,18 +223,19 @@ def addStacValidator(json):
     else:
         return {"message": "The JSON give does not have either stac-instance-id or stac-collection-id or stac-url . Check the parameters provided"}
 
-def callStacCollection(collection: str):
+def callStacCollection(stac_collection_id: str):
     try:
-        stac = redis_actinia_interface.read(collection)
+        instance_id = stac_collection_id.split(".")[1]
+        stac = readStacCollection(instance_id,stac_collection_id)
     except:
         stac = {"Error":"Something went wrong, please check the collection to retrived"}
     
     return stac
 
-def callStacCatalog(collection: str, catalog: str):
+def readStacCollection(stac_instance_id: str, stac_collection_id: str):
     try:
-        stac_dict = redis_actinia_interface.read(collection)
-        stac_root_url = stac_dict[catalog]['root']
+        stac_dict = redis_actinia_interface.read(stac_instance_id)
+        stac_root_url = stac_dict[stac_collection_id]['root']
         response = requests.get(stac_root_url)
         stac = response.content
     except:
@@ -265,6 +268,7 @@ def deleteStacCollection(stac_instance_id:str, stac_collection_id : str):
     return redis_actinia_interface.read(stac_instance_id)
 
 def deleteStacInstance(stac_instance_id:str):
+    
     redis_actinia = connectRedis()
     try:
         redis_actinia_interface.delete(stac_instance_id)
@@ -274,3 +278,12 @@ def deleteStacInstance(stac_instance_id:str):
     except:
         return {"Error": "Something went wrong please that the element is well typed"}
     return {"message": "The instance --"+ stac_instance_id + "-- was deleted with all the collections stored inside"}
+
+def getInstance(instances_id):
+    redis_actinia = connectRedis()
+    exist = redis_actinia_interface.exists(instances_id)
+
+    if exist:
+        return redis_actinia_interface.read(instances_id)
+    
+    return {"Error": "stac instance ID does not match with the instences stored"}

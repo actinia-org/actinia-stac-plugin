@@ -27,12 +27,13 @@ from actinia_core.core.common.redis_base import RedisBaseInterface
 
 
 class RedisActiniaInterface(RedisBaseInterface):
-    """The Redis actinia_template database interface
-    A single actinia_template is stored as Hash with:
-        - actinia_template id aka actinia_template name that must be unique
-        - actinia-actinia_template dictionary
-    In addition is the actinia_template_id saved in a hash that contains all
-    actinia_template ids.
+    """
+        The Redis actinia_template database interface
+        A single actinia_template is stored as Hash with:
+            - actinia_template id aka actinia_template name that must be unique
+            - actinia-actinia_template dictionary
+        In addition is the actinia_template_id saved in a hash that contains all
+        actinia_template ids.
     """
 
     # We use two databases:
