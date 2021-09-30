@@ -1,3 +1,4 @@
+.
 # actinia-stac-plugin
 
 You can run actinia-stac-plugin as actinia-core plugin.
