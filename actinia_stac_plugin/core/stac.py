@@ -93,7 +93,7 @@ def createStacItemList():
 
 def StacCollectionsList():
     redis_actinia = connectRedis()
-    stac_inventary = []
+    stac_inventary = {"collections":[]}
     exist = redis_actinia_interface.exists("stac_instances")
     
     if exist:
@@ -101,8 +101,12 @@ def StacCollectionsList():
         for k,v in instances.items():
             collections = redis_actinia_interface.read(k)
             for i,j in collections.items():
-                stac = readStacCollection(collections,collections[i])
-                stac_inventary.append(stac)
+                stac = readStacCollection(k,i)
+                try: 
+                    stac = stac.decode('utf8').replace("'", '"')
+                except:
+                    stac = stac
+                stac_inventary["collections"].append(json.loads(stac))
     else:
         collections = defaultInstance()
         stac_inventary["defaultStac"] = collections
