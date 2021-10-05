@@ -6,6 +6,8 @@ dist/
 .installed.cfg
 *.egg
 .eggs/
+.vscode/*
+super-linter.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

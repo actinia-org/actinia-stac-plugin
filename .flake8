@@ -1,0 +1,27 @@
+[flake8]
+
+# E402 module level import not at top of file
+# E501 line too long (104 > 88 characters)
+# F401 '.health_check.health_check' imported but unused
+# W605 invalid escape sequence '\<'
+
+max-line-length = 88
+exclude =
+    .git,
+    __pycache__,
+    .env,
+    .eggs,
+    .venv,
+    env,
+    venv,
+    ENV,
+    env.bak,
+    venv.bak,
+    ctypes,
+    pydispatch,
+    testsuite,
+
+per-file-ignores =
+    ./actinia_stac_plugin/core/stac.py: E501
+    ./actinia_stac_plugin/api/stac.py: E501
+    ./actinia_stac_plugin/endpoints.py: E501
