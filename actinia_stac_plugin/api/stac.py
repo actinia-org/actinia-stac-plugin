@@ -21,7 +21,6 @@ __maintainer__ = "Anika Bettge, Carmen Tawalika"
 
 
 from flask import jsonify, make_response, request
-from flask_restful_swagger_2 import swagger
 from actinia_core.rest.resource_base import ResourceBase
 from actinia_stac_plugin.core.stac import createStacItemList
 from actinia_stac_plugin.core.stac import addStacValidator
@@ -30,90 +29,112 @@ from actinia_stac_plugin.core.stac import deleteStac
 from actinia_stac_plugin.core.stac import StacCollectionsList
 from actinia_stac_plugin.core.stac import getInstance
 
+
 class Stac(ResourceBase):
-    """List and Add STAC options
-    """
+    """List and Add STAC options"""
+
     def __init__(self):
         ResourceBase.__init__(self)
 
-    #@swagger.doc(modules.listModules_get_docs)
+    # @swagger.doc(modules.listModules_get_docs)
     def get(self):
-        """Get a list of all GRASS GIS modules.
-        """
-        module_list = createStacItemList()
-        
-        return make_response(module_list, 200)
+        """Get a list of Instances and Genera Information."""
+        stac_info = createStacItemList()
+
+        return make_response(stac_info, 200)
 
     def post(self):
         """
-            Add a new stac to the user catalog
+        Add a new stac to the user catalog
         """
-        
+
         json = request.get_json(force=True)
         new_stac = addStacValidator(json)
 
-        return make_response(new_stac,200)
+        return make_response(new_stac, 200)
 
     def delete(self):
         """
-            This function delete the STAC Catalog stored before on ID basis.
-            Arg:
-                - ID - ID/Name given to the STAC Catalog you want to delete
+        This function delete the STAC Catalog stored before on ID basis.
+        Arg:
+            - ID - ID/Name given to the STAC Catalog you want to delete
         """
 
         json = request.get_json(force=True)
-        deleted_stac = deleteStac(json)
+        stac_deleted = deleteStac(json)
 
-        return make_response(deleted_stac,200)
+        return make_response(stac_deleted, 200)
+
 
 class StacCollections(ResourceBase):
-    """Get the Catalog STAC
+    """
+    Get the STAC Collections
     """
 
     def __init__(self):
         ResourceBase.__init__(self)
 
-    #@swagger.doc(modules.listModules_get_docs)
     def get(self, stac_collection_id):
-        """Get a list of all GRASS GIS modules.
-        """
-        
-        module_list = callStacCollection(stac_collection_id)
-        return make_response(module_list, 200)
+        """Get a Collection stored based in stac_collection_id"""
+
+        stac_collection = callStacCollection(stac_collection_id)
+        return make_response(stac_collection, 200)
 
 
 class StacCollectionList(ResourceBase):
+    """
+    Get the STAC Collections list
+    """
 
     def __init__(self):
         ResourceBase.__init__(self)
 
     def get(self):
-        """Get a list of all GRASS GIS modules.
         """
-        module_list = StacCollectionsList()
+        Get a list of all stac collections stored:
+            - OpenEo specifications
+            - All retrivals from each collections stored
+        """
+        stac_collections_list = StacCollectionsList()
 
-        return make_response(module_list, 200)
+        return make_response(stac_collections_list, 200)
+
 
 class StacInstances(ResourceBase):
-
+    """
+    Get the Intance
+    """
     def __init__(self):
         ResourceBase.__init__(self)
 
     def get(self, stac_instance_id):
-        """Get a list of all GRASS GIS modules.
         """
-        module_list = getInstance(stac_instance_id)
-        
-        return make_response(module_list, 200)
+        Get a Instance based on stac_instance_id
+            - Based on stac_instance_id
+            - Retrieve List of collection with:
+                - href: relative reference URL for ACTINIA
+                - root: URL linked to the STAC Collection
+        """
+
+        stac_instance = getInstance(stac_instance_id)
+
+        return make_response(stac_instance, 200)
+
 
 class StacInstanceList(ResourceBase):
-
+    """
+    Get the Instances list
+    """
     def __init__(self):
         ResourceBase.__init__(self)
 
     def get(self):
-        """Get a list of all GRASS GIS modules.
+        """
+        Get a Instance List
+            - Retrieve List of Instances for the user with:
+                - stac_instances_id: relative reference URL for ACTINIA
+                - path: convention name to reach any collecion in the instance
         """
         module_list = createStacItemList()
-        
+
         return make_response(module_list, 200)

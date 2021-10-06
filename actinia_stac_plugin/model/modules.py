@@ -42,61 +42,45 @@ class ModuleParameterSchema(Schema):
     TODO: add  {"type": "array", "items": {"type": "string"}}
     """
 
-    type = 'object'
+    type = "object"
     properties = {
-        'type': {
-            'type': 'string',
-            'description': ''
-        },
-        'subtype': {
-            'type': 'string',
-            'description': ''
-        },
-        'enum': {
-            'type': 'array',
-            'items': {
-                'type': 'string'
-            },
-            'description': ''
-        }
+        "type": {"type": "string", "description": ""},
+        "subtype": {"type": "string", "description": ""},
+        "enum": {"type": "array", "items": {"type": "string"}, "description": ""},
     }
-    description = 'A schema object according to the specification of JSON '
-    ' Schema draft-07. Additional values for format are defined '
-    ' centrally in the API documentation, e.g. bbox or crs. '
-    ' Callback parameters are defined with the custom schema '
-    ' keyword parameters.'
+    description = "A schema object according to the specification of JSON "
+    " Schema draft-07. Additional values for format are defined "
+    " centrally in the API documentation, e.g. bbox or crs. "
+    " Callback parameters are defined with the custom schema "
+    " keyword parameters."
 
 
 class ModuleParameter(Schema):
-    """Parameters from Module
-    """
+    """Parameters from Module"""
 
-    type = 'object'
+    type = "object"
     properties = {
-        'name': {
-            'type': 'string',
-            'description': 'A unique name for the parameter. '
+        "name": {"type": "string", "description": "A unique name for the parameter. "},
+        "description": {
+            "type": "string",
+            "description": "Detailed description to fully explain the entity.",
         },
-        'description': {
-            'type': 'string',
-            'description': 'Detailed description to fully explain the entity.'
+        "optional": {
+            "type": "boolean",
+            "description": "Determines whether this parameter is mandatory. "
+            " Default: true",
         },
-        'optional': {
-            'type': 'boolean',
-            'description': 'Determines whether this parameter is mandatory. '
-                           ' Default: true'
+        "default": {
+            "type": "string",
+            "description": "The default value for this parameter.",
         },
-        'default': {
-            'type': 'string',
-            'description': 'The default value for this parameter.'
-        },
-        'schema': ModuleParameterSchema
+        "schema": ModuleParameterSchema
         # 'comment': {
         #     'type': 'string',
         #     'description': 'Comment for parameter.'
         # }
     }
-    description = 'A list of parameters that are applicable for this process.'
+    description = "A list of parameters that are applicable for this process."
     required = ["description", "schema", "name"]
 
 
@@ -122,34 +106,30 @@ class ModuleExportDescription(ModuleParameter):
 
 
 class Module(Schema):
-    """Response schema for module
-    """
-    type = 'object'
-    properties = {
-        'id': {
-            'type': 'string',
-            'description': 'Unique identifier of the process. '
-        },
-        'summary': {
-            'type': 'string',
-            'description': 'A short summary of what the process does.'
-        },
-        'description': {
-            'type': 'string',
-            'description': 'Detailed description to fully explain the entity.'
-        },
-        'categories': {
-            'type': 'array',
-            'items': {'type': 'string'},
-            'description': 'A list of categories. GRASS GIS addons have the '
-                           'category "grass-module" and the actinia core '
-                           'modules are identified with "actinia-module"'
-        },
-        'parameters': ModuleParameter,
-        'returns': ModuleReturns,
-        'import_descr': ModuleImportDescription,
-        'export': ModuleExportDescription
+    """Response schema for module"""
 
+    type = "object"
+    properties = {
+        "id": {"type": "string", "description": "Unique identifier of the process. "},
+        "summary": {
+            "type": "string",
+            "description": "A short summary of what the process does.",
+        },
+        "description": {
+            "type": "string",
+            "description": "Detailed description to fully explain the entity.",
+        },
+        "categories": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "A list of categories. GRASS GIS addons have the "
+            'category "grass-module" and the actinia core '
+            'modules are identified with "actinia-module"',
+        },
+        "parameters": ModuleParameter,
+        "returns": ModuleReturns,
+        "import_descr": ModuleImportDescription,
+        "export": ModuleExportDescription,
     }
     example = describemodule_get_docs_example
     required = ["id", "description"]
@@ -165,24 +145,36 @@ class ModuleList(Schema):
     * keywords to categories
     * description is set to required description and not to optional summary
     """
-    type = 'object'
+
+    type = "object"
     properties = {
-        'status': {
-            'type': 'string',
-            'description': 'The status of the resource, values: accepted, '
-                           'running, finished, terminated, error'
+        "status": {
+            "type": "string",
+            "description": "The status of the resource, values: accepted, "
+            "running, finished, terminated, error",
         },
-        'processes': {
-            'type': 'array',
-            'items': Module,
-            'description': 'The list of modules in GRASS GIS'
-        }
+        "processes": {
+            "type": "array",
+            "items": Module,
+            "description": "The list of modules in GRASS GIS",
+        },
     }
-    example = {"processes": [{
-        "id": "v.random",
-        "description": "Generates random 2D/3D vector points.",
-        "categories": ["vector", "sampling", "statistics", "random",
-                       "point pattern", "stratified random sampling",
-                       "level1"]}
-    ], "status": "success"}
+    example = {
+        "processes": [
+            {
+                "id": "v.random",
+                "description": "Generates random 2D/3D vector points.",
+                "categories": [
+                    "vector",
+                    "sampling",
+                    "statistics",
+                    "random",
+                    "point pattern",
+                    "stratified random sampling",
+                    "level1",
+                ],
+            }
+        ],
+        "status": "success",
+    }
     required = ["status", "processes"]

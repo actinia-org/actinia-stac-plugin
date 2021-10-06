@@ -30,14 +30,12 @@ import sys
 
 
 def name():
-    """Print name to console
-    """
+    """Print name to console"""
     return "actinia-stac-plugin"
 
 
 def about():
-    """Print information about actinia-stac-plugin to console
-    """
+    """Print information about actinia-stac-plugin to console"""
 
     text = "actinia-stac-plugin"
     text = text + "\n This package communicates via HTTP"
@@ -49,11 +47,11 @@ def about():
 # used in pc2grass
 def parseExe(process):
     # no api docs model
-    line = process['exe']
+    line = process["exe"]
 
-    if 'params' in process:
-        for param in process['params']:
-            line += ' '
+    if "params" in process:
+        for param in process["params"]:
+            line += " "
             line += param
 
     return line
@@ -71,45 +69,44 @@ def parseModule(process):
     # verbose: boolean
     # superquiet: boolean
 
-    line = process['module']
+    line = process["module"]
 
-    if 'inputs' in process:
+    if "inputs" in process:
         # param: string
         # value: string
         # import_descr: object
-        for input in process['inputs']:
-            line += ' '
-            line += input['param']
-            line += '='
-            line += '"' + input['value'] + '"'
+        for input in process["inputs"]:
+            line += " "
+            line += input["param"]
+            line += "="
+            line += '"' + input["value"] + '"'
 
-        if 'import_descr' in input:
-            print('WARNING: Cannot translate import_descr for '
-                  + process['id'])
+        if "import_descr" in input:
+            print("WARNING: Cannot translate import_descr for " + process["id"])
 
-    if 'outputs' in process:
+    if "outputs" in process:
         # param: string
         # value: string
         # export: object
-        for output in process['outputs']:
-            line += ' '
-            line += input['param']
-            line += '='
-            line += input['value']
+        for output in process["outputs"]:
+            line += " "
+            line += input["param"]
+            line += "="
+            line += input["value"]
 
-        if 'export' in output:
-            print('WARNING: Cannot translate export for ' + process['id'])
+        if "export" in output:
+            print("WARNING: Cannot translate export for " + process["id"])
 
-    if 'flags' in process:
-        line += ' -' + process['flags']
-    if 'stdin' in process:
-        print('WARNING: Cannot translate export for ' + process['id'])
-    if 'overwrite' in process and process['overwrite'] == 'true':
-        line += ' --overwrite'
-    if 'verbose' in process and process['verbose'] == 'true':
-        line += ' --verbose'
-    if 'superquiet' in process and process['superquiet'] == 'true':
-        line += ' --quiet'
+    if "flags" in process:
+        line += " -" + process["flags"]
+    if "stdin" in process:
+        print("WARNING: Cannot translate export for " + process["id"])
+    if "overwrite" in process and process["overwrite"] == "true":
+        line += " --overwrite"
+    if "verbose" in process and process["verbose"] == "true":
+        line += " --verbose"
+    if "superquiet" in process and process["superquiet"] == "true":
+        line += " --quiet"
 
     return line
 
@@ -120,14 +117,13 @@ def defineFile(file):
     elif os.path.isfile(os.getcwd() + file):
         file = os.getcwd() + file
     else:
-        print('WARNING: Could not find file ' + str(file))
+        print("WARNING: Could not find file " + str(file))
         return
     return file
 
 
 def pc2grass():
-    """Parser for actinia-core process chains to GRASS executables
-    """
+    """Parser for actinia-core process chains to GRASS executables"""
 
     input = sys.argv[1]
     output = sys.argv[2]
@@ -139,33 +135,33 @@ def pc2grass():
         input = os.getcwd() + input
         output = os.getcwd() + output
     else:
-        print('ERROR: Could not find input file ' + str(input))
+        print("ERROR: Could not find input file " + str(input))
         return
 
-    with open(input, 'r') as file:
+    with open(input, "r") as file:
         pc = json.loads(file.read())
 
-    list = pc['list']
-    script = ''
+    list = pc["list"]
+    script = ""
 
     for process in list:
-        line = ''
-        if 'exe' in process:
+        line = ""
+        if "exe" in process:
             line = parseExe(process)
-        elif 'module' in process:
+        elif "module" in process:
             line = parseModule(process)
         else:
-            print("WARNING: Neither 'exe' nor 'module' found in "
-                  + process['id'])
+            print("WARNING: Neither 'exe' nor 'module' found in " + process["id"])
 
-        script += line + '\n'
+        script += line + "\n"
 
     try:
-        with open(output, 'x') as file:
+        with open(output, "x") as file:
             file.write(script)
     except FileExistsError:
-        print('ERROR: output file already exists.'
-              + ' (No overwrite option yet, sorry)')
+        print(
+            "ERROR: output file already exists." + " (No overwrite option yet, sorry)"
+        )
         return
 
-    print('All written')
+    print("All written")
