@@ -28,23 +28,18 @@ from flask_restful_swagger_2 import Schema
 
 
 class SimpleStatusCodeResponseModel(Schema):
-    """Simple response schema to inform about status.
+    """Simple response schema to inform about status."""
 
-    """
-    type = 'object'
+    type = "object"
     properties = {
-        'status': {
-            'type': 'number',
-            'description': 'The status code of the request.'
+        "status": {"type": "number", "description": "The status code of the request."},
+        "message": {
+            "type": "string",
+            "description": "A short message to describes the status",
         },
-        'message': {
-            'type': 'string',
-            'description': 'A short message to describes the status'
-        }
     }
     required = ["status", "message"]
 
 
-simpleResponseExample = SimpleStatusCodeResponseModel(
-    status=200, message="success")
+simpleResponseExample = SimpleStatusCodeResponseModel(status=200, message="success")
 SimpleStatusCodeResponseModel.example = simpleResponseExample
