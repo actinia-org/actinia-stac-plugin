@@ -5,7 +5,7 @@
 # F401 '.health_check.health_check' imported but unused
 # W605 invalid escape sequence '\<'
 
-max-line-length = 88
+max-line-length = 100
 exclude =
     .git,
     __pycache__,

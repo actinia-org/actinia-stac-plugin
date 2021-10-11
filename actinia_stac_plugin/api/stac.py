@@ -15,13 +15,12 @@ GRASS GIS module viewer
 """
 
 __license__ = "Apache-2.0"
-__author__ = "Anika Bettge, Carmen Tawalika"
-__copyright__ = "Copyright 2019, mundialis"
-__maintainer__ = "Anika Bettge, Carmen Tawalika"
+__author__ = "Carmen Tawalika, Jorge Herrera"
+__copyright__ = "Copyright 2019-2021, mundialis"
+__maintainer__ = "__mundialis__"
 
 
-from flask import jsonify, make_response, request
-from flask_restful_swagger_2 import swagger
+from flask import make_response, request
 from actinia_core.rest.resource_base import ResourceBase
 from actinia_stac_plugin.core.stac import createStacItemList
 from actinia_stac_plugin.core.stac import addStacValidator
@@ -30,90 +29,85 @@ from actinia_stac_plugin.core.stac import deleteStac
 from actinia_stac_plugin.core.stac import StacCollectionsList
 from actinia_stac_plugin.core.stac import getInstance
 
+
 class Stac(ResourceBase):
-    """List and Add STAC options
-    """
+    """List and Add STAC options"""
+
     def __init__(self):
         ResourceBase.__init__(self)
 
-    #@swagger.doc(modules.listModules_get_docs)
+    # @swagger.doc(modules.listModules_get_docs)
     def get(self):
-        """Get a list of all GRASS GIS modules.
-        """
+        """Get a list of all GRASS GIS modules."""
         module_list = createStacItemList()
-        
+
         return make_response(module_list, 200)
 
     def post(self):
         """
-            Add a new stac to the user catalog
+        Add a new stac to the user catalog
         """
-        
+
         json = request.get_json(force=True)
         new_stac = addStacValidator(json)
 
-        return make_response(new_stac,200)
+        return make_response(new_stac, 200)
 
     def delete(self):
         """
-            This function delete the STAC Catalog stored before on ID basis.
-            Arg:
-                - ID - ID/Name given to the STAC Catalog you want to delete
+        This function delete the STAC Catalog stored before on ID basis.
+        Arg:
+            - ID - ID/Name given to the STAC Catalog you want to delete
         """
 
         json = request.get_json(force=True)
         deleted_stac = deleteStac(json)
 
-        return make_response(deleted_stac,200)
+        return make_response(deleted_stac, 200)
+
 
 class StacCollections(ResourceBase):
-    """Get the Catalog STAC
-    """
+    """Get the Catalog STAC"""
 
     def __init__(self):
         ResourceBase.__init__(self)
 
-    #@swagger.doc(modules.listModules_get_docs)
+    # @swagger.doc(modules.listModules_get_docs)
     def get(self, stac_collection_id):
-        """Get a list of all GRASS GIS modules.
-        """
-        
+        """Get a list of all GRASS GIS modules."""
+
         module_list = callStacCollection(stac_collection_id)
         return make_response(module_list, 200)
 
 
 class StacCollectionList(ResourceBase):
-
     def __init__(self):
         ResourceBase.__init__(self)
 
     def get(self):
-        """Get a list of all GRASS GIS modules.
-        """
+        """Get a list of all GRASS GIS modules."""
         module_list = StacCollectionsList()
 
         return make_response(module_list, 200)
 
-class StacInstances(ResourceBase):
 
+class StacInstances(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
     def get(self, stac_instance_id):
-        """Get a list of all GRASS GIS modules.
-        """
+        """Get a list of all GRASS GIS modules."""
         module_list = getInstance(stac_instance_id)
-        
+
         return make_response(module_list, 200)
 
-class StacInstanceList(ResourceBase):
 
+class StacInstanceList(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
     def get(self):
-        """Get a list of all GRASS GIS modules.
-        """
+        """Get a list of all GRASS GIS modules."""
         module_list = createStacItemList()
-        
+
         return make_response(module_list, 200)

@@ -38,19 +38,19 @@ CORS(app)
 apidoc = Api(
     app,
     title="actinia-stac-plugin",
-    api_spec_url='/latest/api/swagger',
-    schemes=['https', 'http'],
-    consumes=['application/json'],
+    api_spec_url="/latest/api/swagger",
+    schemes=["https", "http"],
+    consumes=["application/json"],
     description="""STAC.
-                   """
+                   """,
 )
 
 endpoints.addEndpoints(app, apidoc)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # call this for development only with
     # `python -m actinia_stac_plugin.main`
-    log.debug('starting app in development mode...')
+    log.debug("starting app in development mode...")
     app.run(debug=True, use_reloader=False)
     # for production environent use application in wsgy.py

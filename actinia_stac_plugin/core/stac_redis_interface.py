@@ -28,12 +28,12 @@ from actinia_core.core.common.redis_base import RedisBaseInterface
 
 class RedisActiniaInterface(RedisBaseInterface):
     """
-        The Redis actinia_template database interface
-        A single actinia_template is stored as Hash with:
-            - actinia_template id aka actinia_template name that must be unique
-            - actinia-actinia_template dictionary
-        In addition is the actinia_template_id saved in a hash that contains all
-        actinia_template ids.
+    The Redis actinia_template database interface
+    A single actinia_template is stored as Hash with:
+        - actinia_template id aka actinia_template name that must be unique
+        - actinia-actinia_template dictionary
+    In addition is the actinia_template_id saved in a hash that contains all
+    actinia_template ids.
     """
 
     # We use two databases:
@@ -45,7 +45,7 @@ class RedisActiniaInterface(RedisBaseInterface):
     def __init__(self):
         RedisBaseInterface.__init__(self)
 
-    def create(self, actinia_id,actinia_template):
+    def create(self, actinia_id, actinia_template):
         """
         Add an actinia_stac to the actinia_stac database
         Args:
@@ -62,21 +62,21 @@ class RedisActiniaInterface(RedisBaseInterface):
             return False
 
         actinia_template_bytes = pickle.dumps(actinia_template)
-        mapping = {"actinia_template_id": actinia_template_id,
-                   "actinia_template": actinia_template_bytes}
+        mapping = {
+            "actinia_template_id": actinia_template_id,
+            "actinia_template": actinia_template_bytes,
+        }
 
-        lock = self.redis_server.lock(
-            name="add_actinia_template_lock", timeout=1)
+        lock = self.redis_server.lock(name="add_actinia_template_lock", timeout=1)
         lock.acquire()
         # First add the actinia_template-id to the actinia_template id database
         self.redis_server.hset(
-            self.actinia_template_id_db,
-            actinia_template_id,
-            actinia_template_id)
+            self.actinia_template_id_db, actinia_template_id, actinia_template_id
+        )
 
         self.redis_server.hset(
-            self.actinia_template_id_hash_prefix + actinia_template_id,
-            mapping=mapping)
+            self.actinia_template_id_hash_prefix + actinia_template_id, mapping=mapping
+        )
         lock.release()
 
         return True
@@ -92,9 +92,12 @@ class RedisActiniaInterface(RedisBaseInterface):
         """
 
         try:
-            actinia_template = pickle.loads(self.redis_server.hget(
-                self.actinia_template_id_hash_prefix + actinia_template_id,
-                "actinia_template"))
+            actinia_template = pickle.loads(
+                self.redis_server.hget(
+                    self.actinia_template_id_hash_prefix + actinia_template_id,
+                    "actinia_template",
+                )
+            )
         except Exception:
             return False
 
@@ -117,16 +120,17 @@ class RedisActiniaInterface(RedisBaseInterface):
             return False
 
         actinia_template_bytes = pickle.dumps(actinia_template)
-        mapping = {"actinia_template_id": actinia_template_id,
-                   "actinia_template": actinia_template_bytes}
+        mapping = {
+            "actinia_template_id": actinia_template_id,
+            "actinia_template": actinia_template_bytes,
+        }
 
-        lock = self.redis_server.lock(
-            name="update_actinia_template_lock", timeout=1)
+        lock = self.redis_server.lock(name="update_actinia_template_lock", timeout=1)
         lock.acquire()
 
         self.redis_server.hset(
-            self.actinia_template_id_hash_prefix + actinia_template_id,
-            mapping=mapping)
+            self.actinia_template_id_hash_prefix + actinia_template_id, mapping=mapping
+        )
 
         lock.release()
 
@@ -144,15 +148,14 @@ class RedisActiniaInterface(RedisBaseInterface):
         if exists == 0 or exists is False:
             return False
 
-        lock = self.redis_server.lock(
-            name="delete_actinia_template_lock", timeout=1)
+        lock = self.redis_server.lock(name="delete_actinia_template_lock", timeout=1)
         lock.acquire()
         # Delete the entry from the actinia_template id database
-        self.redis_server.hdel(self.actinia_template_id_db,
-                               actinia_template_id)
+        self.redis_server.hdel(self.actinia_template_id_db, actinia_template_id)
         # Delete the actual actinia_template entry
         self.redis_server.delete(
-            self.actinia_template_id_hash_prefix + actinia_template_id)
+            self.actinia_template_id_hash_prefix + actinia_template_id
+        )
         lock.release()
 
         return True
@@ -182,7 +185,8 @@ class RedisActiniaInterface(RedisBaseInterface):
             True is actinia_template exists, False otherwise
         """
         return self.redis_server.exists(
-            self.actinia_template_id_hash_prefix + actinia_template_id)
+            self.actinia_template_id_hash_prefix + actinia_template_id
+        )
 
 
 # Create the Redis interface instance
