@@ -20,14 +20,16 @@ __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "__mundialis__"
 
 
-from flask import make_response, request
 from actinia_core.rest.resource_base import ResourceBase
-from actinia_stac_plugin.core.stac import createStacItemList
-from actinia_stac_plugin.core.stac import addStacValidator
-from actinia_stac_plugin.core.stac import callStacCollection
-from actinia_stac_plugin.core.stac import deleteStac
-from actinia_stac_plugin.core.stac import StacCollectionsList
-from actinia_stac_plugin.core.stac import getInstance
+from actinia_stac_plugin.core.stac import (
+    StacCollectionsList,
+    addStacValidator,
+    callStacCollection,
+    createStacItemList,
+    deleteStac,
+    getInstance,
+)
+from flask import make_response, request
 
 
 class Stac(ResourceBase):

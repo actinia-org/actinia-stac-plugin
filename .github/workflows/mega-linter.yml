@@ -40,4 +40,5 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
+          DISABLE_LINTERS: cspell
           DISABLE: COPYPASTE,SPELL # Uncomment to disable copy-paste and spell checks

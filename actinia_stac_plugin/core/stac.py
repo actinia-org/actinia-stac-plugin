@@ -22,11 +22,12 @@ __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "__mundialis__"
 
 import json
+import re
+
 import requests
 from actinia_core.core.common.config import Configuration
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from stac_validator import stac_validator
-import re
 
 global DefaultStacConf
 
@@ -109,7 +110,7 @@ def StacCollectionsList():
                 stac = readStacCollection(k, i)
                 try:
                     stac = stac.decode("utf8").replace("'", '"')
-                except(ValueError):
+                except Exception:
                     stac = stac
                 stac_inventary["collections"].append(json.loads(stac))
     else:
@@ -258,7 +259,7 @@ def callStacCollection(stac_collection_id: str):
     try:
         instance_id = stac_collection_id.split(".")[1]
         stac = readStacCollection(instance_id, stac_collection_id)
-    except(ValueError):
+    except Exception:
         stac = {
             "Error": "Something went wrong, please check the collection to retrived"
         }
@@ -275,7 +276,7 @@ def readStacCollection(stac_instance_id: str, stac_collection_id: str):
             stac_root_url = stac_dict[stac_collection_id]["root"]
             response = requests.get(stac_root_url)
             stac = response.content
-    except(ValueError):
+    except Exception:
         stac = {
             "Error": "Something went wrong, please check the collection and catalog to retrived"
         }
@@ -309,7 +310,7 @@ def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
         redis_actinia_interface.update(stac_instance_id, stac_instance)
         if redis_actinia_interface.exists(stac_collection_id):
             redis_actinia_interface.delete(stac_collection_id)
-    except(ValueError):
+    except Exception:
         return {
             "Error": "Please check that the parameters given are well typed and exist"
         }
@@ -327,7 +328,7 @@ def deleteStacInstance(stac_instance_id: str):
         instances = redis_actinia_interface.read("stac_instances")
         del instances[stac_instance_id]
         redis_actinia_interface.update("stac_instances", instances)
-    except(ValueError):
+    except Exception:
         return {"Error": "Something went wrong please that the element is well typed"}
     return {
         "message": "The instance --"

@@ -25,3 +25,4 @@ per-file-ignores =
     ./actinia_stac_plugin/core/stac.py: E501
     ./actinia_stac_plugin/api/stac.py: E501
     ./actinia_stac_plugin/endpoints.py: E501
+    ./actinia_stac_plugin/*: B403,B301
