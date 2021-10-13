@@ -24,13 +24,10 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 
 
+from actinia_stac_plugin.resources.logging import log
 from flask import Flask
 from flask_cors import CORS
 from flask_restful_swagger_2 import Api
-
-from actinia_stac_plugin import endpoints
-from actinia_stac_plugin.resources.logging import log
-
 
 app = Flask(__name__)
 CORS(app)
@@ -38,19 +35,16 @@ CORS(app)
 apidoc = Api(
     app,
     title="actinia-stac-plugin",
-    api_spec_url='/latest/api/swagger',
-    schemes=['https', 'http'],
-    consumes=['application/json'],
+    api_spec_url="/latest/api/swagger",
+    schemes=["https", "http"],
+    consumes=["application/json"],
     description="""STAC.
-                   """
+                   """,
 )
 
-endpoints.addEndpoints(app, apidoc)
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     # call this for development only with
     # `python -m actinia_stac_plugin.main`
-    log.debug('starting app in development mode...')
-    app.run(debug=True, use_reloader=False)
+    log.debug("starting app in development mode...")
+    app.run(debug=False, use_reloader=False)
     # for production environent use application in wsgy.py

@@ -38,46 +38,51 @@ global templateUUID
 
 
 class ActiniaProcessingTest(ActiniaTestCase):
-
     def test_processing(self):
         """Test Usage of global templates persistent processing"""
         respStatusCode = 200
-        json_path = 'tests/resources/processing/global_default_value.json'
-        url_path = '/locations/nc_spm_08/mapsets/test/processing'
+        json_path = "tests/resources/processing/global_default_value.json"
+        url_path = "/locations/nc_spm_08/mapsets/test/processing"
 
         with open(json_path) as file:
             pc_template = json.load(file)
 
-        resp = self.app.post(URL_PREFIX + url_path,
-                             headers=self.user_auth_header,
-                             data=json.dumps(pc_template),
-                             content_type="application/json")
+        resp = self.app.post(
+            URL_PREFIX + url_path,
+            headers=self.user_auth_header,
+            data=json.dumps(pc_template),
+            content_type="application/json",
+        )
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, 'json')
+        assert hasattr(resp, "json")
 
         check_started_process(self, resp)
 
-        resp = self.app.delete(URL_PREFIX + 'locations/nc_spm_08/mapsets/test',
-                               headers=self.user_auth_header)
+        resp = self.app.delete(
+            URL_PREFIX + "locations/nc_spm_08/mapsets/test",
+            headers=self.user_auth_header,
+        )
 
     def test_processing_export(self):
         """Test Usage of global templates ephemeral processing"""
         respStatusCode = 200
-        json_path = 'tests/resources/processing/global_point_in_polygon.json'
-        url_path = '/locations/nc_spm_08/processing_export'
+        json_path = "tests/resources/processing/global_point_in_polygon.json"
+        url_path = "/locations/nc_spm_08/processing_export"
 
         with open(json_path) as file:
             pc_template = json.load(file)
 
-        resp = self.app.post(URL_PREFIX + url_path,
-                             headers=self.user_auth_header,
-                             data=json.dumps(pc_template),
-                             content_type="application/json")
+        resp = self.app.post(
+            URL_PREFIX + url_path,
+            headers=self.user_auth_header,
+            data=json.dumps(pc_template),
+            content_type="application/json",
+        )
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, 'json')
+        assert hasattr(resp, "json")
 
         check_started_process(self, resp)

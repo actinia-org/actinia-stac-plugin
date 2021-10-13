@@ -30,7 +30,6 @@ from actinia_stac_plugin.resources.cli import name, about
 
 
 class CliTest(unittest.TestCase):
-
     def test_cli_name(self):
         """Test basic cli command"""
         assert name() == "actinia-stac-plugin"

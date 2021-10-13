@@ -29,11 +29,14 @@ __license__ = "Apache-2.0"
 
 # from actinia_module_plugin.resources.logging import log
 
-from actinia_stac_plugin.api.stac import Stac
-from actinia_stac_plugin.api.stac import StacCollections
-from actinia_stac_plugin.api.stac import StacCollectionList
-from actinia_stac_plugin.api.stac import StacInstanceList
-from actinia_stac_plugin.api.stac import StacInstances
+from actinia_stac_plugin.api.stac import (
+    Stac,
+    StacCollectionList,
+    StacCollections,
+    StacInstanceList,
+    StacInstances,
+)
+
 
 def create_endpoints(flask_api):
 
@@ -55,8 +58,10 @@ def create_endpoints(flask_api):
     #     # WARNING: all content from folder "static" will be accessible!
     #     return send_from_directory(app.static_folder, filename)-
 
-    apidoc.add_resource(Stac, '/stac')
-    apidoc.add_resource(StacCollectionList, '/stac/collections')
-    apidoc.add_resource(StacCollections, '/stac/collections/<string:stac_collection_id>')
-    apidoc.add_resource(StacInstanceList, '/stac/instances')
-    apidoc.add_resource(StacInstances, '/stac/instances/<string:stac_instance_id>')
+    apidoc.add_resource(Stac, "/stac")
+    apidoc.add_resource(StacCollectionList, "/stac/collections")
+    apidoc.add_resource(
+        StacCollections, "/stac/collections/<string:stac_collection_id>"
+    )
+    apidoc.add_resource(StacInstanceList, "/stac/instances")
+    apidoc.add_resource(StacInstances, "/stac/instances/<string:stac_instance_id>")

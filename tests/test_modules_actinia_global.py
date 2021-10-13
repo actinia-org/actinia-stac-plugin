@@ -32,25 +32,30 @@ from testsuite import ActiniaTestCase, compare_module_to_file
 
 
 someActiniaModules = [
-    'add_enumeration', 'default_value', 'nested_modules_test',
-    'point_in_polygon', 'slope_aspect', 'vector_area', 'index_NDVI']
+    "add_enumeration",
+    "default_value",
+    "nested_modules_test",
+    "point_in_polygon",
+    "slope_aspect",
+    "vector_area",
+    "index_NDVI",
+]
 
 
 class ActiniaModulesTest(ActiniaTestCase):
-
     def test_list_modules_get(self):
         """Test HTTP GET /actinia_modules"""
         global someActiniaModules
 
         respStatusCode = 200
-        resp = self.app.get(URL_PREFIX + '/actinia_modules')
+        resp = self.app.get(URL_PREFIX + "/actinia_modules")
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, 'json')
-        assert 'actinia-module' in resp.json['processes'][0]['categories']
+        assert hasattr(resp, "json")
+        assert "actinia-module" in resp.json["processes"][0]["categories"]
 
-        respModules = [i['id'] for i in resp.json['processes']]
+        respModules = [i["id"] for i in resp.json["processes"]]
 
         for i in someActiniaModules:
             assert i in respModules
@@ -58,22 +63,23 @@ class ActiniaModulesTest(ActiniaTestCase):
     def test_filter_list_modules_get(self):
         """Test HTTP GET /actinia_modules with filter"""
         respStatusCode = 200
-        resp = self.app.get(URL_PREFIX + '/actinia_modules?tag=global')
+        resp = self.app.get(URL_PREFIX + "/actinia_modules?tag=global")
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, 'json')
-        assert len(resp.json['processes']) == 7
+        assert hasattr(resp, "json")
+        assert len(resp.json["processes"]) == 7
 
     def test_describe_modules_not_found(self):
         """Test HTTP GET /actinia_modules/<not-existing-module>"""
         respStatusCode = 404
-        resp = self.app.get(URL_PREFIX + '/actinia_modules/not_exist',
-                            headers=self.user_auth_header)
+        resp = self.app.get(
+            URL_PREFIX + "/actinia_modules/not_exist", headers=self.user_auth_header
+        )
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, 'json')
+        assert hasattr(resp, "json")
 
 
 for i in someActiniaModules:
@@ -83,5 +89,8 @@ for i in someActiniaModules:
     # create method for every actinia-module to have a better overview in
     # test summary
     def_name = "test_describe_process_chain_template_get_" + i
-    compare_module_to_file.__defaults__ = ('actinia_modules', i,)
+    compare_module_to_file.__defaults__ = (
+        "actinia_modules",
+        i,
+    )
     setattr(ActiniaModulesTest, def_name, compare_module_to_file)
