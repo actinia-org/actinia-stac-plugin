@@ -24,10 +24,9 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 
 import json
-from flask import Response
 
 from actinia_core.core.common.app import URL_PREFIX
-
+from flask import Response
 from testsuite import ActiniaTestCase, import_user_template, delete_user_template
 
 someActiniaModules = [

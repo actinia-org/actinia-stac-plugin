@@ -24,14 +24,12 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 
 
-from flask import Response
+
 import json
 
 from actinia_core.core.common.app import URL_PREFIX
-
-
+from flask import Response
 from testsuite import ActiniaTestCase, check_started_process
-
 
 global allTemplatesCount
 global templateUUID

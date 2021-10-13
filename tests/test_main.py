@@ -24,13 +24,12 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2018-2021, mundialis"
 
 
-import pytest
-import unittest
-from pkg_resources import get_distribution, DistributionNotFound
-from flask import Response
-
 import actinia_stac_plugin
+import pytest
+from flask import Response
+from pkg_resources import get_distribution, DistributionNotFound
 from testsuite import ActiniaTestCase
+import unittest
 
 
 class AppTest(ActiniaTestCase):

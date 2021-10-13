@@ -24,10 +24,8 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 
 
-from flask import Response
-
 from actinia_core.core.common.app import URL_PREFIX
-
+from flask import Response
 from testsuite import ActiniaTestCase, compare_module_to_file
 
 GrassModules = ["r.slope.aspect", "importer", "exporter"]

@@ -38,7 +38,7 @@ def connectRedis():
     try:
         conf.read()
     except Exception:
-        pass
+        print("Error")
 
     server = conf.REDIS_SERVER_URL
     port = conf.REDIS_SERVER_PORT

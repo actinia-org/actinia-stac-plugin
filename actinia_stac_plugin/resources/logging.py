@@ -22,7 +22,6 @@ __maintainer__ = "Carmen Tawalika"
 
 import logging
 from datetime import datetime
-from logging import FileHandler
 
 from actinia_stac_plugin.resources.config import LOGCONFIG
 from colorlog import ColoredFormatter
@@ -55,7 +54,7 @@ def setLogHandler(logger, type, format):
         handler = logging.StreamHandler()
     elif type == "file":
         # For readability, json is never written to file
-        handler = FileHandler(LOGCONFIG.logfile)
+        handler = logging.FileHandler(LOGCONFIG.logfile)
     handler.setFormatter(format)
     logger.addHandler(handler)
 

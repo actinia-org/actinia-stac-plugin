@@ -26,7 +26,7 @@ __copyright__ = "Copyright 2018-2021, mundialis"
 
 import unittest
 
-from actinia_stac_plugin.resources.cli import name, about
+from actinia_stac_plugin.resources.cli import about, name
 
 
 class CliTest(unittest.TestCase):
