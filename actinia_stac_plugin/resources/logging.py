@@ -19,7 +19,7 @@ limitations under the License.
 Logging interface
 """
 
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "Carmen Tawalika"

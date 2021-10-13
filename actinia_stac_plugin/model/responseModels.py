@@ -21,7 +21,7 @@ Common api methods
 
 __author__ = "Carmen Tawalika"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 
 
 from flask_restful_swagger_2 import Schema

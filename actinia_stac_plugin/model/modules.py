@@ -21,7 +21,7 @@ Model classes for grassmodule and process chain template object
 
 __author__ = "Anika Bettge, Carmen Tawalika"
 __copyright__ = "2019-present mundialis GmbH & Co. KG"
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 
 
 import os

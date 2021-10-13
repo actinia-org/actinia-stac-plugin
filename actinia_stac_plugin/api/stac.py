@@ -14,7 +14,7 @@ limitations under the License.
 GRASS GIS module viewer
 """
 
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 __author__ = "Anika Bettge, Carmen Tawalika"
 __copyright__ = "Copyright 2019, mundialis"
 __maintainer__ = "Anika Bettge, Carmen Tawalika"

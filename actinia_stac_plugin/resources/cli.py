@@ -21,7 +21,7 @@ Commandline functions, extend later if needed
 
 __author__ = "Carmen Tawalika"
 __copyright__ = "2018-present mundialis GmbH & Co. KG"
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 
 
 import os

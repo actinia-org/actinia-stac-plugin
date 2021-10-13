@@ -21,7 +21,7 @@ Add endpoints to flask app with endpoint definitions and routes
 
 __author__ = "Carmen Tawalika"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 
 
 # from flask import current_app, send_from_directory

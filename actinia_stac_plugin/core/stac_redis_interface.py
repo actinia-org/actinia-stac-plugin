@@ -15,7 +15,7 @@ Process Chain Template Management
 Redis interface
 """
 
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 __maintainer__ = "Carmen Tawalika"
