@@ -163,7 +163,7 @@ def addStac2User(jsonParameters):
     stac_json_collection = requests.get(stac_root)
     redis_actinia_interface.create(stac_unique_id, stac_json_collection)
 
-    # Verifying the existance of the instances - Adding the item to the Default List
+    # Verifying the existence of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
     if not list_instances_exist:
         defaultInstance()
@@ -261,7 +261,7 @@ def callStacCollection(stac_collection_id: str):
         stac = readStacCollection(instance_id, stac_collection_id)
     except Exception:
         stac = {
-            "Error": "Something went wrong, please check the collection to retrived"
+            "Error": "Something went wrong, please check the collection to retrieved"
         }
 
     return stac
@@ -278,7 +278,7 @@ def readStacCollection(stac_instance_id: str, stac_collection_id: str):
             stac = response.content
     except Exception:
         stac = {
-            "Error": "Something went wrong, please check the collection and catalog to retrived"
+            "Error": "Something went wrong, please check the collection and catalog to retrieved"
         }
 
     return stac

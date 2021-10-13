@@ -30,9 +30,9 @@ from actinia_core.core.common.app import URL_PREFIX
 from flask import Response
 from testsuite import (
     ActiniaTestCase,
-    import_user_template,
-    delete_user_template,
     check_started_process,
+    delete_user_template,
+    import_user_template,
 )
 
 global allTemplatesCount

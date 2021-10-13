@@ -19,6 +19,8 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "Carmen Tawalika"
 
+# pylint: disable=E1101
+# E1101: Instance of 'RootLogger' has no 'loggerDict' member (no-member) - Make no sense
 
 import logging
 from datetime import datetime

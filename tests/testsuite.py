@@ -49,6 +49,7 @@ __maintainer__ = "mundialis"
 
 import base64
 import json
+from typing import Dict, List
 import unittest
 
 import pwgen
@@ -71,8 +72,8 @@ class ActiniaTestCase(unittest.TestCase):
     # admin = None
     # superadmin = None
     user = None
-    auth_header = {}
-    users_list = []
+    auth_header: Dict[str, Headers] = {}
+    users_list: List[str] = []
 
     def setUp(self):
         """Overwrites method setUp from unittest.TestCase class"""

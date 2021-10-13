@@ -24,7 +24,7 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 
 
-from actinia_stac_plugin.resources.logging import log
+from actinia_stac_plugin.resources.log import log
 from flask import Flask
 from flask_cors import CORS
 from flask_restful_swagger_2 import Api

@@ -28,7 +28,6 @@ from actinia_core.core.common.app import URL_PREFIX
 from flask import Response
 from testsuite import ActiniaTestCase, compare_module_to_file
 
-
 someActiniaModules = [
     "add_enumeration",
     "default_value",
@@ -87,8 +86,8 @@ for i in someActiniaModules:
     # create method for every actinia-module to have a better overview in
     # test summary
     def_name = "test_describe_process_chain_template_get_" + i
-    compare_module_to_file.__defaults__ = (
-        "actinia_modules",
-        i,
+    compare_module_to_file.__defaults__ = (  # type: ignore
+        "actinia_modules",  # uri_path
+        i,  # modules
     )
     setattr(ActiniaModulesTest, def_name, compare_module_to_file)

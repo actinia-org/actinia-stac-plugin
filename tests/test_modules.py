@@ -160,8 +160,8 @@ for i in someVirtualModules:
     # create method for every actinia-module to have a better overview in
     # test summary
     def_name = "test_describe_virtual_module_get_" + i
-    compare_module_to_file.__defaults__ = (
-        "modules",
-        i,
+    compare_module_to_file.__defaults__ = (  # type: ignore
+        "modules",  # uri_path
+        i,  # modules
     )
     setattr(VirtualModulesTest, def_name, compare_module_to_file)

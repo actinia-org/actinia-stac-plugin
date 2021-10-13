@@ -110,8 +110,8 @@ for i in someGrassModules:
     # create method for every grass-module to have a better overview in
     # test summary
     def_name = "test_describe_module_get_" + i
-    compare_module_to_file.__defaults__ = (
-        "grass_modules",
-        i,
+    compare_module_to_file.__defaults__ = (  # type: ignore
+        "grass_modules",  # uri_path
+        i,  # module
     )
     setattr(GmodulesTest, def_name, compare_module_to_file)

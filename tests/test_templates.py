@@ -37,7 +37,7 @@ global templateUUID
 
 class ActiniaTemplatesTest(ActiniaTestCase):
     def test_1001_read_all(self):
-        """Test HTTP GET /actinia_templates and rememberes number of templates"""
+        """Test HTTP GET /actinia_templates and remembers number of templates"""
         global allTemplatesCount
 
         respStatusCode = 200
