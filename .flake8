@@ -1,11 +1,7 @@
 [flake8]
+# E501 line too long (110 > 88 characters)
 
-# E402 module level import not at top of file
-# E501 line too long (104 > 88 characters)
-# F401 '.health_check.health_check' imported but unused
-# W605 invalid escape sequence '\<'
-
-max-line-length = 88
+max-line-length = 110
 exclude =
     .git,
     __pycache__,
