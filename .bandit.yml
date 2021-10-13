@@ -1,0 +1,10 @@
+---
+### Config File bandint
+
+# [B403:blacklist] Consider possible security implications associated with pickle module.
+#                  The pickle library remains due to the usage and managment of local datasets
+# [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+# [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+# [B107:hardcoded_password_default] Possible hardcoded password: 'abcdefgh' - Password no relevant
+
+skips: ['B403','B301','B101','B107']
