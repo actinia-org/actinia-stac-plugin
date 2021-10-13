@@ -24,7 +24,6 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 
 
-
 import json
 
 from actinia_core.core.common.app import URL_PREFIX

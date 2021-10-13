@@ -38,6 +38,7 @@ jobs:
           # https://nvuillam.github.io/mega-linter/configuration/
           VALIDATE_ALL_CODEBASE: true # Validates all source when push on master, else just the git diff with master. Override with true if you always want to lint all sources
           DEFAULT_BRANCH: main
+          LINTER_RULES_PATH: ./
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           DISABLE_LINTERS: SPELL_CSPELL
           DISABLE: COPYPASTE, DOCKER, BASH # Uncomment to disable copy-paste and spell checks

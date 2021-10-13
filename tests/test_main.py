@@ -23,13 +23,13 @@ __license__ = "Apache-2.0"
 __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2018-2021, mundialis"
 
+import unittest
 
 import actinia_stac_plugin
 import pytest
 from flask import Response
-from pkg_resources import get_distribution, DistributionNotFound
+from pkg_resources import DistributionNotFound, get_distribution
 from testsuite import ActiniaTestCase
-import unittest
 
 
 class AppTest(ActiniaTestCase):

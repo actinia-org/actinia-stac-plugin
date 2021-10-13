@@ -58,8 +58,8 @@ from actinia_core.core.common.config import global_config
 from actinia_core.core.common.user import ActiniaUser
 from actinia_core.endpoints import create_endpoints
 from actinia_core.models.response_models import ProcessingResponseModel
-
 from werkzeug.datastructures import Headers
+
 # actinia-stac-plugin endpoints are included as defined in actinia_core
 # config
 create_endpoints()
