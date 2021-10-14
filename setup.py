@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
 Setup file for actinia_stac_plugin.
 
 This file was generated with PyScaffold 3.0.2.
