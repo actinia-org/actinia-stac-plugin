@@ -1,6 +1,0 @@
----
-
-# SC2154 "somthing" is referenced but not assigned.
-
-ignored:
-  - SC2154

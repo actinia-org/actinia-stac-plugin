@@ -12,9 +12,9 @@ on:
     branches: [main]
 
 jobs:
-  
+
   # Cancel duplicate jobs: https://github.com/fkirc/skip-duplicate-actions#option-3-cancellation-only
-  
+
   cancel_duplicates:
     name: Cancel duplicate jobs
     runs-on: ubuntu-latest
@@ -25,32 +25,32 @@ jobs:
     name: Mega-Linter
     runs-on: ubuntu-latest
     steps:
-  
+
       # Git Checkout
-  
+
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
       # Mega-Linter
-  
+
       - name: Mega-Linter
         id: ml
         # You can override Mega-Linter flavor used to have faster performances
         # More info at https://nvuillam.github.io/mega-linter/flavors/
-  
+
         uses: nvuillam/mega-linter@v4
         env:
-  
+
           # All available variables are described in documentation
           # https://nvuillam.github.io/mega-linter/configuration/
-  
+
           VALIDATE_ALL_CODEBASE: true # Validates all source when push on master, else just the git diff with master. Override with true if you always want to lint all sources
           DEFAULT_BRANCH: main
           LINTER_RULES_PATH: ./
-  
+
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
-  
+
           DISABLE_LINTERS: SPELL_CSPELL
-          DISABLE: COPYPASTE,DOCKERFILE,BASH # Uncomment to disable copy-paste and spell checks
+          DISABLE: DOCKERFILE,BASH,COPYPASTE # Uncomment to disable copy-paste and spell checks
