@@ -29,9 +29,13 @@ __license__ = "Apache-2.0"
 
 # from actinia_module_plugin.resources.logging import log
 
-from actinia_stac_plugin.api.stac import (Stac, StacCollectionList,
-                                          StacCollections, StacInstanceList,
-                                          StacInstances)
+from actinia_stac_plugin.api.stac import (
+    Stac,
+    StacCollectionList,
+    StacCollections,
+    StacInstanceList,
+    StacInstances,
+)
 
 
 def create_endpoints(flask_api):

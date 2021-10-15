@@ -31,10 +31,10 @@ __license__ = "Apache-2.0"
 from setuptools import setup
 
 entry_points = {
-    "console_scripts ": [
+    "console_scripts": [
         "name = actinia_stac_plugin.resources.cli:name ",
         "about = actinia_stac_plugin.resources.cli:about ",
-        "pc2grass = actinia_stac_plugin.resources.cli:pc2grass "
+        "pc2grass = actinia_stac_plugin.resources.cli:pc2grass ",
     ]
 }
 
@@ -47,7 +47,7 @@ def setup_package():
         package_dir={"actinia_stac_plugin ": "actinia_stac_plugin "},
         include_package_data=True,
         use_pyscaffold=True,
-        install_requires=["stac-validator>=2.2.0"]
+        install_requires=["stac-validator>=2.2.0"],
     )
 
 
