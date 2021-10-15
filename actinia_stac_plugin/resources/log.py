@@ -25,9 +25,10 @@ __maintainer__ = "Carmen Tawalika"
 import logging
 from datetime import datetime
 
-from actinia_stac_plugin.resources.config import LOGCONFIG
 from colorlog import ColoredFormatter
 from pythonjsonlogger import jsonlogger
+
+from actinia_stac_plugin.resources.config import LOGCONFIG
 
 log = logging.getLogger("actinia-stac-plugin")
 werkzeugLog = logging.getLogger("werkzeug")

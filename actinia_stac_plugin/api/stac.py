@@ -21,15 +21,13 @@ __maintainer__ = "__mundialis__"
 
 
 from actinia_core.rest.resource_base import ResourceBase
-from actinia_stac_plugin.core.stac import (
-    StacCollectionsList,
-    addStacValidator,
-    callStacCollection,
-    createStacItemList,
-    deleteStac,
-    getInstance,
-)
 from flask import make_response, request
+
+from actinia_stac_plugin.core.stac import (StacCollectionsList,
+                                           addStacValidator,
+                                           callStacCollection,
+                                           createStacItemList, deleteStac,
+                                           getInstance)
 
 
 class Stac(ResourceBase):

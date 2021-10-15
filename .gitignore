@@ -13,3 +13,6 @@ super-linter.log
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Files
+actinia-stac-plugin.log

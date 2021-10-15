@@ -49,8 +49,8 @@ __maintainer__ = "mundialis"
 
 import base64
 import json
-from typing import Dict, List
 import unittest
+from typing import Dict, List
 
 import pwgen
 from actinia_core.core.common import redis_interface

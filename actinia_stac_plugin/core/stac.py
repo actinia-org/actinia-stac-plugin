@@ -26,8 +26,10 @@ import re
 
 import requests
 from actinia_core.core.common.config import Configuration
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from stac_validator import stac_validator
+
+from actinia_stac_plugin.core.stac_redis_interface import \
+    redis_actinia_interface
 
 global DefaultStacConf
 

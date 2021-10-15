@@ -25,11 +25,12 @@ __copyright__ = "Copyright 2018-2021, mundialis"
 
 import unittest
 
-import actinia_stac_plugin
 import pytest
 from flask import Response
 from pkg_resources import DistributionNotFound, get_distribution
 from testsuite import ActiniaTestCase
+
+import actinia_stac_plugin
 
 
 class AppTest(ActiniaTestCase):

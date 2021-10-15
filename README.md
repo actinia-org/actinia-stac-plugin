@@ -5,9 +5,6 @@ You can run actinia-stac-plugin as actinia-core plugin.
 ## Installation
 For installation or DEV setup, see docker/README.md.
 
-## actinia-core process-chain templating
-see actinia-stac.md
-
 ## DEV notes:
 
 ### Build
