@@ -21,25 +21,40 @@ __author__ = "Carmen Tawalika, Jorge Herrera"
 __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "__mundialis__"
 
+import json
 import re
 
 import requests
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import (
+    collectionValidation,
     connectRedis,
     defaultInstance,
-    collectionValidation,
+    readStacCollection,
     resolveCollectionURL,
 )
 
 
-def createStacItemList():
+def StacCollectionsList():
     connectRedis()
+    stac_inventary = {"collections": []}
     exist = redis_actinia_interface.exists("stac_instances")
 
-    if not exist:
-        defaultInstance()
+    if exist:
+        instances = redis_actinia_interface.read("stac_instances")
+        for k, v in instances.items():
+            collections = redis_actinia_interface.read(k)
+            for i, j in collections.items():
+                stac = readStacCollection(k, i)
+                try:
+                    stac = stac.decode("utf8").replace("'", '"')
+                except Exception:
+                    stac = stac
+                stac_inventary["collections"].append(json.loads(stac))
+    else:
+        collections = defaultInstance()
+        stac_inventary["defaultStac"] = collections
         redis_actinia_interface.create(
             "stac_instances",
             {
@@ -49,9 +64,7 @@ def createStacItemList():
             },
         )
 
-    instances = redis_actinia_interface.read("stac_instances")
-
-    return instances
+    return stac_inventary
 
 
 def addStac2User(jsonParameters):
@@ -114,27 +127,23 @@ def addStac2User(jsonParameters):
     return response
 
 
-def addStacValidator(parameters):
+def addStacValidator(json):
     """
     The function validate the inputs syntax and STAC validity
     Input:
-        - parameters - JSON array with the Instance ID , Collection ID and STAC URL
+        - json - JSON array with the Instance ID , Collection ID and STAC URL
     """
-    stac_instance_id = "stac_instance_id" in parameters
-    stac_collecion_id = "stac_collection_id" in parameters
-    stac_root = "stac_url" in parameters
+    stac_instance_id = "stac_instance_id" in json
+    stac_collecion_id = "stac_collection_id" in json
+    stac_root = "stac_url" in json
     msg = {}
     if stac_instance_id and stac_collecion_id and stac_root:
-        root_validation = collectionValidation(parameters["stac_url"])
-        collection_validation = re.match(
-            "^[a-zA-Z0-9_]*$", parameters["stac_collection_id"]
-        )
-        instance_validation = re.match(
-            "^[a-zA-Z0-9_]*$", parameters["stac_instance_id"]
-        )
+        root_validation = collectionValidation(json["stac_url"])
+        collection_validation = re.match("^[a-zA-Z0-9_]*$", json["stac_collection_id"])
+        instance_validation = re.match("^[a-zA-Z0-9_]*$", json["stac_instance_id"])
 
         if root_validation and instance_validation and collection_validation:
-            return addStac2User(parameters)
+            return addStac2User(json)
         elif not root_validation:
             msg["Error_root"] = {
                 "message": "Check the URL provided (Should be a STAC Collection)."
@@ -153,3 +162,35 @@ def addStacValidator(parameters):
         return {
             "message": "Check the parameters (stac_instance_id,stac_collection_id,stac_url)"
         }
+
+
+def deleteStac(json):
+    stac_instance_id = "stac_instance_id" in json
+    stac_collecion_id = "stac_collection_id" in json
+
+    if stac_instance_id and stac_collecion_id:
+        return deleteStacCollection(
+            json["stac_instance_id"], json["stac_collection_id"]
+        )
+    elif not stac_instance_id and stac_collecion_id:
+        return {"Error": "The parameter stac_instance_id is required"}
+    else:
+        return {
+            "Error": "The parameter does not match stac_instance_id or stac_collection_id"
+        }
+
+
+def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
+    connectRedis()
+    try:
+        stac_instance = redis_actinia_interface.read(stac_instance_id)
+        del stac_instance[stac_collection_id]
+        redis_actinia_interface.update(stac_instance_id, stac_instance)
+        if redis_actinia_interface.exists(stac_collection_id):
+            redis_actinia_interface.delete(stac_collection_id)
+    except Exception:
+        return {
+            "Error": "Please check that the parameters given are well typed and exist"
+        }
+
+    return redis_actinia_interface.read(stac_instance_id)

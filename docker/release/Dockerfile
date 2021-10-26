@@ -1,6 +1,6 @@
 FROM alpine:edge as build
 
-RUN apk add git python3 postgresql-dev gcc python3-dev musl-dev
+RUN apk add git python3 gcc python3-dev musl-dev
 
 RUN pip3 install --upgrade pip pep517 wheel
 

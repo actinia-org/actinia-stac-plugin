@@ -11,8 +11,9 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-Process Chain Template Management
 Redis interface
+This file is not yet fitted to STAC plugin usability,
+however, the file will be adjusted in futher steps of the development.
 """
 
 __license__ = "Apache-2.0"

@@ -28,8 +28,8 @@ import requests
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import (
     connectRedis,
-    defaultInstance,
     collectionValidation,
+    defaultInstance,
     resolveCollectionURL,
 )
 
@@ -118,7 +118,7 @@ def addStacValidator(parameters):
     """
     The function validate the inputs syntax and STAC validity
     Input:
-        - parameters - JSON array with the Instance ID , Collection ID and STAC URL
+        - json - JSON array with the Instance ID , Collection ID and STAC URL
     """
     stac_instance_id = "stac_instance_id" in parameters
     stac_collecion_id = "stac_collection_id" in parameters
@@ -153,3 +153,33 @@ def addStacValidator(parameters):
         return {
             "message": "Check the parameters (stac_instance_id,stac_collection_id,stac_url)"
         }
+
+
+def deleteStac(parameters):
+    stac_instance_id = "stac_instance_id" in parameters
+
+    if stac_instance_id:
+        return deleteStacInstance(parameters["stac_instance_id"])
+    else:
+        return {
+            "Error": "The parameter does not match stac_instance_id or stac_collection_id"
+        }
+
+
+def deleteStacInstance(stac_instance_id: str):
+    connectRedis()
+    try:
+        instance = redis_actinia_interface.read(stac_instance_id)
+        for i in instance.keys():
+            redis_actinia_interface.delete(instance[i])
+        redis_actinia_interface.delete(stac_instance_id)
+        instances = redis_actinia_interface.read("stac_instances")
+        del instances[stac_instance_id]
+        redis_actinia_interface.update("stac_instances", instances)
+    except Exception:
+        return {"Error": "Something went wrong please that the element is well typed"}
+    return {
+        "message": "The instance --"
+        + stac_instance_id
+        + "-- was deleted with all the collections stored inside"
+    }

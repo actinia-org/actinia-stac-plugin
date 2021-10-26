@@ -21,30 +21,20 @@ __maintainer__ = "__mundialis__"
 
 
 from actinia_core.rest.resource_base import ResourceBase
-from flask import make_response, request
+from flask import make_response
 
-from actinia_stac_plugin.core.stac import addStacValidator, createStacItemList
+from actinia_stac_plugin.core.stac_collection_id import callStacCollection
 
 
-class Stac(ResourceBase):
-    """List and Add STAC options"""
+class StacCollections(ResourceBase):
+    """Get the Collections STAC"""
 
     def __init__(self):
         ResourceBase.__init__(self)
 
     # @swagger.doc(modules.listModules_get_docs)
-    def get(self):
-        """Get a list of instances and its notation."""
-        module_list = createStacItemList()
+    def get(self, stac_collection_id):
+        """Get a list of specified Collection."""
 
+        module_list = callStacCollection(stac_collection_id)
         return make_response(module_list, 200)
-
-    def post(self):
-        """
-        Add a new stac to the user collection
-        """
-
-        json = request.get_json(force=True)
-        new_stac = addStacValidator(json)
-
-        return make_response(new_stac, 200)

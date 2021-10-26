@@ -11,7 +11,9 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-STAC plugin
+STAC module
+* List all API availables
+* Describe available actions on STAC formats in Actinia
 """
 
 __license__ = "Apache-2.0"
@@ -19,32 +21,15 @@ __author__ = "Carmen Tawalika, Jorge Herrera"
 __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "__mundialis__"
 
-
-from actinia_core.rest.resource_base import ResourceBase
-from flask import make_response, request
-
-from actinia_stac_plugin.core.stac import addStacValidator, createStacItemList
+from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.common import connectRedis
 
 
-class Stac(ResourceBase):
-    """List and Add STAC options"""
+def getInstance(stac_instance_id):
+    connectRedis()
+    exist = redis_actinia_interface.exists(stac_instance_id)
 
-    def __init__(self):
-        ResourceBase.__init__(self)
+    if exist:
+        return redis_actinia_interface.read(stac_instance_id)
 
-    # @swagger.doc(modules.listModules_get_docs)
-    def get(self):
-        """Get a list of instances and its notation."""
-        module_list = createStacItemList()
-
-        return make_response(module_list, 200)
-
-    def post(self):
-        """
-        Add a new stac to the user collection
-        """
-
-        json = request.get_json(force=True)
-        new_stac = addStacValidator(json)
-
-        return make_response(new_stac, 200)
+    return {"Error": "stac instance ID does not match with the instences stored"}

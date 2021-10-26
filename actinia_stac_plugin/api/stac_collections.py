@@ -23,19 +23,20 @@ __maintainer__ = "__mundialis__"
 from actinia_core.rest.resource_base import ResourceBase
 from flask import make_response, request
 
-from actinia_stac_plugin.core.stac import addStacValidator, createStacItemList
+from actinia_stac_plugin.core.stac_collections import (
+    StacCollectionsList,
+    addStacValidator,
+    deleteStac,
+)
 
 
-class Stac(ResourceBase):
-    """List and Add STAC options"""
-
+class StacCollectionList(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
-    # @swagger.doc(modules.listModules_get_docs)
     def get(self):
-        """Get a list of instances and its notation."""
-        module_list = createStacItemList()
+        """Get a list of all Collection."""
+        module_list = StacCollectionsList()
 
         return make_response(module_list, 200)
 
@@ -48,3 +49,15 @@ class Stac(ResourceBase):
         new_stac = addStacValidator(json)
 
         return make_response(new_stac, 200)
+
+    def delete(self):
+        """
+            This function delete the STAC Catalog stored before on ID basis.
+            Arg:
+                - ID - ID/Name given to the STAC Catalog you want to delete
+        """
+
+        stac_instance_id = request.get_json(force=True)
+        deleted_stac = deleteStac(stac_instance_id)
+
+        return make_response(deleted_stac, 200)

@@ -2,6 +2,7 @@
 env_stac/
 build/
 dist/
+config/actinia-stac-plugin.cfg
 *.egg-info/
 .installed.cfg
 *.egg
