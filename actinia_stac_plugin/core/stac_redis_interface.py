@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 Redis interface
 This file is not yet fitted to STAC plugin usability,
-however, the file will be adjusted in futher steps of the development.
+however, the file will be adjusted in further steps of the development.
 """
 
 __license__ = "Apache-2.0"
