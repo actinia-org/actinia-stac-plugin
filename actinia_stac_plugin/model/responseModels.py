@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-Application entrypoint. Creates Flask app and swagger docs, adds endpoints
+Common api methods
 """
 
 __author__ = "Carmen Tawalika"
@@ -25,28 +25,22 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
 
-from flask import Flask
-from flask_cors import CORS
-from flask_restful_swagger_2 import Api
+from flask_restful_swagger_2 import Schema
 
-from actinia_stac_plugin.resources.log import log
 
-app = Flask(__name__)
-CORS(app)
+class SimpleStatusCodeResponseModel(Schema):
+    """Simple response schema to inform about status."""
 
-apidoc = Api(
-    app,
-    title="actinia-stac-plugin",
-    api_spec_url="/latest/api/swagger",
-    schemes=["https", "http"],
-    consumes=["application/json"],
-    description="""STAC.
-                   """,
-)
+    type = "object"
+    properties = {
+        "status": {"type": "number", "description": "The status code of the request."},
+        "message": {
+            "type": "string",
+            "description": "A short message to describes the status",
+        },
+    }
+    required = ["status", "message"]
 
-if __name__ == "__main__":
-    # call this for development only with
-    # `python -m actinia_stac_plugin.main`
-    log.debug("starting app in development mode...")
-    app.run(debug=False, use_reloader=False)
-    # for production environent use application in wsgy.py
+
+simpleResponseExample = SimpleStatusCodeResponseModel(status=200, message="success")
+SimpleStatusCodeResponseModel.example = simpleResponseExample
