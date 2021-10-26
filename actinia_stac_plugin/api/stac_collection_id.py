@@ -36,5 +36,5 @@ class StacCollections(ResourceBase):
     def get(self, stac_collection_id):
         """Get a list of specified Collection."""
 
-        module_list = callStacCollection(stac_collection_id)
-        return make_response(module_list, 200)
+        collection_list = callStacCollection(stac_collection_id)
+        return make_response(collection_list, 200)

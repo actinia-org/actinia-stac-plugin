@@ -32,6 +32,6 @@ class StacInstances(ResourceBase):
 
     def get(self, stac_instance_id):
         """Get a list of collection that are inside a instance and its notation."""
-        module_list = getInstance(stac_instance_id)
+        instance = getInstance(stac_instance_id)
 
-        return make_response(module_list, 200)
+        return make_response(instance, 200)

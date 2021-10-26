@@ -23,15 +23,8 @@ __maintainer__ = "__mundialis__"
 
 import re
 
-import requests
-
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
-from actinia_stac_plugin.core.common import (
-    connectRedis,
-    collectionValidation,
-    defaultInstance,
-    resolveCollectionURL,
-)
+from actinia_stac_plugin.core.common import connectRedis, defaultInstance
 
 
 def createStacItemList():
@@ -54,7 +47,7 @@ def createStacItemList():
     return instances
 
 
-def addStac2User(jsonParameters):
+def addInstance2User(jsonParameters):
     """
     Add the STAC Catalog to redis
         1. Update the catalog to the initial list GET /stac
@@ -65,14 +58,6 @@ def addStac2User(jsonParameters):
 
     # Splitting the inputs
     stac_instance_id = jsonParameters["stac_instance_id"]
-    stac_collection_id = jsonParameters["stac_collection_id"]
-    stac_root = resolveCollectionURL(jsonParameters["stac_url"])
-    stac_unique_id = "stac." + stac_instance_id + ".rastercube." + stac_collection_id
-
-    # Caching JSON from the STAC collection
-    stac_json_collection = requests.get(stac_root)
-    redis_actinia_interface.create(stac_unique_id, stac_json_collection)
-
     # Verifying the existence of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
     if not list_instances_exist:
@@ -83,66 +68,42 @@ def addStac2User(jsonParameters):
     if not stac_instance_exist:
         redis_actinia_interface.create(stac_instance_id, {})
 
-    defaultJson = redis_actinia_interface.read(stac_instance_id)
-
-    instances_list = redis_actinia_interface.read("stac_instances")
-
-    instances_list[stac_instance_id] = {
-        "path": "stac." + stac_instance_id + ".rastercube.<stac_collection_id>"
-    }
-
-    defaultJson[stac_unique_id] = {
-        "root": stac_root,
-        "href": "api/v1/stac/collections/" + stac_unique_id,
-    }
-
-    list_of_instances_updated = redis_actinia_interface.update(
-        "stac_instances", instances_list
-    )
-    instance_updated = redis_actinia_interface.update(stac_instance_id, defaultJson)
-
-    if instance_updated and list_of_instances_updated:
-        response = {
-            "message": "The STAC Collection has been added successfully",
-            "StacCatalogs": redis_actinia_interface.read(stac_instance_id),
-        }
-    else:
-        response = {
-            "message": "Check the stac_instance_id , stac_url or stac_collection_id given"
+        instances_list = redis_actinia_interface.read("stac_instances")
+        instances_list[stac_instance_id] = {
+            "path": "stac." + stac_instance_id + ".rastercube.<stac_collection_id>"
         }
 
-    return response
+        list_of_instances_updated = redis_actinia_interface.update(
+            "stac_instances", instances_list
+        )
+
+        if list_of_instances_updated:
+            response = {
+                "message": "The Instance has been added successfully",
+                "StacInstance": redis_actinia_interface.read(stac_instance_id),
+            }
+        else:
+            response = {"message": "Check the stac_instance_id given"}
+
+        return response
 
 
-def addStacValidator(parameters):
+def addInstance(parameters):
     """
     The function validate the inputs syntax and STAC validity
     Input:
-        - json - JSON array with the Instance ID , Collection ID and STAC URL
+        - parameters - JSON array with the Instance ID
     """
     stac_instance_id = "stac_instance_id" in parameters
-    stac_collecion_id = "stac_collection_id" in parameters
-    stac_root = "stac_url" in parameters
     msg = {}
-    if stac_instance_id and stac_collecion_id and stac_root:
-        root_validation = collectionValidation(parameters["stac_url"])
-        collection_validation = re.match(
-            "^[a-zA-Z0-9_]*$", parameters["stac_collection_id"]
-        )
+
+    if stac_instance_id:
         instance_validation = re.match(
             "^[a-zA-Z0-9_]*$", parameters["stac_instance_id"]
         )
 
-        if root_validation and instance_validation and collection_validation:
-            return addStac2User(parameters)
-        elif not root_validation:
-            msg["Error_root"] = {
-                "message": "Check the URL provided (Should be a STAC Collection)."
-            }
-        elif not collection_validation:
-            msg["Error_collection"] = {
-                "message": "Please check the URL provided (Should be a STAC Catalog)."
-            }
+        if instance_validation:
+            return addInstance2User(parameters)
         elif not instance_validation:
             msg["Error_instance"] = {
                 "message": "Please check the ID given (no spaces or undercore characters)."
@@ -150,9 +111,7 @@ def addStacValidator(parameters):
 
         return msg
     else:
-        return {
-            "message": "Check the parameters (stac_instance_id,stac_collection_id,stac_url)"
-        }
+        return {"message": "Check the parameters (stac_instance_id)"}
 
 
 def deleteStac(parameters):
@@ -171,13 +130,16 @@ def deleteStacInstance(stac_instance_id: str):
     try:
         instance = redis_actinia_interface.read(stac_instance_id)
         for i in instance.keys():
-            redis_actinia_interface.delete(instance[i])
+            redis_actinia_interface.delete(i)
         redis_actinia_interface.delete(stac_instance_id)
         instances = redis_actinia_interface.read("stac_instances")
         del instances[stac_instance_id]
         redis_actinia_interface.update("stac_instances", instances)
     except Exception:
-        return {"Error": "Something went wrong please that the element is well typed"}
+        return {
+            "Error": "Something went wrong please that the element is well typed "
+            + stac_instance_id
+        }
     return {
         "message": "The instance --"
         + stac_instance_id

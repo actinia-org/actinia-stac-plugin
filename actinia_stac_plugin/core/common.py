@@ -72,18 +72,19 @@ def defaultInstance():
 
 
 def readStacCollection(stac_instance_id: str, stac_collection_id: str):
-    try:
-        if redis_actinia_interface.exists(stac_collection_id):
-            stac = redis_actinia_interface.read(stac_collection_id)
-        else:
-            stac_dict = redis_actinia_interface.read(stac_instance_id)
-            stac_root_url = stac_dict[stac_collection_id]["root"]
-            response = requests.get(stac_root_url)
-            stac = response.content
-    except Exception:
-        stac = {
-            "Error": "Something went wrong, please check the collection and catalog to retrieved"
-        }
+    connectRedis()
+    # try:
+    if redis_actinia_interface.exists(stac_collection_id):
+        stac = redis_actinia_interface.read(stac_collection_id)
+    else:
+        stac_dict = redis_actinia_interface.read(stac_instance_id)
+        stac_root_url = stac_dict[stac_collection_id]["root"]
+        response = requests.get(stac_root_url)
+        stac = response.content
+    # except Exception:
+    #    stac = {
+    #        "Error": "Something went wrong, please check the collection and catalog to retrieved"
+    #    }
 
     return stac
 

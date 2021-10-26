@@ -25,7 +25,7 @@ from flask import make_response, request
 
 from actinia_stac_plugin.core.stac_collections import (
     StacCollectionsList,
-    addStacValidator,
+    addStacCollection,
     deleteStac,
 )
 
@@ -36,17 +36,17 @@ class StacCollectionList(ResourceBase):
 
     def get(self):
         """Get a list of all Collection."""
-        module_list = StacCollectionsList()
+        collection_list = StacCollectionsList()
 
-        return make_response(module_list, 200)
+        return make_response(collection_list, 200)
 
     def post(self):
         """
         Add a new stac to the user collection
         """
 
-        json = request.get_json(force=True)
-        new_stac = addStacValidator(json)
+        parameters = request.get_json(force=True)
+        new_stac = addStacCollection(parameters)
 
         return make_response(new_stac, 200)
 

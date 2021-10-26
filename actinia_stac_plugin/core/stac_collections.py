@@ -82,10 +82,6 @@ def addStac2User(jsonParameters):
     stac_root = resolveCollectionURL(jsonParameters["stac_url"])
     stac_unique_id = "stac." + stac_instance_id + ".rastercube." + stac_collection_id
 
-    # Caching JSON from the STAC collection
-    stac_json_collection = requests.get(stac_root)
-    redis_actinia_interface.create(stac_unique_id, stac_json_collection)
-
     # Verifying the existence of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
     if not list_instances_exist:
@@ -94,56 +90,58 @@ def addStac2User(jsonParameters):
     stac_instance_exist = redis_actinia_interface.exists(stac_instance_id)
 
     if not stac_instance_exist:
-        redis_actinia_interface.create(stac_instance_id, {})
+        return {"message": "No Instance name matched"}
 
-    defaultJson = redis_actinia_interface.read(stac_instance_id)
+    if stac_instance_id and stac_root and stac_collection_id:
 
-    instances_list = redis_actinia_interface.read("stac_instances")
+        # Caching JSON from the STAC collection
+        stac_json_collection = requests.get(stac_root)
+        redis_actinia_interface.create(stac_unique_id, stac_json_collection.content)
 
-    instances_list[stac_instance_id] = {
-        "path": "stac." + stac_instance_id + ".rastercube.<stac_collection_id>"
-    }
+        defaultJson = redis_actinia_interface.read(stac_instance_id)
 
-    defaultJson[stac_unique_id] = {
-        "root": stac_root,
-        "href": "api/v1/stac/collections/" + stac_unique_id,
-    }
-
-    list_of_instances_updated = redis_actinia_interface.update(
-        "stac_instances", instances_list
-    )
-    instance_updated = redis_actinia_interface.update(stac_instance_id, defaultJson)
-
-    if instance_updated and list_of_instances_updated:
-        response = {
-            "message": "The STAC Collection has been added successfully",
-            "StacCatalogs": redis_actinia_interface.read(stac_instance_id),
-        }
-    else:
-        response = {
-            "message": "Check the stac_instance_id , stac_url or stac_collection_id given"
+        defaultJson[stac_unique_id] = {
+            "root": stac_root,
+            "href": "api/v1/stac/collections/" + stac_unique_id,
         }
 
-    return response
+        instance_updated = redis_actinia_interface.update(stac_instance_id, defaultJson)
+
+        if instance_updated:
+            response = {
+                "message": "The STAC Collection has been added successfully",
+                "StacCollection": redis_actinia_interface.read(stac_instance_id),
+            }
+        else:
+            response = {
+                "message": "Check the stac_instance_id , stac_url or stac_collection_id given"
+            }
+
+        return response
 
 
-def addStacValidator(json):
+def addStacCollection(parameters):
     """
     The function validate the inputs syntax and STAC validity
     Input:
         - json - JSON array with the Instance ID , Collection ID and STAC URL
     """
-    stac_instance_id = "stac_instance_id" in json
-    stac_collecion_id = "stac_collection_id" in json
-    stac_root = "stac_url" in json
+    stac_instance_id = "stac_instance_id" in parameters
+    stac_collecion_id = "stac_collection_id" in parameters
+    stac_root = "stac_url" in parameters
     msg = {}
+
     if stac_instance_id and stac_collecion_id and stac_root:
-        root_validation = collectionValidation(json["stac_url"])
-        collection_validation = re.match("^[a-zA-Z0-9_]*$", json["stac_collection_id"])
-        instance_validation = re.match("^[a-zA-Z0-9_]*$", json["stac_instance_id"])
+        root_validation = collectionValidation(parameters["stac_url"])
+        collection_validation = re.match(
+            "^[a-zA-Z0-9_]*$", parameters["stac_collection_id"]
+        )
+        instance_validation = re.match(
+            "^[a-zA-Z0-9_]*$", parameters["stac_instance_id"]
+        )
 
         if root_validation and instance_validation and collection_validation:
-            return addStac2User(json)
+            return addStac2User(parameters)
         elif not root_validation:
             msg["Error_root"] = {
                 "message": "Check the URL provided (Should be a STAC Collection)."
@@ -154,7 +152,7 @@ def addStacValidator(json):
             }
         elif not instance_validation:
             msg["Error_instance"] = {
-                "message": "Please check the ID given (no spaces or undercore characters)."
+                "message": "Please check the ID given (no spaces or hypens)."
             }
 
         return msg

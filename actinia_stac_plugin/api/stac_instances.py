@@ -24,7 +24,7 @@ from actinia_core.rest.resource_base import ResourceBase
 from flask import make_response, request
 
 from actinia_stac_plugin.core.stac_instances import (
-    addStacValidator,
+    addInstance,
     createStacItemList,
     deleteStac,
 )
@@ -36,17 +36,17 @@ class StacInstanceList(ResourceBase):
 
     def get(self):
         """Get a list of all instances."""
-        module_list = createStacItemList()
+        instances_list = createStacItemList()
 
-        return make_response(module_list, 200)
+        return make_response(instances_list, 200)
 
     def post(self):
         """
         Add a new stac to the user collection
         """
 
-        json = request.get_json(force=True)
-        new_stac = addStacValidator(json)
+        parameters = request.get_json(force=True)
+        new_stac = addInstance(parameters)
 
         return make_response(new_stac, 200)
 
