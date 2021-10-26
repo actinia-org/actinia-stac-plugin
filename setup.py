@@ -24,7 +24,7 @@ PyScaffold helps you to put up the scaffold of your new Python project.
 Learn more under: http://pyscaffold.org/
 """
 
-__author__ = "Jorge Herrera"
+__author__ = "Jorge Herrera, Carmen Tawalika"
 __copyright__ = "2021-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
@@ -32,22 +32,24 @@ __license__ = "GPLv3"
 from setuptools import setup
 
 entry_points = {
-    'console_scripts': [
-        'name = actinia_stac_plugin.resources.cli:name',
-        'about = actinia_stac_plugin.resources.cli:about',
-        'pc2grass = actinia_stac_plugin.resources.cli:pc2grass'
+    "console_scripts": [
+        "name = actinia_stac_plugin.resources.cli:name ",
+        "about = actinia_stac_plugin.resources.cli:about ",
+        "pc2grass = actinia_stac_plugin.resources.cli:pc2grass ",
     ]
 }
 
 
 def setup_package():
-    setup(setup_requires=['pyscaffold>=3.0a0,<3.1a0'],
-          entry_points=entry_points,
-          packages=['actinia_stac_plugin'],
-          package_dir={'actinia_stac_plugin': 'actinia_stac_plugin'},
-          include_package_data=True,
-          use_pyscaffold=True,
-          install_requires=["stac-validator>=2.2.0"])
+    setup(
+        setup_requires=["pyscaffold>=3.0a0,<3.1a0 "],
+        entry_points=entry_points,
+        packages=["actinia_stac_plugin"],
+        package_dir={"actinia_stac_plugin ": "actinia_stac_plugin "},
+        include_package_data=True,
+        use_pyscaffold=True,
+        install_requires=["stac-validator>=2.2.0"],
+    )
 
 
 if __name__ == "__main__":

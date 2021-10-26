@@ -25,16 +25,16 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "Carmen Tawalika"
 
+# pylint: disable=E1101
+# E1101: Instance of 'RootLogger' has no 'loggerDict' member (no-member) - Make no sense
 
 import logging
 from datetime import datetime
-from logging import FileHandler
 
 from colorlog import ColoredFormatter
 from pythonjsonlogger import jsonlogger
 
 from actinia_stac_plugin.resources.config import LOGCONFIG
-
 
 log = logging.getLogger("actinia-stac-plugin")
 werkzeugLog = logging.getLogger("werkzeug")
@@ -63,7 +63,7 @@ def setLogHandler(logger, type, format):
         handler = logging.StreamHandler()
     elif type == "file":
         # For readability, json is never written to file
-        handler = FileHandler(LOGCONFIG.logfile)
+        handler = logging.FileHandler(LOGCONFIG.logfile)
     handler.setFormatter(format)
     logger.addHandler(handler)
 

@@ -26,14 +26,17 @@ __copyright__ = "Copyright 2019, mundialis"
 __maintainer__ = "Anika Bettge, Carmen Tawalika"
 
 
-from flask import jsonify, make_response, request
 from actinia_core.rest.resource_base import ResourceBase
-from actinia_stac_plugin.core.stac import createStacItemList
-from actinia_stac_plugin.core.stac import addStacValidator
-from actinia_stac_plugin.core.stac import callStacCollection
-from actinia_stac_plugin.core.stac import deleteStac
-from actinia_stac_plugin.core.stac import StacCollectionsList
-from actinia_stac_plugin.core.stac import getInstance
+from flask import make_response, request
+
+from actinia_stac_plugin.core.stac import (
+    StacCollectionsList,
+    addStacValidator,
+    callStacCollection,
+    createStacItemList,
+    deleteStac,
+    getInstance,
+)
 
 
 class Stac(ResourceBase):
@@ -110,6 +113,7 @@ class StacInstances(ResourceBase):
     """
     Get the Intance
     """
+
     def __init__(self):
         ResourceBase.__init__(self)
 
@@ -131,6 +135,7 @@ class StacInstanceList(ResourceBase):
     """
     Get the Instances list
     """
+
     def __init__(self):
         ResourceBase.__init__(self)
 

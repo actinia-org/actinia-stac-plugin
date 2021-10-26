@@ -6,8 +6,13 @@ dist/
 .installed.cfg
 *.egg
 .eggs/
+.vscode/*
+super-linter.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Files
+actinia-stac-plugin.log

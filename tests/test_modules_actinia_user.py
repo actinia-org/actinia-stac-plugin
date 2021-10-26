@@ -24,41 +24,43 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 
 import json
-from flask import Response
 
 from actinia_core.core.common.app import URL_PREFIX
-
-from testsuite import ActiniaTestCase, import_user_template, \
-     delete_user_template
+from flask import Response
+from testsuite import ActiniaTestCase, delete_user_template, import_user_template
 
 someActiniaModules = [
-    'add_enumeration', 'default_value', 'nested_modules_test',
-    'point_in_polygon', 'slope_aspect', 'vector_area', 'index_NDVI']
+    "add_enumeration",
+    "default_value",
+    "nested_modules_test",
+    "point_in_polygon",
+    "slope_aspect",
+    "vector_area",
+    "index_NDVI",
+]
 
 
 class ActiniaModulesTest(ActiniaTestCase):
-
     def test_read_user_module_get(self):
         """Test HTTP GET /actinia_modules/<module> for redis based templates"""
-        import_user_template(self, 'user_point_in_polygon')
+        import_user_template(self, "user_point_in_polygon")
 
         respStatusCode = 200
-        json_path = 'tests/resources/actinia_modules/point_in_polygon.json'
-        url_path = '/actinia_modules/user_point_in_polygon'
+        json_path = "tests/resources/actinia_modules/point_in_polygon.json"
+        url_path = "/actinia_modules/user_point_in_polygon"
 
         with open(json_path) as file:
             expectedResp = json.load(file)
-        expectedResp['id'] = 'user_point_in_polygon'
-        curr = expectedResp['categories']
-        new = [s.replace('global-template', 'user-template') for s in curr]
-        expectedResp['categories'] = new
+        expectedResp["id"] = "user_point_in_polygon"
+        curr = expectedResp["categories"]
+        new = [s.replace("global-template", "user-template") for s in curr]
+        expectedResp["categories"] = new
 
-        resp = self.app.get(URL_PREFIX + url_path,
-                            headers=self.user_auth_header)
+        resp = self.app.get(URL_PREFIX + url_path, headers=self.user_auth_header)
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, 'json')
+        assert hasattr(resp, "json")
         assert resp.json == expectedResp
 
-        delete_user_template(self, 'user_point_in_polygon')
+        delete_user_template(self, "user_point_in_polygon")
