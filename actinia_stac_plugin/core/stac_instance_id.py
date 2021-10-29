@@ -22,24 +22,14 @@ __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "__mundialis__"
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
-from actinia_stac_plugin.core.common import connectRedis, defaultInstance
+from actinia_stac_plugin.core.common import connectRedis
 
 
-def createStacItemList():
+def getInstance(stac_instance_id):
     connectRedis()
-    exist = redis_actinia_interface.exists("stac_instances")
+    exist = redis_actinia_interface.exists(stac_instance_id)
 
-    if not exist:
-        defaultInstance()
-        redis_actinia_interface.create(
-            "stac_instances",
-            {
-                "defaultStac": {
-                    "path": "stac.defaultStac.rastercube.<stac_collection_id>"
-                }
-            },
-        )
+    if exist:
+        return redis_actinia_interface.read(stac_instance_id)
 
-    instances = redis_actinia_interface.read("stac_instances")
-
-    return instances
+    return {"Error": "stac instance ID does not match with the instences stored"}

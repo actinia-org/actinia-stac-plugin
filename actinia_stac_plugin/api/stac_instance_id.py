@@ -14,27 +14,24 @@ limitations under the License.
 STAC plugin
 """
 
-__license__ = "GPLv3"
-__author__ = "Anika Bettge, Carmen Tawalika"
-__copyright__ = "Copyright 2019, mundialis"
-__maintainer__ = "Anika Bettge, Carmen Tawalika"
+__license__ = "Apache-2.0"
+__author__ = "Carmen Tawalika, Jorge Herrera"
+__copyright__ = "Copyright 2019-2021, mundialis"
+__maintainer__ = "__mundialis__"
 
 
 from actinia_core.rest.resource_base import ResourceBase
 from flask import make_response
 
-from actinia_stac_plugin.core.stac import createStacItemList
+from actinia_stac_plugin.core.stac_instance_id import getInstance
 
 
-class Stac(ResourceBase):
-    """List and Add STAC options"""
-
+class StacInstances(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
-    # @swagger.doc(modules.listModules_get_docs)
-    def get(self):
-        """Get a list of instances and its notation."""
-        instances_list = createStacItemList()
+    def get(self, stac_instance_id):
+        """Get a list of collection that are inside a instance and its notation."""
+        instance = getInstance(stac_instance_id)
 
-        return make_response(instances_list, 200)
+        return make_response(instance, 200)
