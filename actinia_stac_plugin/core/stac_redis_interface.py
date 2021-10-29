@@ -16,7 +16,7 @@ This file is not yet fitted to STAC plugin usability,
 however, the file will be adjusted in further steps of the development.
 """
 
-__license__ = "Apache-2.0"
+__license__ = "GPLv3"
 __author__ = "Carmen Tawalika"
 __copyright__ = "Copyright 2021, mundialis"
 __maintainer__ = "Carmen Tawalika"

@@ -14,10 +14,10 @@ limitations under the License.
 STAC plugin
 """
 
-__license__ = "Apache-2.0"
-__author__ = "Carmen Tawalika, Jorge Herrera"
-__copyright__ = "Copyright 2019-2021, mundialis"
-__maintainer__ = "__mundialis__"
+__license__ = "GPLv3"
+__author__ = "Anika Bettge, Carmen Tawalika"
+__copyright__ = "Copyright 2019, mundialis"
+__maintainer__ = "Anika Bettge, Carmen Tawalika"
 
 
 from actinia_core.rest.resource_base import ResourceBase
