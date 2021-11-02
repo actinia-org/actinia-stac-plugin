@@ -21,7 +21,8 @@ __author__ = "Carmen Tawalika, Jorge Herrera"
 __copyright__ = "Copyright 2019-2021, mundialis"
 __maintainer__ = "__mundialis__"
 
-from actinia_stac_plugin.core.common import readStacCollection
+from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.common import readStacCollection, connectRedis
 
 
 def callStacCollection(stac_collection_id: str):
@@ -34,3 +35,20 @@ def callStacCollection(stac_collection_id: str):
         }
 
     return stac
+
+
+def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
+    connectRedis()
+
+    try:
+        stac_instance = redis_actinia_interface.read(stac_instance_id)
+        del stac_instance[stac_collection_id]
+        redis_actinia_interface.update(stac_instance_id, stac_instance)
+        if redis_actinia_interface.exists(stac_collection_id):
+            redis_actinia_interface.delete(stac_collection_id)
+    except Exception:
+        return {
+            "Error": "Please check that the parameters given are well typed and exist"
+        }
+
+    return redis_actinia_interface.read(stac_instance_id)
