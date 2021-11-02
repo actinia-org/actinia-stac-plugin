@@ -49,9 +49,9 @@ class StacCollections(ResourceBase):
     @swagger.doc(stac_collections_id_docs.staccollection_id_delete_docs)
     def delete(self, stac_collection_id: str):
         """
-            This function delete the STAC Catalog stored before on ID basis.
+            This function delete the STAC Collection stored before on ID basis.
             Arg:
-                - ID - ID/Name given to the STAC Catalog you want to delete
+                - ID - ID/Name given to the STAC Collection you want to delete
         """
         stac_instance_id = stac_collection_id.split(".")[1]
 

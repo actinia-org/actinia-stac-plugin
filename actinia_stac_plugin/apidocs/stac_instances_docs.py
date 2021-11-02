@@ -18,6 +18,7 @@ __author__ = "Jorge Herrera"
 __copyright__ = "2019-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 
+from actinia_stac_plugin.apidocs.schemas import AddInstaceModel
 
 null = "null"
 
@@ -37,8 +38,9 @@ stacinstances_post_docs = {
     "parameters": [
         {
             "in": "body",
-            "name": "stac_instance_id",
-            "type": "string",
+            "name": "Adding Instance",
+            "type": "object",
+            "schema": AddInstaceModel,
             "description": "the Instance ID where the Collection will be storaged",
             "required": True,
         }

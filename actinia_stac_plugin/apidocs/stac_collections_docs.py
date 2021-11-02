@@ -18,14 +18,14 @@ __author__ = "Carmen Tawalika"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 
+from actinia_stac_plugin.apidocs.schemas import AddCollectionModel
 
 null = "null"
 
 
 staccollection_get_docs = {
     "tags": ["STAC"],
-    "description": "Get a list of STAC collections. "
-    "Minimum required user role: user.",
+    "description": "Get a list of STAC collections" "Minimum required user role: user.",
     "parameters": [],
     "responses": {
         "200": {"description": "This response returns a list of STAC collections"}
@@ -38,25 +38,12 @@ staccollection_post_docs = {
     "parameters": [
         {
             "in": "body",
-            "name": "stac_instance_id",
-            "type": "string",
+            "name": "Adding Collection",
+            "type": "object",
             "description": "the Instance ID where the Collection will be storaged",
+            "schema": AddCollectionModel,
             "required": True,
-        },
-        {
-            "in": "body",
-            "name": "stac_collection_id",
-            "type": "string",
-            "description": "the Collection ID given to the STAC collection storaged",
-            "required": False,
-        },
-        {
-            "in": "body",
-            "name": "stac_url",
-            "type": "string",
-            "description": "the external URL where the STAC collection is allocated",
-            "required": True,
-        },
+        }
     ],
     "responses": {
         "200": {

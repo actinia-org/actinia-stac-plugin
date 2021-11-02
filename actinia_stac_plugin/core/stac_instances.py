@@ -49,8 +49,8 @@ def createStacItemList():
 
 def addInstance2User(jsonParameters):
     """
-    Add the STAC Catalog to redis
-        1. Update the catalog to the initial list GET /stac
+    Add the STAC Collection to redis
+        1. Update the Collection to the initial list GET /stac
         2. Store the JSON as a new variable in redis
     """
     # Initializing Redis
