@@ -46,7 +46,7 @@ stacinstances_post_docs = {
                 "properties": {
                     "stac_instance_id": {
                         "type": "string",
-                        "descriptcion": "name of the instance id to create",
+                        "description": "name of the instance id to create",
                         "example": "ProjectIntance",
                     }
                 },
