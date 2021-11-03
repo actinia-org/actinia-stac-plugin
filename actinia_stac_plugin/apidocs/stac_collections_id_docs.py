@@ -32,14 +32,14 @@ __license__ = "Apache-2.0"
 
 staccollection_id_get_docs = {
     "tags": ["STAC"],
-    "description": "Get the STAC collection with the ID Given "
+    "description": "Get the STAC collection with the id given "
     "Minimum required user role: user.",
     "parameters": [
         {
             "in": "path",
             "name": "stac_collection_id",
             "type": "string",
-            "description": "the STAC collection ID of the collection to be obtained",
+            "description": "the STAC collection id of the collection to be obtained",
             "required": True,
         }
     ],
@@ -54,7 +54,7 @@ staccollection_id_delete_docs = {
             "in": "path",
             "name": "stac_collection_id",
             "type": "string",
-            "description": "the STAC collection ID of the collection to be deleted",
+            "description": "the STAC collection id of the collection to be deleted",
             "required": True,
         }
     ],

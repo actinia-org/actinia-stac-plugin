@@ -44,7 +44,7 @@ staccollection_post_docs = {
             "in": "body",
             "name": "Adding collection",
             "type": "object",
-            "description": "the instance ID where the collection will be stored",
+            "description": "the instance id where the collection will be stored",
             "schema": AddCollectionModel,
             "required": True,
         }

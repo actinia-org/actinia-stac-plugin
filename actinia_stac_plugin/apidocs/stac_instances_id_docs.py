@@ -27,31 +27,31 @@ __license__ = "GPLv3"
 
 stacinstance_id_get_docs = {
     "tags": ["STAC"],
-    "description": "Get the Instance with the ID Given "
+    "description": "Get the instance with the id given "
     "Minimum required user role: user.",
     "parameters": [
         {
             "in": "path",
             "name": "stac_instance_id",
             "type": "string",
-            "description": "the Instance ID of the collection to be obtained",
+            "description": "the instance id of the collection to be obtained",
             "required": True,
         }
     ],
     "responses": {
-        "200": {"description": "This response returns a Instance with its collections"}
+        "200": {"description": "This response returns a instance with its collections"}
     },
 }
 
 stacinstance_id_delete_docs = {
     "tags": ["STAC"],
-    "description": "Delete an Instance",
+    "description": "Delete an instance",
     "parameters": [
         {
             "in": "path",
             "name": "stac_instance_id",
             "type": "string",
-            "description": "the Instance ID to be deleted (All collections will be removed)",
+            "description": "the instance id to be deleted (All collections will be removed)",
             "required": True,
         }
     ],

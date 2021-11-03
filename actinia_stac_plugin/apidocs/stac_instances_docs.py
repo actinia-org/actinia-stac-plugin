@@ -30,10 +30,10 @@ from actinia_stac_plugin.apidocs.schemas import AddInstaceModel
 
 stacinstances_get_docs = {
     "tags": ["STAC"],
-    "description": "Get a list of STAC Instances. " "Minimum required user role: user.",
+    "description": "Get a list of STAC instances. " "Minimum required user role: user.",
     "parameters": [],
     "responses": {
-        "200": {"description": "This response returns a list of STAC Instances"}
+        "200": {"description": "This response returns a list of STAC instances"}
     },
 }
 
@@ -46,7 +46,7 @@ stacinstances_post_docs = {
             "name": "Adding instance",
             "type": "object",
             "schema": AddInstaceModel,
-            "description": "the instance ID where the collection will be stored",
+            "description": "the instance id where the collection will be stored",
             "required": True,
         }
     ],

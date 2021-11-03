@@ -27,9 +27,9 @@ __license__ = "GPLv3"
 
 stac_get_docs = {
     "tags": ["STAC"],
-    "description": "Get a list of STAC Instances. " "Minimum required user role: user.",
+    "description": "Get a list of STAC instances. " "Minimum required user role: user.",
     "parameters": [],
     "responses": {
-        "200": {"description": "This response returns a list of STAC Instances"}
+        "200": {"description": "This response returns a list of STAC instances"}
     },
 }
