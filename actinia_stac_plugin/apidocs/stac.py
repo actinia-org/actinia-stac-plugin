@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-Documentation objects for GRASS modules and actinia modules api endpoints
+Documentation for STAC module api endpoints
 """
 
 __author__ = "Jorge Herrera"
