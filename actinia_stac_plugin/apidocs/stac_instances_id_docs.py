@@ -19,9 +19,6 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 
 
-null = "null"
-
-
 stacinstance_id_get_docs = {
     "tags": ["STAC"],
     "description": "Get the Instance with the ID Given "
@@ -48,13 +45,14 @@ stacinstance_id_delete_docs = {
             "in": "path",
             "name": "stac_instance_id",
             "type": "string",
-            "description": "the Instance ID of the collection to be deleted",
+            "description": "the Instance ID to be deleted (All collections will be removed)",
             "required": True,
         }
     ],
     "responses": {
         "200": {
-            "description": "This response returns a message with the STAC collection successfully deleted"
+            "description": "This response returns a message with the "
+            + "Instance and the STAC collections deleted"
         }
     },
 }

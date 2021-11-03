@@ -19,9 +19,6 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "Apache-2.0"
 
 
-null = "null"
-
-
 staccollection_id_get_docs = {
     "tags": ["STAC"],
     "description": "Get the STAC collection with the ID Given "

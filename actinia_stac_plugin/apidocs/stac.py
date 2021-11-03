@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 Documentation objects for GRASS modules and actinia modules api endpoints
 """
 
-__author__ = "Carmen Tawalika"
+__author__ = "Jorge Herrera"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 

@@ -20,8 +20,6 @@ __license__ = "Apache-2.0"
 
 from actinia_stac_plugin.apidocs.schemas import AddCollectionModel
 
-null = "null"
-
 
 staccollection_get_docs = {
     "tags": ["STAC"],
@@ -40,7 +38,7 @@ staccollection_post_docs = {
             "in": "body",
             "name": "Adding Collection",
             "type": "object",
-            "description": "the Instance ID where the Collection will be storaged",
+            "description": "the Instance ID where the Collection will be stored",
             "schema": AddCollectionModel,
             "required": True,
         }
