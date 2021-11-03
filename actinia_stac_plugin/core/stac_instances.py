@@ -112,36 +112,3 @@ def addInstance(parameters):
         return msg
     else:
         return {"message": "Check the parameters (stac_instance_id)"}
-
-
-def deleteStac(parameters):
-    stac_instance_id = "stac_instance_id" in parameters
-
-    if stac_instance_id:
-        return deleteStacInstance(parameters["stac_instance_id"])
-    else:
-        return {
-            "Error": "The parameter does not match stac_instance_id or stac_collection_id"
-        }
-
-
-def deleteStacInstance(stac_instance_id: str):
-    connectRedis()
-    try:
-        instance = redis_actinia_interface.read(stac_instance_id)
-        for i in instance.keys():
-            redis_actinia_interface.delete(i)
-        redis_actinia_interface.delete(stac_instance_id)
-        instances = redis_actinia_interface.read("stac_instances")
-        del instances[stac_instance_id]
-        redis_actinia_interface.update("stac_instances", instances)
-    except Exception:
-        return {
-            "Error": "Something went wrong please that the element is well typed "
-            + stac_instance_id
-        }
-    return {
-        "message": "The instance --"
-        + stac_instance_id
-        + "-- was deleted with all the collections stored inside"
-    }

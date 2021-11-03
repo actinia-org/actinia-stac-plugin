@@ -160,35 +160,3 @@ def addStacCollection(parameters):
         return {
             "message": "Check the parameters (stac_instance_id,stac_collection_id,stac_url)"
         }
-
-
-def deleteStac(json):
-    stac_instance_id = "stac_instance_id" in json
-    stac_collecion_id = "stac_collection_id" in json
-
-    if stac_instance_id and stac_collecion_id:
-        return deleteStacCollection(
-            json["stac_instance_id"], json["stac_collection_id"]
-        )
-    elif not stac_instance_id and stac_collecion_id:
-        return {"Error": "The parameter stac_instance_id is required"}
-    else:
-        return {
-            "Error": "The parameter does not match stac_instance_id or stac_collection_id"
-        }
-
-
-def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
-    connectRedis()
-    try:
-        stac_instance = redis_actinia_interface.read(stac_instance_id)
-        del stac_instance[stac_collection_id]
-        redis_actinia_interface.update(stac_instance_id, stac_instance)
-        if redis_actinia_interface.exists(stac_collection_id):
-            redis_actinia_interface.delete(stac_collection_id)
-    except Exception:
-        return {
-            "Error": "Please check that the parameters given are well typed and exist"
-        }
-
-    return redis_actinia_interface.read(stac_instance_id)

@@ -33,3 +33,25 @@ def getInstance(stac_instance_id):
         return redis_actinia_interface.read(stac_instance_id)
 
     return {"Error": "stac instance ID does not match with the instences stored"}
+
+
+def deleteStacInstance(stac_instance_id):
+    connectRedis()
+    try:
+        instance = redis_actinia_interface.read(stac_instance_id)
+        for i in instance.keys():
+            redis_actinia_interface.delete(i)
+        redis_actinia_interface.delete(stac_instance_id)
+        instances = redis_actinia_interface.read("stac_instances")
+        del instances[stac_instance_id]
+        redis_actinia_interface.update("stac_instances", instances)
+    except Exception:
+        return {
+            "Error": "Something went wrong please that the element is well typed "
+            + stac_instance_id
+        }
+    return {
+        "message": "The instance --"
+        + stac_instance_id
+        + "-- was deleted with all the collections stored inside"
+    }
