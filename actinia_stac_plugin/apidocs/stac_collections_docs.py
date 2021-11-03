@@ -53,7 +53,7 @@ staccollection_post_docs = {
                     },
                     "stac_url": {
                         "type": "string",
-                        "descriptcion": "url where the collection is located",
+                        "description": "url where the collection is located",
                         "example": "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a",
                     },
                 },
