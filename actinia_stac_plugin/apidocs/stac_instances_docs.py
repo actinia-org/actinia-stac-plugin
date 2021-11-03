@@ -46,7 +46,7 @@ stacinstances_post_docs = {
             "name": "Adding instance",
             "type": "object",
             "schema": AddInstaceModel,
-            "description": "the Instance ID where the Collection will be stored",
+            "description": "the instance ID where the collection will be stored",
             "required": True,
         }
     ],
