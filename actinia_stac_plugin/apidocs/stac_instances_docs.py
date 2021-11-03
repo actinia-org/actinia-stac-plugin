@@ -43,7 +43,7 @@ stacinstances_post_docs = {
     "parameters": [
         {
             "in": "body",
-            "name": "Adding Instance",
+            "name": "Adding instance",
             "type": "object",
             "schema": AddInstaceModel,
             "description": "the Instance ID where the Collection will be stored",
