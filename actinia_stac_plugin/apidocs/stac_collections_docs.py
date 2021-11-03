@@ -48,7 +48,7 @@ staccollection_post_docs = {
                 "properties": {
                     "stac_instance_id": {
                         "type": "string",
-                        "descriptcion": "instance id where the collection will be stored",
+                        "description": "instance id where the collection will be stored",
                         "example": "ProjectIntance",
                     },
                     "stac_url": {
