@@ -58,7 +58,7 @@ stacinstance_id_delete_docs = {
     "responses": {
         "200": {
             "description": "This response returns a message with the "
-            + "Instance and the STAC collections deleted"
+            + "instance and the STAC collections deleted"
         }
     },
 }

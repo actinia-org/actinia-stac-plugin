@@ -24,8 +24,6 @@ __author__ = "Jorge Herrera"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
-from actinia_stac_plugin.apidocs.schemas import AddCollectionModel
-
 
 staccollection_get_docs = {
     "tags": ["STAC"],
@@ -42,10 +40,24 @@ staccollection_post_docs = {
     "parameters": [
         {
             "in": "body",
-            "name": "Adding collection",
+            "name": "body",
             "type": "object",
             "description": "the instance id where the collection will be stored",
-            "schema": AddCollectionModel,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "stac_instance_id": {
+                        "type": "string",
+                        "descriptcion": "instance id where the collection will be stored",
+                        "example": "ProjectIntance",
+                    },
+                    "stac_url": {
+                        "type": "string",
+                        "descriptcion": "url where the collection is located",
+                        "example": "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a",
+                    },
+                },
+            },
             "required": True,
         }
     ],

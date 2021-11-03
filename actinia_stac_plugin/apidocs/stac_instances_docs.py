@@ -24,10 +24,6 @@ __author__ = "Jorge Herrera"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
-
-from actinia_stac_plugin.apidocs.schemas import AddInstaceModel
-
-
 stacinstances_get_docs = {
     "tags": ["STAC"],
     "description": "Get a list of STAC instances. " "Minimum required user role: user.",
@@ -43,9 +39,18 @@ stacinstances_post_docs = {
     "parameters": [
         {
             "in": "body",
-            "name": "Adding instance",
+            "name": "body",
             "type": "object",
-            "schema": AddInstaceModel,
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "stac_instance_id": {
+                        "type": "string",
+                        "descriptcion": "name of the instance id to create",
+                        "example": "ProjectIntance",
+                    }
+                },
+            },
             "description": "the instance id where the collection will be stored",
             "required": True,
         }
