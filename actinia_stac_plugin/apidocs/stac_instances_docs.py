@@ -52,7 +52,7 @@ stacinstances_post_docs = {
     ],
     "responses": {
         "200": {
-            "description": "This response returns a message with the Instance successfully added"
+            "description": "This response returns a message with the instance successfully added"
         }
     },
 }
