@@ -15,15 +15,19 @@ STAC plugin
 """
 
 __license__ = "GPLv3"
-__author__ = "Anika Bettge, Carmen Tawalika"
+__author__ = "Jorge Herrera, Carmen Tawalika"
 __copyright__ = "Copyright 2019, mundialis"
-__maintainer__ = "Anika Bettge, Carmen Tawalika"
+__maintainer__ = "__mundialis__"
 
 
 from actinia_core.rest.resource_base import ResourceBase
 from flask import make_response
 
+from flask_restful_swagger_2 import swagger
+
 from actinia_stac_plugin.core.stac import createStacItemList
+
+from actinia_stac_plugin.apidocs import stac
 
 
 class Stac(ResourceBase):
@@ -32,7 +36,7 @@ class Stac(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
-    # @swagger.doc(modules.listModules_get_docs)
+    @swagger.doc(stac.stac_get_docs)
     def get(self):
         """Get a list of instances and its notation."""
         instances_list = createStacItemList()

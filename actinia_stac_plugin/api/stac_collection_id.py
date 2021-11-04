@@ -23,10 +23,14 @@ __maintainer__ = "__mundialis__"
 from actinia_core.rest.resource_base import ResourceBase
 from flask import make_response
 
+from flask_restful_swagger_2 import swagger
+
 from actinia_stac_plugin.core.stac_collection_id import (
     callStacCollection,
     deleteStacCollection,
 )
+
+from actinia_stac_plugin.apidocs import stac_collections_id_docs
 
 
 class StacCollections(ResourceBase):
@@ -35,18 +39,19 @@ class StacCollections(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
-    # @swagger.doc(modules.listModules_get_docs)
+    @swagger.doc(stac_collections_id_docs.staccollection_id_get_docs)
     def get(self, stac_collection_id: str):
         """Get a list of specified Collection."""
 
         collection_list = callStacCollection(stac_collection_id)
         return make_response(collection_list, 200)
 
+    @swagger.doc(stac_collections_id_docs.staccollection_id_delete_docs)
     def delete(self, stac_collection_id: str):
         """
-            This function delete the STAC Catalog stored before on ID basis.
+            This function deletes the STAC collection with the given id.
             Arg:
-                - ID - ID/Name given to the STAC Catalog you want to delete
+                - ID - ID/Name given to the STAC Collection you want to delete
         """
         stac_instance_id = stac_collection_id.split(".")[1]
 
