@@ -1,8 +1,0 @@
-{
-    "id": "UUID",
-    "description": "Update test for actinia_template CRUD",
-    "template": {
-        "version": "1",
-        "list": []
-    }
-}
