@@ -51,7 +51,6 @@ class StacInstancesEndpointTest(ActiniaTestCase):
             data=json.dumps(instance_add_body),
             content_type="application/json",
         )
-        print(json.dumps(instance_add_body))
+
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
-        assert hasattr(resp, "json")
