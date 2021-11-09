@@ -23,14 +23,30 @@ __author__ = "Jorge Herrera"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
+
 from flask import Response
 from testsuite import ActiniaTestCase
 
 
-class StacEndpointTest(ActiniaTestCase):
-    def test_app_instances(self):
-        """Test if app responds"""
-        resp = self.app.get("/api/v1/stac", headers=self.user_auth_header)
+class StacInstanceEndpointTest(ActiniaTestCase):
+    def test_get_instance_id(self):
+        """Test if get an instance responds"""
+
+        stac_instance_id = "STACtest"
+        resp = self.app.get(
+            "/api/v1/stac/instances/" + stac_instance_id, headers=self.user_auth_header
+        )
+        assert type(resp) is Response
+        assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_delete_instance_id(self):
+        """Test if delete an instance responds"""
+
+        stac_instance_id = "STACtest"
+        resp = self.app.delete(
+            "/api/v1/stac/instances/" + stac_instance_id, headers=self.user_auth_header
+        )
 
         assert type(resp) is Response
         assert resp.status_code == 200

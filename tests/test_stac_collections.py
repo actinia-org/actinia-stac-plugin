@@ -29,10 +29,11 @@ from flask import Response
 from testsuite import ActiniaTestCase
 
 
-class STacCollectionsEndpointTest(ActiniaTestCase):
+class StacCollectionsEndpointTest(ActiniaTestCase):
     def test_get_collections(self):
         """Test if get collections responds"""
-        resp = self.app.get("/stac/collections")
+        resp = self.app.get("/api/v1/stac/collections", headers=self.user_auth_header)
+
         assert type(resp) is Response
 
     def test_post_collections(self):
@@ -41,12 +42,13 @@ class STacCollectionsEndpointTest(ActiniaTestCase):
         respStatusCode = 200
 
         collection_add_body = {
-            "stac_instance_id": "STACtest",
+            "stac_instance_id": "STACtestinstance",
             "stac_url": "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a",
         }
 
         resp = self.app.post(
-            "/stac/collections",
+            "/api/v1/stac/collections",
+            headers=self.user_auth_header,
             data=json.dumps(collection_add_body),
             content_type="application/json",
         )
@@ -54,4 +56,3 @@ class STacCollectionsEndpointTest(ActiniaTestCase):
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
         assert hasattr(resp, "json")
-        assert "Success" in resp.json["message"]

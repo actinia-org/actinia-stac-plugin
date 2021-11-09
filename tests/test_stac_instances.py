@@ -29,26 +29,29 @@ from flask import Response
 from testsuite import ActiniaTestCase
 
 
-class STacInstancesEndpointTest(ActiniaTestCase):
+class StacInstancesEndpointTest(ActiniaTestCase):
     def test_get_instances(self):
         """Test if get instances responds"""
-        resp = self.app.get("/stac/instances")
+        resp = self.app.get("/api/v1/stac/instances", headers=self.user_auth_header)
+
         assert type(resp) is Response
+        assert resp.status_code == 200
+        assert hasattr(resp, "json")
 
     def test_post_instances(self):
         """Test if add a new instance responds"""
 
         respStatusCode = 200
 
-        instance_add_body = {"stac_instance_id": "STACtest"}
+        instance_add_body = {"stac_instance_id": "STACtestinstance"}
 
         resp = self.app.post(
-            "/stac/instances",
+            "/api/v1/stac/instances",
+            headers=self.user_auth_header,
             data=json.dumps(instance_add_body),
             content_type="application/json",
         )
-
+        print(json.dumps(instance_add_body))
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
         assert hasattr(resp, "json")
-        assert "Success" in resp.json["message"]
