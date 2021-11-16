@@ -136,8 +136,12 @@ def addStacCollection(parameters):
 
     if stac_instance_id and stac_root:
         root_validation = collectionValidation(parameters["stac_url"])
+
+        stac_json_collection = requests.get(parameters["stac_url"])
+        stac_collection_id = stac_json_collection.json()["id"]
+
         collection_validation = re.match(
-            "^[a-zA-Z0-9_]*$", parameters["stac_collection_id"]
+            "^[a-zA-Z0-9-_]*$", stac_collection_id
         )
         instance_validation = re.match(
             "^[a-zA-Z0-9_]*$", parameters["stac_instance_id"]
@@ -161,5 +165,5 @@ def addStacCollection(parameters):
         return msg
     else:
         return {
-            "message": "Check the parameters (stac_instance_id,stac_collection_id,stac_url)"
+            "message": "Check the parameters (stac_instance_id,stac_url)"
         }
