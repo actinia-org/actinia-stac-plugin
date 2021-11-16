@@ -81,6 +81,8 @@ def addStac2User(jsonParameters):
     # Splitting the inputs
     stac_instance_id = jsonParameters["stac_instance_id"]
     stac_root = resolveCollectionURL(jsonParameters["stac_url"])
+    stac_json_collection = jsonParameters["collection"]
+    stac_collection_id = jsonParameters["stac_collection_id"]
 
     # Verifying the existence of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
@@ -95,8 +97,6 @@ def addStac2User(jsonParameters):
     if stac_instance_id and stac_root:
 
         # Caching JSON from the STAC collection
-        stac_json_collection = requests.get(stac_root)
-        stac_collection_id = stac_json_collection.json()["id"]
         stac_unique_id = (
             "stac." + stac_instance_id + ".rastercube." + stac_collection_id
         )
@@ -137,11 +137,11 @@ def addStacCollection(parameters):
     if stac_instance_id and stac_root:
         root_validation = collectionValidation(parameters["stac_url"])
 
-        stac_json_collection = requests.get(parameters["stac_url"])
-        stac_collection_id = stac_json_collection.json()["id"]
+        parameters["collection"] = requests.get(parameters["stac_url"])
+        parameters["stac_collection_id"] = parameters["collection"].json()["id"]
 
         collection_validation = re.match(
-            "^[a-zA-Z0-9-_]*$", stac_collection_id
+            "^[a-zA-Z0-9-_]*$", parameters["stac_collection_id"]
         )
         instance_validation = re.match(
             "^[a-zA-Z0-9_]*$", parameters["stac_instance_id"]
