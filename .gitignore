@@ -9,6 +9,7 @@ config/actinia-stac-plugin.cfg
 .eggs/
 .vscode/*
 super-linter.log
+.coverage
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
