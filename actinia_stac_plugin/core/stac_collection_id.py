@@ -37,7 +37,7 @@ def callStacCollection(stac_collection_id: str):
         # overwrite original ID with generated ID
         resp['id'] = stac_collection_id
     except Exception:
-        stac = {
+        resp = {
             "Error": "Something went wrong, please check the collection to retrieved"
         }
 
