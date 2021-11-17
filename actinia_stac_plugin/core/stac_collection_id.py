@@ -23,6 +23,8 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
+import json
+
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import readStacCollection, connectRedis
 
@@ -31,12 +33,15 @@ def callStacCollection(stac_collection_id: str):
     try:
         instance_id = stac_collection_id.split(".")[1]
         stac = readStacCollection(instance_id, stac_collection_id)
+        resp = json.loads(stac)
+        # overwrite original ID with generated ID
+        resp['id'] = stac_collection_id
     except Exception:
-        stac = {
+        resp = {
             "Error": "Something went wrong, please check the collection to retrieved"
         }
 
-    return stac
+    return resp
 
 
 def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
