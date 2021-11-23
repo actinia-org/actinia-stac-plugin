@@ -26,6 +26,7 @@ __license__ = "GPLv3"
 
 from flask import Response
 from testsuite import ActiniaTestCase
+from actinia_core.core.common.app import URL_PREFIX
 
 
 class StacCollectionEndpointTest(ActiniaTestCase):
@@ -34,7 +35,7 @@ class StacCollectionEndpointTest(ActiniaTestCase):
 
         stac_unique_id = "stac.STACtest.rastercube.element84sentinel"
         resp = self.app.get(
-            "/api/v1/stac/collections/" + stac_unique_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/collections/" + stac_unique_id, headers=self.user_auth_header
         )
 
         assert type(resp) is Response
@@ -46,7 +47,7 @@ class StacCollectionEndpointTest(ActiniaTestCase):
 
         stac_unique_id = "stac.STACtest.rastercube.element84sentinel"
         resp = self.app.delete(
-            "/api/v1/stac/collections/" + stac_unique_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/collections/" + stac_unique_id, headers=self.user_auth_header
         )
 
         assert type(resp) is Response
