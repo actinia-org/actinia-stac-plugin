@@ -54,7 +54,11 @@ def StacCollectionsList():
                     stac = stac.decode("utf8").replace("'", '"')
                 except Exception:
                     stac = stac
-                stac_inventary["collections"].append(json.loads(stac))
+                # if response is slow (especially with growing collections),
+                # it might be an option to use pickle to store json in redis
+                json_collection = json.loads(stac)
+                json_collection["id"] = i
+                stac_inventary["collections"].append(json_collection)
     else:
         collections = defaultInstance()
         stac_inventary["defaultStac"] = collections
