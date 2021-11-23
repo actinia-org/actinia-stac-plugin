@@ -55,4 +55,10 @@ class StacInstances(ResourceBase):
 
         deleted_stac = deleteStacInstance(stac_instance_id)
 
-        return make_response(deleted_stac, 200)
+        message = {
+            "message": "The instance --"
+            + deleted_stac
+            + "-- was deleted with all the collections stored inside"
+        }
+
+        return make_response(message, 200)

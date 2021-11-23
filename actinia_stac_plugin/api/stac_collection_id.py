@@ -48,6 +48,7 @@ class StacCollections(ResourceBase):
         """Get a list of specified Collection."""
 
         collection_list = callStacCollection(stac_collection_id)
+
         return make_response(collection_list, 200)
 
     @swagger.doc(stac_collections_id_docs.staccollection_id_delete_docs)

@@ -23,7 +23,9 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
+
 import json
+from werkzeug.exceptions import BadRequest
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import readStacCollection, connectRedis
@@ -35,11 +37,9 @@ def callStacCollection(stac_collection_id: str):
         stac = readStacCollection(instance_id, stac_collection_id)
         resp = json.loads(stac)
         # overwrite original ID with generated ID
-        resp['id'] = stac_collection_id
+        resp["id"] = stac_collection_id
     except Exception:
-        resp = {
-            "Error": "Something went wrong, please check the collection to retrieved"
-        }
+        raise BadRequest("Please check the collection id provided")
 
     return resp
 
@@ -54,8 +54,8 @@ def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
         if redis_actinia_interface.exists(stac_collection_id):
             redis_actinia_interface.delete(stac_collection_id)
     except Exception:
-        return {
-            "Error": "Please check that the parameters given are well typed and exist"
-        }
+        raise BadRequest(
+            "Please check that the parameters given are well typed and exist"
+        )
 
     return redis_actinia_interface.read(stac_instance_id)
