@@ -28,6 +28,7 @@ import re
 
 import requests
 from werkzeug.exceptions import BadRequest
+from actinia_core.core.common.app import URL_PREFIX
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import (
@@ -111,7 +112,7 @@ def addStac2User(jsonParameters):
 
         defaultJson[stac_unique_id] = {
             "root": stac_root,
-            "href": "api/v1/stac/collections/" + stac_unique_id,
+            "href": URL_PREFIX[1:] + "/stac/collections/" + stac_unique_id,
         }
 
         instance_updated = redis_actinia_interface.update(stac_instance_id, defaultJson)
