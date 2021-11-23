@@ -26,6 +26,7 @@ __maintainer__ = "__mundialis__"
 import requests
 from werkzeug.exceptions import BadRequest
 from actinia_core.core.common.config import Configuration
+from actinia_core.core.common.app import URL_PREFIX
 from stac_validator import stac_validator
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
@@ -59,11 +60,11 @@ def defaultInstance():
     defaultStac = {
         "stac.defaultStac.rastercube.landsat-8": {
             "root": "https://landsat-stac.s3.amazonaws.com/landsat-8-l1/catalog.json",
-            "href": "/api/v1/stac/collections/stac.defaultStac.rastercube.landsat-8",
+            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.landsat-8",
         },
         "stac.defaultStac.rastercube.sentinel-2": {
             "root": "https://sentinel-stac.s3.amazonaws.com/sentinel-2-l1c/catalog.json",
-            "href": "/api/v1/stac/collections/stac.defaultStac.rastercube.sentinel-2",
+            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.sentinel-2",
         },
     }
 

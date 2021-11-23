@@ -25,12 +25,13 @@ __license__ = "GPLv3"
 
 from flask import Response
 from testsuite import ActiniaTestCase
+from actinia_core.core.common.app import URL_PREFIX
 
 
 class StacEndpointTest(ActiniaTestCase):
     def test_app_instances(self):
         """Test if app responds"""
-        resp = self.app.get("/api/v1/stac", headers=self.user_auth_header)
+        resp = self.app.get(f"{URL_PREFIX}/stac", headers=self.user_auth_header)
 
         assert type(resp) is Response
         assert resp.status_code == 200

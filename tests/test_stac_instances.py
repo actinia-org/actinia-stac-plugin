@@ -27,12 +27,13 @@ import json
 
 from flask import Response
 from testsuite import ActiniaTestCase
+from actinia_core.core.common.app import URL_PREFIX
 
 
 class StacInstancesEndpointTest(ActiniaTestCase):
     def test_get_instances(self):
         """Test if get instances responds"""
-        resp = self.app.get("/api/v1/stac/instances", headers=self.user_auth_header)
+        resp = self.app.get(f"{URL_PREFIX}/stac/instances", headers=self.user_auth_header)
 
         assert type(resp) is Response
         assert resp.status_code == 200
@@ -46,7 +47,7 @@ class StacInstancesEndpointTest(ActiniaTestCase):
         instance_add_body = {"stac_instance_id": "STACtestinstance"}
 
         resp = self.app.post(
-            "/api/v1/stac/instances",
+            f"{URL_PREFIX}/stac/instances",
             headers=self.user_auth_header,
             data=json.dumps(instance_add_body),
             content_type="application/json",
