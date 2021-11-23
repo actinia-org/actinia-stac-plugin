@@ -24,6 +24,7 @@ __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 import re
+from werkzeug.exceptions import BadRequest
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import connectRedis, defaultInstance
@@ -80,12 +81,9 @@ def addInstance2User(jsonParameters):
         )
 
         if list_of_instances_updated:
-            response = {
-                "message": "The Instance has been added successfully",
-                "StacInstance": redis_actinia_interface.read(stac_instance_id),
-            }
+            response = redis_actinia_interface.read(stac_instance_id)
         else:
-            response = {"message": "Check the stac_instance_id given"}
+            raise BadRequest("Check the stac_instance_id given")
 
         return response
 
@@ -107,10 +105,10 @@ def addInstance(parameters):
         if instance_validation:
             return addInstance2User(parameters)
         elif not instance_validation:
-            msg["Error_instance"] = {
-                "message": "Please check the ID given (no spaces or undercore characters)."
-            }
+            raise BadRequest(
+                "Please check the ID given (no spaces or undercore characters)."
+            )
 
         return msg
     else:
-        return {"message": "Check the parameters (stac_instance_id)"}
+        raise BadRequest("Check the parameters (stac_instance_id)")

@@ -24,6 +24,7 @@ __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 import requests
+from werkzeug.exceptions import BadRequest
 from actinia_core.core.common.config import Configuration
 from stac_validator import stac_validator
 
@@ -75,18 +76,18 @@ def defaultInstance():
 
 def readStacCollection(stac_instance_id: str, stac_collection_id: str):
     connectRedis()
-    # try:
-    if redis_actinia_interface.exists(stac_collection_id):
-        stac = redis_actinia_interface.read(stac_collection_id)
-    else:
-        stac_dict = redis_actinia_interface.read(stac_instance_id)
-        stac_root_url = stac_dict[stac_collection_id]["root"]
-        response = requests.get(stac_root_url)
-        stac = response.content
-    # except Exception:
-    #    stac = {
-    #        "Error": "Something went wrong, please check the collection and catalog to retrieved"
-    #    }
+    try:
+        if redis_actinia_interface.exists(stac_collection_id):
+            stac = redis_actinia_interface.read(stac_collection_id)
+        else:
+            stac_dict = redis_actinia_interface.read(stac_instance_id)
+            stac_root_url = stac_dict[stac_collection_id]["root"]
+            response = requests.get(stac_root_url)
+            stac = response.content
+    except Exception:
+        raise BadRequest(
+            "Something went wrong, please check the collection and catalog to retrieved"
+        )
 
     return stac
 
