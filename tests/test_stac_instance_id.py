@@ -35,7 +35,20 @@ class StacInstanceEndpointTest(ActiniaTestCase):
 
         stac_instance_id = "STACtest"
         resp = self.app.get(
-            f"{URL_PREFIX}/stac/instances/" + stac_instance_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
+        )
+        assert type(resp) is Response
+        assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_get_error_instance_id(self):
+        """Test if get an instance responds"""
+
+        stac_instance_id = "STAC-NoExist-"
+        resp = self.app.get(
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
         )
         assert type(resp) is Response
         assert resp.status_code == 200
@@ -46,9 +59,23 @@ class StacInstanceEndpointTest(ActiniaTestCase):
 
         stac_instance_id = "STACtest"
         resp = self.app.delete(
-            f"{URL_PREFIX}/stac/instances/" + stac_instance_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
         )
 
         assert type(resp) is Response
         assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_delete_error_instance_id(self):
+        """Test if delete an instance responds"""
+
+        stac_instance_id = "STAC-NoExist-"
+        resp = self.app.delete(
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
+        )
+
+        assert type(resp) is Response
+        assert resp.status_code == 400
         assert hasattr(resp, "json")

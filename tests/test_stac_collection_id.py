@@ -35,11 +35,25 @@ class StacCollectionEndpointTest(ActiniaTestCase):
 
         stac_unique_id = "stac.STACtest.rastercube.element84sentinel"
         resp = self.app.get(
-            f"{URL_PREFIX}/stac/collections/" + stac_unique_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/collections/" + stac_unique_id,
+            headers=self.user_auth_header,
         )
 
         assert type(resp) is Response
         assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_get_collection_error_id(self):
+        """Test if get collection id responds"""
+
+        stac_unique_id = "element84sentinel"
+        resp = self.app.get(
+            f"{URL_PREFIX}/stac/collections/" + stac_unique_id,
+            headers=self.user_auth_header,
+        )
+
+        assert type(resp) is Response
+        assert resp.status_code == 400
         assert hasattr(resp, "json")
 
     def test_delete_collection_id(self):
@@ -47,9 +61,23 @@ class StacCollectionEndpointTest(ActiniaTestCase):
 
         stac_unique_id = "stac.STACtest.rastercube.element84sentinel"
         resp = self.app.delete(
-            f"{URL_PREFIX}/stac/collections/" + stac_unique_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/collections/" + stac_unique_id,
+            headers=self.user_auth_header,
         )
 
         assert type(resp) is Response
         assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_delete_error_collection_id(self):
+        """Test if delete a collection id responds"""
+
+        stac_unique_id = "element84sentinel"
+        resp = self.app.delete(
+            f"{URL_PREFIX}/stac/collections/" + stac_unique_id,
+            headers=self.user_auth_header,
+        )
+
+        assert type(resp) is Response
+        assert resp.status_code == 400
         assert hasattr(resp, "json")
