@@ -30,47 +30,53 @@ from testsuite import ActiniaTestCase
 from actinia_core.core.common.app import URL_PREFIX
 
 
-class StacInstancesEndpointTest(ActiniaTestCase):
-    def test_get_instances(self):
-        """Test if get instances responds"""
+class StacCollectionsEndpointTest(ActiniaTestCase):
+    def test_i_get_collections(self):
+        """Test if get collections responds"""
         resp = self.app.get(
-            f"{URL_PREFIX}/stac/instances", headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/collections", headers=self.user_auth_header
         )
 
         assert type(resp) is Response
-        assert resp.status_code == 200
-        assert hasattr(resp, "json")
 
-    def test_post_instances(self):
-        """Test if add a new instance responds"""
+    def test_k_post_collections(self):
+        """Test if add a new collection responds"""
 
         respStatusCode = 200
 
-        instance_add_body = {"stac_instance_id": "STACtestinstance"}
+        collection_add_body = {
+            "stac_instance_id": "defaultStac",
+            "stac_url": "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a",
+        }
 
         resp = self.app.post(
-            f"{URL_PREFIX}/stac/instances",
+            f"{URL_PREFIX}/stac/collections",
             headers=self.user_auth_header,
-            data=json.dumps(instance_add_body),
+            data=json.dumps(collection_add_body),
             content_type="application/json",
         )
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
+        assert hasattr(resp, "json")
 
-    def test_post_error_instances(self):
-        """Test if add a new instance responds"""
+    def test_l_post_error_collections(self):
+        """Test if add a new collection responds"""
 
         respStatusCode = 400
 
-        instance_add_body = {"stac_instance": ""}
+        collection_add_body = {
+            "stac_instance_id": "STACtestNoInInstance",
+            "stac_url": "https://earth-search.aws.element84.com/v0",
+        }
 
         resp = self.app.post(
-            f"{URL_PREFIX}/stac/instances",
+            f"{URL_PREFIX}/stac/collections",
             headers=self.user_auth_header,
-            data=json.dumps(instance_add_body),
+            data=json.dumps(collection_add_body),
             content_type="application/json",
         )
 
         assert type(resp) is Response
         assert resp.status_code == respStatusCode
+        assert hasattr(resp, "json")

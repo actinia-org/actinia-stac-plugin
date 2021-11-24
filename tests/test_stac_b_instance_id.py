@@ -30,10 +30,10 @@ from actinia_core.core.common.app import URL_PREFIX
 
 
 class StacInstanceEndpointTest(ActiniaTestCase):
-    def test_get_instance_id(self):
+    def test_e_get_instance_id(self):
         """Test if get an instance responds"""
 
-        stac_instance_id = "STACtest"
+        stac_instance_id = "defaultStac"
         resp = self.app.get(
             f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
             headers=self.user_auth_header,
@@ -42,7 +42,7 @@ class StacInstanceEndpointTest(ActiniaTestCase):
         assert resp.status_code == 200
         assert hasattr(resp, "json")
 
-    def test_get_error_instance_id(self):
+    def test_f_get_error_instance_id(self):
         """Test if get an instance responds"""
 
         stac_instance_id = "STAC-NoExist-"
@@ -51,13 +51,13 @@ class StacInstanceEndpointTest(ActiniaTestCase):
             headers=self.user_auth_header,
         )
         assert type(resp) is Response
-        assert resp.status_code == 200
+        assert resp.status_code == 400
         assert hasattr(resp, "json")
 
-    def test_delete_instance_id(self):
+    def test_g_delete_instance_id(self):
         """Test if delete an instance responds"""
 
-        stac_instance_id = "STACtest"
+        stac_instance_id = "STACtestinstance"
         resp = self.app.delete(
             f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
             headers=self.user_auth_header,
@@ -67,7 +67,7 @@ class StacInstanceEndpointTest(ActiniaTestCase):
         assert resp.status_code == 200
         assert hasattr(resp, "json")
 
-    def test_delete_error_instance_id(self):
+    def test_h_delete_error_instance_id(self):
         """Test if delete an instance responds"""
 
         stac_instance_id = "STAC-NoExist-"
