@@ -58,7 +58,15 @@ class StacCollections(ResourceBase):
             Arg:
                 - ID - ID/Name given to the STAC Collection you want to delete
         """
-        stac_instance_id = stac_collection_id.split(".")[1]
+        try:
+            stac_instance_id = stac_collection_id.split(".")[1]
+        except Exception:
+            message = (
+                "stac_collection_id does not match the pattern "
+                "stac.<stac_instance_id>.rastercube.<stac_collection_id"
+            )
+
+            return make_response(message, 400)
 
         deleted_stac = deleteStacCollection(stac_instance_id, stac_collection_id)
 

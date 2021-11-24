@@ -27,7 +27,6 @@ import json
 import re
 
 import requests
-
 from werkzeug.exceptions import BadRequest
 from actinia_core.core.common.app import URL_PREFIX
 

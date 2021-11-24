@@ -23,33 +23,54 @@ __author__ = "Jorge Herrera"
 __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
+import json
 
 from flask import Response
 from testsuite import ActiniaTestCase
 from actinia_core.core.common.app import URL_PREFIX
 
 
-class StacCollectionEndpointTest(ActiniaTestCase):
-    def test_get_collection_id(self):
-        """Test if get collection id responds"""
-
-        stac_unique_id = "stac.STACtest.rastercube.element84sentinel"
+class StacInstancesEndpointTest(ActiniaTestCase):
+    def test_b_get_instances(self):
+        """Test if get instances responds"""
         resp = self.app.get(
-            f"{URL_PREFIX}/stac/collections/" + stac_unique_id, headers=self.user_auth_header
+            f"{URL_PREFIX}/stac/instances", headers=self.user_auth_header
         )
 
         assert type(resp) is Response
         assert resp.status_code == 200
         assert hasattr(resp, "json")
 
-    def test_delete_collection_id(self):
-        """Test if delete a collection id responds"""
+    def test_c_post_instances(self):
+        """Test if add a new instance responds"""
 
-        stac_unique_id = "stac.STACtest.rastercube.element84sentinel"
-        resp = self.app.delete(
-            f"{URL_PREFIX}/stac/collections/" + stac_unique_id, headers=self.user_auth_header
+        respStatusCode = 200
+
+        instance_add_body = {"stac_instance_id": "STACtestinstance"}
+
+        resp = self.app.post(
+            f"{URL_PREFIX}/stac/instances",
+            headers=self.user_auth_header,
+            data=json.dumps(instance_add_body),
+            content_type="application/json",
         )
 
         assert type(resp) is Response
-        assert resp.status_code == 200
-        assert hasattr(resp, "json")
+        assert resp.status_code == respStatusCode
+
+    def test_d_post_error_instances(self):
+        """Test if add a new instance responds"""
+
+        respStatusCode = 400
+
+        instance_add_body = {"stac_instance": ""}
+
+        resp = self.app.post(
+            f"{URL_PREFIX}/stac/instances",
+            headers=self.user_auth_header,
+            data=json.dumps(instance_add_body),
+            content_type="application/json",
+        )
+
+        assert type(resp) is Response
+        assert resp.status_code == respStatusCode
