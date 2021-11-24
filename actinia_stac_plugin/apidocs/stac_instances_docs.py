@@ -58,6 +58,19 @@ stacinstances_post_docs = {
     "responses": {
         "200": {
             "description": "This response returns a message with the instance successfully added"
-        }
+        },
+        "400": {
+            "description": "This response returns a detail error message",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "detailed message",
+                        "example": "Please check the ID given (no spaces or undercore characters)",
+                    }
+                },
+            },
+        },
     },
 }
