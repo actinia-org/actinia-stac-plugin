@@ -58,9 +58,9 @@ def defaultInstance():
     exist = redis_actinia_interface.exists("defaultStac")
 
     defaultStac = {
-        "stac.defaultStac.rastercube.landsat-8": {
-            "root": "https://landsat-stac.s3.amazonaws.com/landsat-8-l1/catalog.json",
-            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.landsat-8",
+        "stac.defaultStac.rastercube.landsat-8-l1-c1": {
+            "root": "https://earth-search.aws.element84.com/v0/collections/landsat-8-l1-c1",
+            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.landsat-8-l1-c1",
         },
         "stac.defaultStac.rastercube.sentinel-2": {
             "root": "https://sentinel-stac.s3.amazonaws.com/sentinel-2-l1c/catalog.json",
