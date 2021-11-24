@@ -23,6 +23,8 @@ __copyright__ = "2018-2021 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
+from werkzeug.exceptions import BadRequest
+
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
 from actinia_stac_plugin.core.common import connectRedis
 
@@ -31,10 +33,10 @@ def getInstance(stac_instance_id):
     connectRedis()
     exist = redis_actinia_interface.exists(stac_instance_id)
 
-    if exist:
-        return redis_actinia_interface.read(stac_instance_id)
+    if not exist:
+        raise BadRequest("stac instance ID does not match with the instences stored")
 
-    return {"Error": "stac instance ID does not match with the instences stored"}
+    return redis_actinia_interface.read(stac_instance_id)
 
 
 def deleteStacInstance(stac_instance_id):
@@ -48,12 +50,8 @@ def deleteStacInstance(stac_instance_id):
         del instances[stac_instance_id]
         redis_actinia_interface.update("stac_instances", instances)
     except Exception:
-        return {
-            "Error": "Something went wrong please that the element is well typed "
+        raise BadRequest(
+            "Something went wrong please that the element is well typed "
             + stac_instance_id
-        }
-    return {
-        "message": "The instance --"
-        + stac_instance_id
-        + "-- was deleted with all the collections stored inside"
-    }
+        )
+    return stac_instance_id

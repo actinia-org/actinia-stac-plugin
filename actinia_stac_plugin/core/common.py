@@ -12,10 +12,17 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
+<<<<<<< HEAD
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+=======
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+>>>>>>> 2d3a4d1f6903dae447e07a1ad45af8ee5971f030
 This code shows the functional elements in common for STAC endpoints
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
@@ -24,7 +31,9 @@ __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 import requests
+from werkzeug.exceptions import BadRequest
 from actinia_core.core.common.config import Configuration
+from actinia_core.core.common.app import URL_PREFIX
 from stac_validator import stac_validator
 
 from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
@@ -58,11 +67,11 @@ def defaultInstance():
     defaultStac = {
         "stac.defaultStac.rastercube.landsat-8": {
             "root": "https://landsat-stac.s3.amazonaws.com/landsat-8-l1/catalog.json",
-            "href": "/api/v1/stac/collections/stac.defaultStac.rastercube.landsat-8",
+            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.landsat-8",
         },
         "stac.defaultStac.rastercube.sentinel-2": {
             "root": "https://sentinel-stac.s3.amazonaws.com/sentinel-2-l1c/catalog.json",
-            "href": "/api/v1/stac/collections/stac.defaultStac.rastercube.sentinel-2",
+            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.sentinel-2",
         },
     }
 
@@ -75,18 +84,18 @@ def defaultInstance():
 
 def readStacCollection(stac_instance_id: str, stac_collection_id: str):
     connectRedis()
-    # try:
-    if redis_actinia_interface.exists(stac_collection_id):
-        stac = redis_actinia_interface.read(stac_collection_id)
-    else:
-        stac_dict = redis_actinia_interface.read(stac_instance_id)
-        stac_root_url = stac_dict[stac_collection_id]["root"]
-        response = requests.get(stac_root_url)
-        stac = response.content
-    # except Exception:
-    #    stac = {
-    #        "Error": "Something went wrong, please check the collection and catalog to retrieved"
-    #    }
+    try:
+        if redis_actinia_interface.exists(stac_collection_id):
+            stac = redis_actinia_interface.read(stac_collection_id)
+        else:
+            stac_dict = redis_actinia_interface.read(stac_instance_id)
+            stac_root_url = stac_dict[stac_collection_id]["root"]
+            response = requests.get(stac_root_url)
+            stac = response.content
+    except Exception:
+        raise BadRequest(
+            "Something went wrong, please check the collection and catalog to retrieved"
+        )
 
     return stac
 

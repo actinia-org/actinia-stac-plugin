@@ -54,4 +54,9 @@ class StacInstanceList(ResourceBase):
         parameters = request.get_json(force=True)
         new_stac = addInstance(parameters)
 
-        return make_response(new_stac, 200)
+        message = {
+            "message": "The Instance has been added successfully",
+            "StacInstance": new_stac,
+        }
+
+        return make_response(message, 200)
