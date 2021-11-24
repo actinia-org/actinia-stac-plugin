@@ -38,7 +38,22 @@ staccollection_id_get_docs = {
             "required": True,
         }
     ],
-    "responses": {"200": {"description": "This response returns a STAC collection"}},
+    "responses": {
+        "200": {"description": "This response returns a STAC collection"},
+        "400": {
+            "description": "This response returns a detail error message",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "detailed message",
+                        "example": "Please check the collection id provide",
+                    }
+                },
+            },
+        },
+    },
 }
 
 staccollection_id_delete_docs = {
@@ -56,6 +71,20 @@ staccollection_id_delete_docs = {
     "responses": {
         "200": {
             "description": "This response returns a message with the STAC collection successfully deleted"
-        }
+        },
+        "400": {
+            "description": "This response returns a detail error message",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "detailed message",
+                        "example": "stac_collection_id does not match the pattern "
+                        + "stac.<stac_instance_id>.rastercube.<stac_collection_id",
+                    }
+                },
+            },
+        },
     },
 }

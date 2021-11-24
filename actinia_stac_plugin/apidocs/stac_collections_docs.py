@@ -64,6 +64,19 @@ staccollection_post_docs = {
     "responses": {
         "200": {
             "description": "This response returns a message with the STAC collection successfully added"
-        }
+        },
+        "400": {
+            "description": "This response returns a detail error message",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "detailed message",
+                        "example": "Please check the URL provided (Should be a STAC Collection)",
+                    }
+                },
+            },
+        },
     },
 }
