@@ -39,7 +39,20 @@ stacinstance_id_get_docs = {
         }
     ],
     "responses": {
-        "200": {"description": "This response returns a instance with its collections"}
+        "200": {"description": "This response returns a instance with its collections"},
+        "400": {
+            "description": "This response returns a detail error message",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "detailed message",
+                        "example": "stac instance ID does not match with the instences stored",
+                    }
+                },
+            },
+        },
     },
 }
 
@@ -59,6 +72,19 @@ stacinstance_id_delete_docs = {
         "200": {
             "description": "This response returns a message with the "
             + "instance and the STAC collections deleted"
-        }
+        },
+        "400": {
+            "description": "This response returns a detail error message",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "detailed message",
+                        "example": "Something went wrong please check that the element is well typed",
+                    }
+                },
+            },
+        },
     },
 }
