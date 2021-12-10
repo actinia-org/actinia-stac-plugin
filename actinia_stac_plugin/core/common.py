@@ -12,17 +12,10 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-<<<<<<< HEAD
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-=======
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
->>>>>>> 2d3a4d1f6903dae447e07a1ad45af8ee5971f030
 This code shows the functional elements in common for STAC endpoints
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
