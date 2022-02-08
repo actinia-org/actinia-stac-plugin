@@ -39,7 +39,7 @@ def setup_package():
         package_dir={"actinia_stac_plugin ": "actinia_stac_plugin "},
         include_package_data=True,
         use_pyscaffold=True,
-        install_requires=["stac-validator>=2.2.0"],
+        install_requires=["stac-validator>=2.2.0", "rasterio==1.2.10", "pystac==0.5.6"],
     )
 
 
