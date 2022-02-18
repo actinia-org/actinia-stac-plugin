@@ -36,6 +36,7 @@ from actinia_stac_plugin.api.stac_collection_id import StacCollections
 from actinia_stac_plugin.api.stac_instances import StacInstanceList
 from actinia_stac_plugin.api.stac_instance_id import StacInstances
 from actinia_stac_plugin.api.stac_catalogs import StacCatalogList
+from actinia_stac_plugin.api.stac_items import StacItems
 
 
 def create_endpoints(flask_api):
@@ -66,3 +67,6 @@ def create_endpoints(flask_api):
     apidoc.add_resource(StacInstanceList, "/stac/instances")
     apidoc.add_resource(StacInstances, "/stac/instances/<string:stac_instance_id>")
     apidoc.add_resource(StacCatalogList, "/stac/catalogs/catalog.json")
+    apidoc.add_resource(
+        StacItems, "/stac/catalogs/<string:item_id>/<string:item_id>.json"
+    )
