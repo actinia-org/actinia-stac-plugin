@@ -65,4 +65,4 @@ def create_endpoints(flask_api):
     )
     apidoc.add_resource(StacInstanceList, "/stac/instances")
     apidoc.add_resource(StacInstances, "/stac/instances/<string:stac_instance_id>")
-    apidoc.add_resource(StacCatalogList, "/stac/catalogs")
+    apidoc.add_resource(StacCatalogList, "/stac/catalogs/catalog.json")

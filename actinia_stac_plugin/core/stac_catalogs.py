@@ -36,6 +36,6 @@ def createStacCatalogList():
     if not exist:
         raise BadRequest("No processes implemented or stored as STAC in Actinia")
 
-    catalog = redis_actinia_interface.read("stac_instances")
+    catalog = redis_actinia_interface.read("result-catalog")
 
     return catalog
