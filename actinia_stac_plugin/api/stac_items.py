@@ -39,8 +39,8 @@ class StacItems(ResourceBase):
         ResourceBase.__init__(self)
 
     @swagger.doc(stac_items_docs.stacitems_get_docs)
-    def get(self):
+    def get(self, item: str, item_id: str):
         """Get a list of all instances."""
-        catalog_list = getStacItem()
+        catalog_list = getStacItem(item, item_id)
 
         return make_response(catalog_list, 200)

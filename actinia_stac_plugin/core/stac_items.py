@@ -29,13 +29,13 @@ from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interfac
 from actinia_stac_plugin.core.common import connectRedis
 
 
-def createStacCatalogList(item: str):
+def getStacItem(item: str, item_id: str):
     connectRedis()
     exist = redis_actinia_interface.exists(item)
 
     if not exist:
         raise BadRequest("No Item found with the provided parameters")
 
-    catalog = redis_actinia_interface.read(item)
+    item = redis_actinia_interface.read(item)
 
-    return catalog
+    return item
