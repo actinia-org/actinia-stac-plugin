@@ -26,7 +26,7 @@ __license__ = "GPLv3"
 
 staccatalog_get_docs = {
     "tags": ["STAC"],
-    "description": "Get a list of STAC resutl-catalog. "
+    "description": "Get a list of STAC result-catalog. "
     "Minimum required user role: user.",
     "parameters": [],
     "responses": {
