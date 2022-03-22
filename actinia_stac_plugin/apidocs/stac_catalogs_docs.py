@@ -21,7 +21,7 @@ Documentation for STAC module api endpoints
 """
 
 __author__ = "Jorge Herrera"
-__copyright__ = "2018-2021 mundialis GmbH & Co. KG"
+__copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
 staccatalog_get_docs = {
