@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 This code shows the transactions valids for STAC catalogs endpoint
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
-__copyright__ = "2018-2021 mundialis GmbH & Co. KG"
+__copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
