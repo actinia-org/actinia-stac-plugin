@@ -69,9 +69,9 @@ def defaultInstance():
             "root": "https://earth-search.aws.element84.com/v0/collections/landsat-8-l1-c1",
             "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.landsat-8-l1-c1",
         },
-        "stac.defaultStac.rastercube.sentinel-2": {
-            "root": "https://sentinel-stac.s3.amazonaws.com/sentinel-2-l1c/catalog.json",
-            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.sentinel-2",
+        "stac.defaultStac.rastercube.sentinel-s2-l2a": {
+            "root": "https://earth-search.aws.element84.com/v0/collections/sentinel-s2-l2a",
+            "href": f"{URL_PREFIX}/stac/collections/stac.defaultStac.rastercube.sentinel-s2-l2a",
         },
     }
 
