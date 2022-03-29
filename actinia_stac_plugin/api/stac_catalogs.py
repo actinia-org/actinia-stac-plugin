@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-<<<<<<< HEAD
 Copyright (c) 2022 mundialis GmbH & Co. KG
-=======
-Copyright (c) 2022 mundialis GmbH & Co. KG
->>>>>>> 8ada9cffc385a5fa21b924aa718a99a1e73f6762
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -32,8 +28,9 @@ from flask import make_response
 from flask_restful_swagger_2 import swagger
 from actinia_core.rest.resource_base import ResourceBase
 
-from actinia_stac_plugin.core.stac_catalogs import createStacCatalogList
+
 from actinia_stac_plugin.apidocs import stac_catalogs_docs
+from actinia_stac_plugin.core.stac_catalogs import createStacCatalogList
 
 
 class StacCatalogList(ResourceBase):
