@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2021 mundialis GmbH & Co. KG
+Copyright (c) 2022 mundialis GmbH & Co. KG
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -12,14 +12,21 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
+<<<<<<< HEAD
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+=======
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+>>>>>>> 2d3a4d1f6903dae447e07a1ad45af8ee5971f030
 This code shows the functional elements in common for STAC endpoints
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
-__copyright__ = "2018-2021 mundialis GmbH & Co. KG"
+__copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 

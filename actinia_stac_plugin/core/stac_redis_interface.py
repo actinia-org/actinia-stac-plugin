@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2021 mundialis GmbH & Co. KG
+Copyright (c) 2022 mundialis GmbH & Co. KG
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ This file is not yet fitted to STAC plugin usability,
 however, the file will be adjusted in further steps of the development.
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
-__copyright__ = "2018-2021 mundialis GmbH & Co. KG"
+__copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 

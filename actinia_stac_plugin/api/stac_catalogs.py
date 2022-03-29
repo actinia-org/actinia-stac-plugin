@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2021 mundialis GmbH & Co. KG
+<<<<<<< HEAD
+Copyright (c) 2022 mundialis GmbH & Co. KG
+=======
+Copyright (c) 2022 mundialis GmbH & Co. KG
+>>>>>>> 8ada9cffc385a5fa21b924aa718a99a1e73f6762
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,18 +23,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 This code shows the transactions valids for STAC catalogs endpoint
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
-__copyright__ = "2018-2021 mundialis GmbH & Co. KG"
+__copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 
-from actinia_core.rest.resource_base import ResourceBase
 from flask import make_response
-
 from flask_restful_swagger_2 import swagger
+from actinia_core.rest.resource_base import ResourceBase
 
 from actinia_stac_plugin.core.stac_catalogs import createStacCatalogList
-
 from actinia_stac_plugin.apidocs import stac_catalogs_docs
 
 
