@@ -4,6 +4,7 @@ You can run actinia-stac-plugin as actinia-core plugin.
 
 ## Installation
 For installation or DEV setup, see docker/README.md.
+See also [https://github.com/mundialis/actinia_core#installation](https://github.com/mundialis/actinia_core#installation)
 
 ## DEV notes:
 
