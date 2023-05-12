@@ -34,7 +34,7 @@ from setuptools import setup
 
 def setup_package():
     setup(
-        setup_requires=["pyscaffold>=3.0a0,<3.1a0 "],
+        setup_requires=["pyscaffold>=3.3,<3.4 "],
         packages=["actinia_stac_plugin"],
         package_dir={"actinia_stac_plugin ": "actinia_stac_plugin "},
         include_package_data=True,
