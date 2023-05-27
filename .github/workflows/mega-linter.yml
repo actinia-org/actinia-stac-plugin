@@ -40,7 +40,7 @@ jobs:
         # You can override Mega-Linter flavor used to have faster performances
         # More info at https://nvuillam.github.io/mega-linter/flavors/
 
-        uses: nvuillam/mega-linter@v6
+        uses: nvuillam/mega-linter@v7
         env:
 
           # All available variables are described in documentation
