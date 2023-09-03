@@ -100,6 +100,9 @@ def addStac2User(jsonParameters):
     if not stac_instance_exist:
         raise BadRequest("No Instance name matched")
 
+    if not stac_root:
+        raise BadRequest("<%s> is not a valid STAC collection" % jsonParameters["stac_url"])
+
     if stac_instance_id and stac_root:
 
         # Caching JSON from the STAC collection

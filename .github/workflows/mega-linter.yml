@@ -29,7 +29,7 @@ jobs:
       # Git Checkout
 
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -40,7 +40,7 @@ jobs:
         # You can override Mega-Linter flavor used to have faster performances
         # More info at https://nvuillam.github.io/mega-linter/flavors/
 
-        uses: nvuillam/mega-linter@v4
+        uses: nvuillam/mega-linter@v6
         env:
 
           # All available variables are described in documentation
