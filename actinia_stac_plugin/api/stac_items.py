@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-This code shows the transactions valids for STAC endpoint
+This code shows the transactions valids for STAC catalogs endpoint
 """
 __author__ = "Carmen Tawalika, Jorge Herrera"
 __copyright__ = "2018-2022 mundialis GmbH & Co. KG"
@@ -29,20 +29,18 @@ from flask import make_response
 
 from flask_restful_swagger_2 import swagger
 
-from actinia_stac_plugin.core.stac import createStacItemList
+from actinia_stac_plugin.core.stac_items import getStacItem
 
-from actinia_stac_plugin.apidocs import stac
+from actinia_stac_plugin.apidocs import stac_items_docs
 
 
-class Stac(ResourceBase):
-    """List and Add STAC options"""
-
+class StacItems(ResourceBase):
     def __init__(self):
         ResourceBase.__init__(self)
 
-    @swagger.doc(stac.stac_get_docs)
-    def get(self):
-        """Get a list of instances and its notation."""
-        instances_list = createStacItemList()
+    @swagger.doc(stac_items_docs.stacitems_get_docs)
+    def get(self, item: str, item_id: str):
+        """Get a list of all instances."""
+        catalog_list = getStacItem(item, item_id)
 
-        return make_response(instances_list, 200)
+        return make_response(catalog_list, 200)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright (c) 2021 mundialis GmbH & Co. KG
+Copyright (c) 2022 mundialis GmbH & Co. KG
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ Add endpoints to flask app with endpoint definitions and routes
 """
 
 __author__ = "Carmen Tawalika"
-__copyright__ = "2018-2021 mundialis GmbH & Co. KG"
+__copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
 
 
@@ -36,6 +36,7 @@ from actinia_stac_plugin.api.stac_collection_id import StacCollections
 from actinia_stac_plugin.api.stac_instances import StacInstanceList
 from actinia_stac_plugin.api.stac_instance_id import StacInstances
 from actinia_stac_plugin.api.stac_catalogs import StacCatalogList
+from actinia_stac_plugin.api.stac_items import StacItems
 
 
 def create_endpoints(flask_api):
@@ -66,3 +67,4 @@ def create_endpoints(flask_api):
     apidoc.add_resource(StacInstanceList, "/stac/instances")
     apidoc.add_resource(StacInstances, "/stac/instances/<string:stac_instance_id>")
     apidoc.add_resource(StacCatalogList, "/stac/catalogs/catalog.json")
+    apidoc.add_resource(StacItems, "/stac/catalogs/<string:item>/<string:item_id>.json")
