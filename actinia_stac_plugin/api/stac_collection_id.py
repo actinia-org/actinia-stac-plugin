@@ -24,7 +24,7 @@ __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 
-from actinia_core.rest.resource_base import ResourceBase
+from actinia_core.rest.base.resource_base import ResourceBase
 from flask import make_response
 
 from flask_restful_swagger_2 import swagger

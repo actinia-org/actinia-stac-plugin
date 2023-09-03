@@ -45,7 +45,7 @@ def connectRedis():
     try:
         conf.read()
     except Exception:
-        print("Error")
+        print("Error reading configuration")
 
     server = conf.REDIS_SERVER_URL
     port = conf.REDIS_SERVER_PORT
@@ -105,22 +105,42 @@ def collectionValidation(url: str) -> bool:
     Verify that the URL provided belong to a STAC endpoint
     """
     stac = stac_validator.StacValidate(url)
-    stac.run()
-    valid = stac.message[0]["valid_stac"]
-    type = stac.message[0]["asset_type"]
-    if valid and type == "COLLECTION":
-        return True
-    else:
+    if stac.run() is False:
+        print("This <%s> is not a valid STAC collection" % stac)
         return False
+    if "valid_stac" not in stac.message[0].keys():
+        print("This <%s> is not a valid STAC collection" % stac)
+        return False
+    if stac.message[0]["valid_stac"] is False:
+        print("This <%s> is not a valid STAC collection" % stac)
+        return False
+    if "asset_type" not in stac.message[0].keys():
+        print("This <%s> is not a valid STAC collection" % stac)
+        return False
+    if stac.message[0]["asset_type"] != "COLLECTION":
+        print("This <%s> is not a valid STAC collection" % stac)
+        return False
+
+    return True
 
 
 def resolveCollectionURL(url):
-    collection_url = url
 
     stac = stac_validator.StacValidate(url)
-    stac.run()
-    type = stac.message[0]["asset_type"]
-    if type == "COLLECTION":
-        collection_url = url
+    if stac.run() is False:
+        print("This <%s> is not a valid STAC collection" % stac)
+        return None
+    if "valid_stac" not in stac.message[0].keys():
+        print("This <%s> is not a valid STAC collection" % stac)
+        return None
+    if stac.message[0]["valid_stac"] is False:
+        print("This <%s> is not a valid STAC collection" % stac)
+        return None
+    if "asset_type" not in stac.message[0].keys():
+        print("This <%s> is not a valid STAC collection" % stac)
+        return None
+    if stac.message[0]["asset_type"] != "COLLECTION":
+        print("This <%s> is not a valid STAC collection" % stac)
+        return None
 
-    return collection_url
+    return url
