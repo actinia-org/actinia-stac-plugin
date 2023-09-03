@@ -27,7 +27,7 @@ import json
 
 from flask import Response
 from testsuite import ActiniaTestCase
-from actinia_core.core.common.app import URL_PREFIX
+from actinia_api import URL_PREFIX
 
 
 class StacInstancesEndpointTest(ActiniaTestCase):
