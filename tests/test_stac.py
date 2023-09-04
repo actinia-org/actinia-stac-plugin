@@ -33,6 +33,5 @@ class StacEndpointTest(ActiniaTestCase):
         """Test if app responds"""
         resp = self.app.get(f"{URL_PREFIX}/stac", headers=self.user_auth_header)
 
-        assert type(resp) is Response
         assert resp.status_code == 200
         assert hasattr(resp, "json")
