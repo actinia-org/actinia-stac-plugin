@@ -25,7 +25,6 @@ __license__ = "GPLv3"
 
 import json
 
-from flask import Response
 from testsuite import ActiniaTestCase
 from actinia_api import URL_PREFIX
 
@@ -37,28 +36,10 @@ class StacInstancesEndpointTest(ActiniaTestCase):
             f"{URL_PREFIX}/stac/instances", headers=self.user_auth_header
         )
 
-        assert type(resp) is Response
         assert resp.status_code == 200
         assert hasattr(resp, "json")
 
-    def test_c_post_instances(self):
-        """Test if add a new instance responds"""
-
-        respStatusCode = 200
-
-        instance_add_body = {"stac_instance_id": "STACtestinstance"}
-
-        resp = self.app.post(
-            f"{URL_PREFIX}/stac/instances",
-            headers=self.user_auth_header,
-            data=json.dumps(instance_add_body),
-            content_type="application/json",
-        )
-
-        assert type(resp) is Response
-        assert resp.status_code == respStatusCode
-
-    def test_d_post_error_instances(self):
+    def test_c_post_error_instances(self):
         """Test if add a new instance responds"""
 
         respStatusCode = 400
@@ -72,5 +53,68 @@ class StacInstancesEndpointTest(ActiniaTestCase):
             content_type="application/json",
         )
 
-        assert type(resp) is Response
         assert resp.status_code == respStatusCode
+        assert hasattr(resp, "json")
+
+    def test_d_post_instances(self):
+        """Test if add a new instance responds"""
+
+        respStatusCode = 200
+
+        instance_add_body = {"stac_instance_id": "STACtestinstance"}
+
+        resp = self.app.post(
+            f"{URL_PREFIX}/stac/instances",
+            headers=self.user_auth_header,
+            data=json.dumps(instance_add_body),
+            content_type="application/json",
+        )
+
+        assert resp.status_code == respStatusCode
+        assert hasattr(resp, "json")
+
+    def test_e_get_instance_id(self):
+        """Test if get an instance responds"""
+
+        stac_instance_id = "STACtestinstance"
+        resp = self.app.get(
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
+        )
+        assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_f_get_error_instance_id(self):
+        """Test if get an instance responds"""
+
+        stac_instance_id = "STAC-NoExist-"
+        resp = self.app.get(
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
+        )
+        assert resp.status_code == 400
+        assert hasattr(resp, "json")
+
+    def test_g_delete_instance_id(self):
+        """Test if delete an instance responds"""
+
+        stac_instance_id = "STACtestinstance"
+        resp = self.app.delete(
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
+        )
+
+        assert resp.status_code == 200
+        assert hasattr(resp, "json")
+
+    def test_h_delete_error_instance_id(self):
+        """Test if delete an instance responds"""
+
+        stac_instance_id = "STAC-NoExist-"
+        resp = self.app.delete(
+            f"{URL_PREFIX}/stac/instances/" + stac_instance_id,
+            headers=self.user_auth_header,
+        )
+
+        assert resp.status_code == 400
+        assert hasattr(resp, "json")

@@ -2,7 +2,6 @@
 env_stac/
 build/
 dist/
-config/actinia-stac-plugin.cfg
 *.egg-info/
 .installed.cfg
 *.egg
@@ -18,3 +17,4 @@ __pycache__/
 
 # Files
 actinia-stac-plugin.log
+config/actinia-*-plugin.cfg
