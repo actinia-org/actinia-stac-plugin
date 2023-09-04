@@ -25,7 +25,6 @@ __license__ = "GPLv3"
 
 import json
 
-from flask import Response
 from testsuite import ActiniaTestCase
 from actinia_api import URL_PREFIX
 
