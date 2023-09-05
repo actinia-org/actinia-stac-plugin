@@ -24,7 +24,9 @@ __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.stac_redis_interface import (
+    redis_actinia_interface,
+)
 from actinia_stac_plugin.core.common import connectRedis, defaultInstance
 
 

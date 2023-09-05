@@ -27,10 +27,13 @@ __license__ = "GPLv3"
 
 staccollection_get_docs = {
     "tags": ["STAC"],
-    "description": "Get a list of STAC collections" "Minimum required user role: user.",
+    "description": "Get a list of STAC collections"
+    "Minimum required user role: user.",
     "parameters": [],
     "responses": {
-        "200": {"description": "This response returns a list of STAC collections"}
+        "200": {
+            "description": "This response returns a list of STAC collections"
+        }
     },
 }
 

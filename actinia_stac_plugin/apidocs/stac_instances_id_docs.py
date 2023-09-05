@@ -39,7 +39,9 @@ stacinstance_id_get_docs = {
         }
     ],
     "responses": {
-        "200": {"description": "This response returns a instance with its collections"},
+        "200": {
+            "description": "This response returns a instance with its collections"
+        },
         "400": {
             "description": "This response returns a detail error message",
             "schema": {

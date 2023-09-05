@@ -54,9 +54,9 @@ class StacCollections(ResourceBase):
     @swagger.doc(stac_collections_id_docs.staccollection_id_delete_docs)
     def delete(self, stac_collection_id: str):
         """
-            This function deletes the STAC collection with the given id.
-            Arg:
-                - ID - ID/Name given to the STAC Collection you want to delete
+        This function deletes the STAC collection with the given id.
+        Arg:
+            - ID - ID/Name given to the STAC Collection you want to delete
         """
         try:
             stac_instance_id = stac_collection_id.split(".")[1]
@@ -68,6 +68,8 @@ class StacCollections(ResourceBase):
 
             return make_response(message, 400)
 
-        deleted_stac = deleteStacCollection(stac_instance_id, stac_collection_id)
+        deleted_stac = deleteStacCollection(
+            stac_instance_id, stac_collection_id
+        )
 
         return make_response(deleted_stac, 200)

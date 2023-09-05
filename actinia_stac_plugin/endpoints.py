@@ -40,7 +40,6 @@ from actinia_stac_plugin.api.stac_items import StacItems
 
 
 def create_endpoints(flask_api):
-
     # app = flask_api.app
     apidoc = flask_api
 
@@ -65,6 +64,10 @@ def create_endpoints(flask_api):
         StacCollections, "/stac/collections/<string:stac_collection_id>"
     )
     apidoc.add_resource(StacInstanceList, "/stac/instances")
-    apidoc.add_resource(StacInstances, "/stac/instances/<string:stac_instance_id>")
+    apidoc.add_resource(
+        StacInstances, "/stac/instances/<string:stac_instance_id>"
+    )
     apidoc.add_resource(StacCatalogList, "/stac/catalogs/catalog.json")
-    apidoc.add_resource(StacItems, "/stac/catalogs/<string:item>/<string:item_id>.json")
+    apidoc.add_resource(
+        StacItems, "/stac/catalogs/<string:item>/<string:item_id>.json"
+    )

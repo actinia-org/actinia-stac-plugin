@@ -1,0 +1,6 @@
+build/
+dist/
+*.egg-info/
+actinia-stac-plugin.log
+config/actinia-*-plugin.cfg
+docker/actinia-stac-tests/Dockerfile

@@ -26,7 +26,9 @@ __maintainer__ = "__mundialis__"
 import re
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.stac_redis_interface import (
+    redis_actinia_interface,
+)
 from actinia_stac_plugin.core.common import connectRedis, defaultInstance
 
 
@@ -73,7 +75,9 @@ def addInstance2User(jsonParameters):
 
         instances_list = redis_actinia_interface.read("stac_instances")
         instances_list[stac_instance_id] = {
-            "path": "stac." + stac_instance_id + ".rastercube.<stac_collection_id>"
+            "path": "stac."
+            + stac_instance_id
+            + ".rastercube.<stac_collection_id>"
         }
 
         list_of_instances_updated = redis_actinia_interface.update(

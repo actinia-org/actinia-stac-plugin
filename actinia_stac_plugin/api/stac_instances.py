@@ -29,7 +29,10 @@ from flask import make_response, request
 
 from flask_restful_swagger_2 import swagger
 
-from actinia_stac_plugin.core.stac_instances import addInstance, createStacItemList
+from actinia_stac_plugin.core.stac_instances import (
+    addInstance,
+    createStacItemList,
+)
 
 from actinia_stac_plugin.apidocs import stac_instances_docs
 
