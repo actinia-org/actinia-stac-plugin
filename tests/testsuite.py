@@ -43,7 +43,6 @@ create_endpoints()
 
 
 class ActiniaTestCase(unittest.TestCase):
-
     # guest = None
     # admin = None
     # superadmin = None
@@ -67,13 +66,21 @@ class ActiniaTestCase(unittest.TestCase):
         self.app = flask_app.test_client()
 
         # Start and connect the redis interface
-        redis_args = (global_config.REDIS_SERVER_URL, global_config.REDIS_SERVER_PORT)
-        if global_config.REDIS_SERVER_PW and global_config.REDIS_SERVER_PW is not None:
+        redis_args = (
+            global_config.REDIS_SERVER_URL,
+            global_config.REDIS_SERVER_PORT,
+        )
+        if (
+            global_config.REDIS_SERVER_PW
+            and global_config.REDIS_SERVER_PW is not None
+        ):
             redis_args = (*redis_args, global_config.REDIS_SERVER_PW)
         redis_interface.connect(*redis_args)
 
         # create test user for roles user (more to come)
-        accessible_datasets = {"nc_spm_08": ["PERMANENT", "user1", "modis_lst"]}
+        accessible_datasets = {
+            "nc_spm_08": ["PERMANENT", "user1", "modis_lst"]
+        }
         password = pwgen.pwgen()
         self.user_id, self.user_group, self.user_auth_header = self.createUser(
             name="user",
@@ -109,7 +116,6 @@ class ActiniaTestCase(unittest.TestCase):
         process_num_limit=1000,
         process_time_limit=6000,
     ):
-
         auth = bytes("%s:%s" % (name, password), "utf-8")
 
         # We need to create an HTML basic authorization header

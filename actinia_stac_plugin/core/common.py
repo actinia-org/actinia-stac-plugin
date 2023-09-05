@@ -29,7 +29,9 @@ from actinia_core.core.common.config import Configuration
 from actinia_api import URL_PREFIX
 from stac_validator import stac_validator
 
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.stac_redis_interface import (
+    redis_actinia_interface,
+)
 
 
 def connectRedis():
@@ -47,13 +49,14 @@ def connectRedis():
     else:
         redis_password = None
 
-    redis_actinia_interface.connect(host=server, port=port, password=redis_password)
+    redis_actinia_interface.connect(
+        host=server, port=port, password=redis_password
+    )
 
     return redis_actinia_interface
 
 
 def defaultInstance():
-
     connectRedis()
     exist = redis_actinia_interface.exists("defaultStac")
 
@@ -118,7 +121,6 @@ def collectionValidation(url: str) -> bool:
 
 
 def resolveCollectionURL(url):
-
     stac = stac_validator.StacValidate(url)
     if stac.run() is False:
         print("This <%s> is not a valid STAC collection" % stac)

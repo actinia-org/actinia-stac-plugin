@@ -30,7 +30,6 @@ from actinia_api import URL_PREFIX
 
 
 class StacCollectionsEndpointTest(ActiniaTestCase):
-
     def test_i_post_instances(self):
         """Test if add a new instance responds"""
 

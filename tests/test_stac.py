@@ -30,7 +30,9 @@ from actinia_api import URL_PREFIX
 class StacEndpointTest(ActiniaTestCase):
     def test_a_app_instances(self):
         """Test if app responds"""
-        resp = self.app.get(f"{URL_PREFIX}/stac", headers=self.user_auth_header)
+        resp = self.app.get(
+            f"{URL_PREFIX}/stac", headers=self.user_auth_header
+        )
 
         assert resp.status_code == 200
         assert hasattr(resp, "json")

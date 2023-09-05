@@ -70,7 +70,9 @@ def setLogHandler(logger, type, format):
 
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):
-        super(CustomJsonFormatter, self).add_fields(log_record, record, message_dict)
+        super(CustomJsonFormatter, self).add_fields(
+            log_record, record, message_dict
+        )
 
         # (Pdb) dir(record)
         # ... 'args', 'created', 'exc_info', 'exc_text', 'filename', 'funcName'

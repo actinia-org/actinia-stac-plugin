@@ -72,15 +72,20 @@ class RedisActiniaInterface(RedisBaseInterface):
             "actinia_template": actinia_template_bytes,
         }
 
-        lock = self.redis_server.lock(name="add_actinia_template_lock", timeout=1)
+        lock = self.redis_server.lock(
+            name="add_actinia_template_lock", timeout=1
+        )
         lock.acquire()
         # First add the actinia_template-id to the actinia_template id database
         self.redis_server.hset(
-            self.actinia_template_id_db, actinia_template_id, actinia_template_id
+            self.actinia_template_id_db,
+            actinia_template_id,
+            actinia_template_id,
         )
 
         self.redis_server.hset(
-            self.actinia_template_id_hash_prefix + actinia_template_id, mapping=mapping
+            self.actinia_template_id_hash_prefix + actinia_template_id,
+            mapping=mapping,
         )
         lock.release()
 
@@ -130,11 +135,14 @@ class RedisActiniaInterface(RedisBaseInterface):
             "actinia_template": actinia_template_bytes,
         }
 
-        lock = self.redis_server.lock(name="update_actinia_template_lock", timeout=1)
+        lock = self.redis_server.lock(
+            name="update_actinia_template_lock", timeout=1
+        )
         lock.acquire()
 
         self.redis_server.hset(
-            self.actinia_template_id_hash_prefix + actinia_template_id, mapping=mapping
+            self.actinia_template_id_hash_prefix + actinia_template_id,
+            mapping=mapping,
         )
 
         lock.release()
@@ -153,10 +161,14 @@ class RedisActiniaInterface(RedisBaseInterface):
         if exists == 0 or exists is False:
             return False
 
-        lock = self.redis_server.lock(name="delete_actinia_template_lock", timeout=1)
+        lock = self.redis_server.lock(
+            name="delete_actinia_template_lock", timeout=1
+        )
         lock.acquire()
         # Delete the entry from the actinia_template id database
-        self.redis_server.hdel(self.actinia_template_id_db, actinia_template_id)
+        self.redis_server.hdel(
+            self.actinia_template_id_db, actinia_template_id
+        )
         # Delete the actual actinia_template entry
         self.redis_server.delete(
             self.actinia_template_id_hash_prefix + actinia_template_id

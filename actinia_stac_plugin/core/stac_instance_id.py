@@ -25,7 +25,9 @@ __maintainer__ = "__mundialis__"
 
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.stac_redis_interface import (
+    redis_actinia_interface,
+)
 from actinia_stac_plugin.core.common import connectRedis
 
 
@@ -34,7 +36,9 @@ def getInstance(stac_instance_id):
     exist = redis_actinia_interface.exists(stac_instance_id)
 
     if not exist:
-        raise BadRequest("stac instance ID does not match with the instences stored")
+        raise BadRequest(
+            "stac instance ID does not match with the instences stored"
+        )
 
     return redis_actinia_interface.read(stac_instance_id)
 

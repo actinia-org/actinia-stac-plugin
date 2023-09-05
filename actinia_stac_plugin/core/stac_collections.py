@@ -30,7 +30,9 @@ import requests
 from werkzeug.exceptions import BadRequest
 from actinia_api import URL_PREFIX
 
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.stac_redis_interface import (
+    redis_actinia_interface,
+)
 from actinia_stac_plugin.core.common import (
     collectionValidation,
     connectRedis,
@@ -101,15 +103,18 @@ def addStac2User(jsonParameters):
         raise BadRequest("No Instance name matched")
 
     if not stac_root:
-        raise BadRequest("<%s> is not a valid STAC collection" % jsonParameters["stac_url"])
+        raise BadRequest(
+            "<%s> is not a valid STAC collection" % jsonParameters["stac_url"]
+        )
 
     if stac_instance_id and stac_root:
-
         # Caching JSON from the STAC collection
         stac_unique_id = (
             "stac." + stac_instance_id + ".rastercube." + stac_collection_id
         )
-        redis_actinia_interface.create(stac_unique_id, stac_json_collection.content)
+        redis_actinia_interface.create(
+            stac_unique_id, stac_json_collection.content
+        )
 
         defaultJson = redis_actinia_interface.read(stac_instance_id)
 
@@ -118,12 +123,16 @@ def addStac2User(jsonParameters):
             "href": URL_PREFIX[1:] + "/stac/collections/" + stac_unique_id,
         }
 
-        instance_updated = redis_actinia_interface.update(stac_instance_id, defaultJson)
+        instance_updated = redis_actinia_interface.update(
+            stac_instance_id, defaultJson
+        )
 
         if instance_updated:
             response = {
                 "message": "The STAC Collection has been added successfully",
-                "StacCollection": redis_actinia_interface.read(stac_instance_id),
+                "StacCollection": redis_actinia_interface.read(
+                    stac_instance_id
+                ),
             }
         else:
             raise BadRequest(
@@ -147,7 +156,9 @@ def addStacCollection(parameters):
         root_validation = collectionValidation(parameters["stac_url"])
 
         parameters["collection"] = requests.get(parameters["stac_url"])
-        parameters["stac_collection_id"] = parameters["collection"].json()["id"]
+        parameters["stac_collection_id"] = parameters["collection"].json()[
+            "id"
+        ]
 
         collection_validation = re.match(
             "^[a-zA-Z0-9-_]*$", parameters["stac_collection_id"]
@@ -159,13 +170,17 @@ def addStacCollection(parameters):
         if root_validation and instance_validation and collection_validation:
             return addStac2User(parameters)
         elif not root_validation:
-            raise BadRequest("Check the URL provided (Should be a STAC Collection).")
+            raise BadRequest(
+                "Check the URL provided (Should be a STAC Collection)."
+            )
         elif not collection_validation:
             raise BadRequest(
                 "Please check the URL provided (Should be a STAC Collection)."
             )
         elif not instance_validation:
-            raise BadRequest("Please check the ID given (no spaces or hypens).")
+            raise BadRequest(
+                "Please check the ID given (no spaces or hypens)."
+            )
 
         return msg
     else:

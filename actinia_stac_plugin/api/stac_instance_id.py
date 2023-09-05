@@ -29,7 +29,10 @@ from flask import make_response
 
 from flask_restful_swagger_2 import swagger
 
-from actinia_stac_plugin.core.stac_instance_id import getInstance, deleteStacInstance
+from actinia_stac_plugin.core.stac_instance_id import (
+    getInstance,
+    deleteStacInstance,
+)
 
 from actinia_stac_plugin.apidocs import stac_instances_id_docs
 
@@ -48,9 +51,9 @@ class StacInstances(ResourceBase):
     @swagger.doc(stac_instances_id_docs.stacinstance_id_delete_docs)
     def delete(self, stac_instance_id: str):
         """
-            This function delete the STAC Collection stored before on ID basis.
-            Arg:
-                - ID - ID/Name given to the STAC Collection you want to delete
+        This function delete the STAC Collection stored before on ID basis.
+        Arg:
+            - ID - ID/Name given to the STAC Collection you want to delete
         """
 
         deleted_stac = deleteStacInstance(stac_instance_id)

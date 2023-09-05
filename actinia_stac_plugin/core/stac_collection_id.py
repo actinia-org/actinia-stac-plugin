@@ -27,7 +27,9 @@ __maintainer__ = "__mundialis__"
 import json
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import redis_actinia_interface
+from actinia_stac_plugin.core.stac_redis_interface import (
+    redis_actinia_interface,
+)
 from actinia_stac_plugin.core.common import readStacCollection, connectRedis
 
 
