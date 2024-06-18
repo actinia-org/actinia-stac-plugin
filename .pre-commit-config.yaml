@@ -11,6 +11,6 @@ repos:
     -   id: check-added-large-files
 
 -   repo: https://github.com/mundialis/github-workflows
-    rev: 1.0.3
+    rev: 1.2.0
     hooks:
     -   id: linting
