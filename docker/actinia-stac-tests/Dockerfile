@@ -1,4 +1,4 @@
-FROM mundialis/actinia-core:latest as actinia_test
+FROM mundialis/actinia-core:latest AS actinia_test
 
 LABEL authors="Carmen Tawalika,Anika Weinmann"
 LABEL maintainer="tawalika@mundialis.de,weinmann@mundialis.de"
@@ -10,7 +10,7 @@ ENV DEFAULT_CONFIG_PATH /etc/default/actinia_stac_test
 
 # install things only for tests
 RUN apk add redis
-RUN pip3 install iniconfig colorlog
+RUN pip3 install iniconfig colorlog pwgen pytest==8.3.5 pytest-cov==6.0.0
 
 # uninstall actinia core from FROM-image
 #RUN pip3 uninstall actinia-core -y

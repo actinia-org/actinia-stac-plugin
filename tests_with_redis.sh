@@ -12,4 +12,4 @@ sleep 10
 # run tests
 echo $ACTINIA_CUSTOM_TEST_CFG
 echo $DEFAULT_CONFIG_PATH
-python3 setup.py test
+pytest
