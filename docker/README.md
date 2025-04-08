@@ -1,3 +1,10 @@
+<!-- markdownlint-configure-file
+{
+  "MD013": { "line_length": 150 },
+  "MD034": false # no-bare-urls
+}
+-->
+
 # actinia-stac-plugin
 
 You can run actinia-stac-plugin as actinia-core plugin.

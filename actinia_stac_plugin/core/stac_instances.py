@@ -52,7 +52,7 @@ def createStacItemList():
     return instances
 
 
-def addInstance2User(jsonParameters):
+def addInstance2User(jsonparameters):
     """
     Add the STAC Collection to redis
         1. Update the Collection to the initial list GET /stac
@@ -62,7 +62,7 @@ def addInstance2User(jsonParameters):
     connectRedis()
 
     # Splitting the inputs
-    stac_instance_id = jsonParameters["stac_instance_id"]
+    stac_instance_id = jsonparameters["stac_instance_id"]
     # Verifying the existence of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
     if not list_instances_exist:
