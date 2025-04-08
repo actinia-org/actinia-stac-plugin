@@ -7,8 +7,8 @@ mkdir -p /actinia_core/workspace/temp_db
 mkdir -p /actinia_core/workspace/tmp
 mkdir -p /actinia_core/resources
 
-# TODO: use this location for tests and integrate sample data, see README
-# created here, because set in sample config as default location
+# TODO: use this project for tests and integrate sample data, see README
+# created here, because set in sample config as default project
 [ ! -d "/actinia_core/grassdb/nc_spm_08" ] && grass --text -e -c 'EPSG:3358' /actinia_core/grassdb/nc_spm_08
 
 actinia-user create -u actinia-gdi -w actinia-gdi -r superadmin -g superadmin -c 100000000000 -n 1000 -t 31536000
