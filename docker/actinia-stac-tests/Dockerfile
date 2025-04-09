@@ -36,4 +36,4 @@ RUN chmod a+x tests_with_kvdb.sh
 
 RUN make install
 
-# RUN make test
+RUN make test
