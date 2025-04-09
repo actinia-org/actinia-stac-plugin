@@ -19,4 +19,4 @@ dist:
 	python3 setup.py dist
 
 test:
-	./tests_with_redis.sh
+	./tests_with_kvdb.sh

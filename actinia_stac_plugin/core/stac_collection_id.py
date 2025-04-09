@@ -27,10 +27,10 @@ __maintainer__ = "__mundialis__"
 import json
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
-from actinia_stac_plugin.core.common import readStacCollection, connectRedis
+from actinia_stac_plugin.core.common import readStacCollection, connectKvdb
 
 
 def callStacCollection(stac_collection_id: str):
@@ -47,17 +47,17 @@ def callStacCollection(stac_collection_id: str):
 
 
 def deleteStacCollection(stac_instance_id: str, stac_collection_id: str):
-    connectRedis()
+    connectKvdb()
 
     try:
-        stac_instance = redis_actinia_interface.read(stac_instance_id)
+        stac_instance = kvdb_actinia_interface.read(stac_instance_id)
         del stac_instance[stac_collection_id]
-        redis_actinia_interface.update(stac_instance_id, stac_instance)
-        if redis_actinia_interface.exists(stac_collection_id):
-            redis_actinia_interface.delete(stac_collection_id)
+        kvdb_actinia_interface.update(stac_instance_id, stac_instance)
+        if kvdb_actinia_interface.exists(stac_collection_id):
+            kvdb_actinia_interface.delete(stac_collection_id)
     except Exception:
         raise BadRequest(
             "Please check that the parameters given are well typed and exist"
         )
 
-    return redis_actinia_interface.read(stac_instance_id)
+    return kvdb_actinia_interface.read(stac_instance_id)
