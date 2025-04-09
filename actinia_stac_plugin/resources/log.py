@@ -37,8 +37,8 @@ from pythonjsonlogger import jsonlogger
 from actinia_stac_plugin.resources.config import LOGCONFIG
 
 log = logging.getLogger("actinia-stac-plugin")
-werkzeugLog = logging.getLogger("werkzeug")
-gunicornLog = logging.getLogger("gunicorn")
+werkzeuglog = logging.getLogger("werkzeug")
+gunicornlog = logging.getLogger("gunicorn")
 
 
 def setLogFormat(veto=None):
@@ -96,19 +96,19 @@ def createLogger():
 
 
 def createWerkzeugLogger():
-    werkzeugLog.setLevel(getattr(logging, LOGCONFIG.level))
+    werkzeuglog.setLevel(getattr(logging, LOGCONFIG.level))
     fileformat = setLogFormat("veto")
     stdoutformat = setLogFormat()
-    setLogHandler(werkzeugLog, "file", fileformat)
-    setLogHandler(werkzeugLog, "stdout", stdoutformat)
+    setLogHandler(werkzeuglog, "file", fileformat)
+    setLogHandler(werkzeuglog, "stdout", stdoutformat)
 
 
 def createGunicornLogger():
-    gunicornLog.setLevel(getattr(logging, LOGCONFIG.level))
+    gunicornlog.setLevel(getattr(logging, LOGCONFIG.level))
     fileformat = setLogFormat("veto")
     stdoutformat = setLogFormat()
-    setLogHandler(gunicornLog, "file", fileformat)
-    setLogHandler(gunicornLog, "stdout", stdoutformat)
+    setLogHandler(gunicornlog, "file", fileformat)
+    setLogHandler(gunicornlog, "stdout", stdoutformat)
     # gunicorn already has a lot of children logger, e.g gunicorn.http,
     # gunicorn.access. These lines deactivate their default handlers.
     for name in logging.root.manager.loggerDict:

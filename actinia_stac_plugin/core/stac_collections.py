@@ -77,7 +77,7 @@ def StacCollectionsList():
     return stac_inventary
 
 
-def addStac2User(jsonParameters):
+def addStac2User(jsonparameters):
     """
     Add the STAC Collection to redis
         1. Update the Collection to the initial list GET /stac
@@ -87,10 +87,10 @@ def addStac2User(jsonParameters):
     connectRedis()
 
     # Splitting the inputs
-    stac_instance_id = jsonParameters["stac_instance_id"]
-    stac_root = resolveCollectionURL(jsonParameters["stac_url"])
-    stac_json_collection = jsonParameters["collection"]
-    stac_collection_id = jsonParameters["stac_collection_id"]
+    stac_instance_id = jsonparameters["stac_instance_id"]
+    stac_root = resolveCollectionURL(jsonparameters["stac_url"])
+    stac_json_collection = jsonparameters["collection"]
+    stac_collection_id = jsonparameters["stac_collection_id"]
 
     # Verifying the existence of the instances - Adding the item to the Default List
     list_instances_exist = redis_actinia_interface.exists("stac_instances")
@@ -104,7 +104,7 @@ def addStac2User(jsonParameters):
 
     if not stac_root:
         raise BadRequest(
-            "<%s> is not a valid STAC collection" % jsonParameters["stac_url"]
+            "<%s> is not a valid STAC collection" % jsonparameters["stac_url"]
         )
 
     if stac_instance_id and stac_root:

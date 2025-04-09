@@ -1,4 +1,7 @@
-FROM mundialis/actinia-core:latest as actinia_test
+# Exception for hadolint-docker-linter:
+# DL3007: using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag
+# hadolint ignore=DL3007
+FROM mundialis/actinia-core:latest AS actinia_test
 
 LABEL authors="Carmen Tawalika,Anika Weinmann"
 LABEL maintainer="tawalika@mundialis.de,weinmann@mundialis.de"
@@ -9,8 +12,11 @@ ENV ACTINIA_CUSTOM_TEST_CFG /etc/default/actinia_stac_test
 ENV DEFAULT_CONFIG_PATH /etc/default/actinia_stac_test
 
 # install things only for tests
-RUN apk add redis
-RUN pip3 install iniconfig colorlog
+# DL3013 # Pin versions in pip
+# DL3018: Pin versions in apk add
+# hadolint ignore=DL3013,DL3018
+RUN apk add --no-cache redis && \
+    pip3 install --no-cache-dir iniconfig colorlog pwgen pytest pytest-cov
 
 # uninstall actinia core from FROM-image
 #RUN pip3 uninstall actinia-core -y
