@@ -1,7 +1,11 @@
 ---
 name: Linting and code quality check
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   lint:
