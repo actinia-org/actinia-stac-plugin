@@ -35,7 +35,7 @@ from actinia_stac_plugin.core.stac_kvdb_interface import (
 
 
 def connectKvdb():
-    """This method initializes the connection with kvdb."""
+    """This method initializes the connection with a kvdb."""
     conf = Configuration()
     try:
         conf.read()
