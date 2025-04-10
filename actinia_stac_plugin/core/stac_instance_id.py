@@ -25,34 +25,34 @@ __maintainer__ = "__mundialis__"
 
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
-from actinia_stac_plugin.core.common import connectRedis
+from actinia_stac_plugin.core.common import connectKvdb
 
 
 def getInstance(stac_instance_id):
-    connectRedis()
-    exist = redis_actinia_interface.exists(stac_instance_id)
+    connectKvdb()
+    exist = kvdb_actinia_interface.exists(stac_instance_id)
 
     if not exist:
         raise BadRequest(
             "stac instance ID does not match with the instences stored"
         )
 
-    return redis_actinia_interface.read(stac_instance_id)
+    return kvdb_actinia_interface.read(stac_instance_id)
 
 
 def deleteStacInstance(stac_instance_id):
-    connectRedis()
+    connectKvdb()
     try:
-        instance = redis_actinia_interface.read(stac_instance_id)
+        instance = kvdb_actinia_interface.read(stac_instance_id)
         for i in instance.keys():
-            redis_actinia_interface.delete(i)
-        redis_actinia_interface.delete(stac_instance_id)
-        instances = redis_actinia_interface.read("stac_instances")
+            kvdb_actinia_interface.delete(i)
+        kvdb_actinia_interface.delete(stac_instance_id)
+        instances = kvdb_actinia_interface.read("stac_instances")
         del instances[stac_instance_id]
-        redis_actinia_interface.update("stac_instances", instances)
+        kvdb_actinia_interface.update("stac_instances", instances)
     except Exception:
         raise BadRequest(
             "Something went wrong please that the element is well typed "

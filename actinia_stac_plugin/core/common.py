@@ -29,36 +29,36 @@ from actinia_core.core.common.config import Configuration
 from actinia_api import URL_PREFIX
 from stac_validator import stac_validator
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
 
 
-def connectRedis():
-    """This method initializes the connection with redis."""
+def connectKvdb():
+    """This method initializes the connection with a kvdb."""
     conf = Configuration()
     try:
         conf.read()
     except Exception:
         print("Error reading configuration")
 
-    server = conf.REDIS_SERVER_URL
-    port = conf.REDIS_SERVER_PORT
-    if conf.REDIS_SERVER_PW:
-        redis_password = conf.REDIS_SERVER_PW
+    server = conf.KVDB_SERVER_URL
+    port = conf.KVDB_SERVER_PORT
+    if conf.KVDB_SERVER_PW:
+        kvdb_password = conf.KVDB_SERVER_PW
     else:
-        redis_password = None
+        kvdb_password = None
 
-    redis_actinia_interface.connect(
-        host=server, port=port, password=redis_password
+    kvdb_actinia_interface.connect(
+        host=server, port=port, password=kvdb_password
     )
 
-    return redis_actinia_interface
+    return kvdb_actinia_interface
 
 
 def defaultInstance():
-    connectRedis()
-    exist = redis_actinia_interface.exists("defaultStac")
+    connectKvdb()
+    exist = kvdb_actinia_interface.exists("defaultStac")
 
     defaultStac = {
         "stac.defaultStac.rastercube.landsat-8-l1-c1": {
@@ -72,19 +72,19 @@ def defaultInstance():
     }
 
     if exist:
-        return redis_actinia_interface.read("defaultStac")
+        return kvdb_actinia_interface.read("defaultStac")
     else:
-        redis_actinia_interface.create("defaultStac", defaultStac)
-        return redis_actinia_interface.read("defaultStac")
+        kvdb_actinia_interface.create("defaultStac", defaultStac)
+        return kvdb_actinia_interface.read("defaultStac")
 
 
 def readStacCollection(stac_instance_id: str, stac_collection_id: str):
-    connectRedis()
+    connectKvdb()
     try:
-        if redis_actinia_interface.exists(stac_collection_id):
-            stac = redis_actinia_interface.read(stac_collection_id)
+        if kvdb_actinia_interface.exists(stac_collection_id):
+            stac = kvdb_actinia_interface.read(stac_collection_id)
         else:
-            stac_dict = redis_actinia_interface.read(stac_instance_id)
+            stac_dict = kvdb_actinia_interface.read(stac_instance_id)
             stac_root_url = stac_dict[stac_collection_id]["root"]
             response = requests.get(stac_root_url)
             stac = response.content

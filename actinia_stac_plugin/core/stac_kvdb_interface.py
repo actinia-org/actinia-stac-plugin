@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Redis interface
+Kvdb interface
 This file is not yet fitted to STAC plugin usability,
 however, the file will be adjusted in further steps of the development.
 """
@@ -28,12 +28,12 @@ __maintainer__ = "__mundialis__"
 
 import pickle
 
-from actinia_core.core.common.redis_base import RedisBaseInterface
+from actinia_core.core.common.kvdb_base import KvdbBaseInterface
 
 
-class RedisActiniaInterface(RedisBaseInterface):
+class KvdbActiniaInterface(KvdbBaseInterface):
     """
-    The Redis actinia_template database interface
+    The Kvdb actinia_template database interface
     A single actinia_template is stored as Hash with:
         - actinia_template id aka actinia_template name that must be unique
         - actinia-actinia_template dictionary
@@ -48,7 +48,7 @@ class RedisActiniaInterface(RedisBaseInterface):
     actinia_template_id_db = "ACTINIA-STAC-ID-DATABASE"
 
     def __init__(self):
-        RedisBaseInterface.__init__(self)
+        KvdbBaseInterface.__init__(self)
 
     def create(self, actinia_id, actinia_template):
         """
@@ -62,7 +62,7 @@ class RedisActiniaInterface(RedisBaseInterface):
         actinia_template_id = actinia_id
 
         keyname = self.actinia_template_id_hash_prefix + actinia_template_id
-        exists = self.redis_server.exists(keyname)
+        exists = self.kvdb_server.exists(keyname)
         if exists == 1 or exists is True:
             return False
 
@@ -72,18 +72,18 @@ class RedisActiniaInterface(RedisBaseInterface):
             "actinia_template": actinia_template_bytes,
         }
 
-        lock = self.redis_server.lock(
+        lock = self.kvdb_server.lock(
             name="add_actinia_template_lock", timeout=1
         )
         lock.acquire()
         # First add the actinia_template-id to the actinia_template id database
-        self.redis_server.hset(
+        self.kvdb_server.hset(
             self.actinia_template_id_db,
             actinia_template_id,
             actinia_template_id,
         )
 
-        self.redis_server.hset(
+        self.kvdb_server.hset(
             self.actinia_template_id_hash_prefix + actinia_template_id,
             mapping=mapping,
         )
@@ -103,7 +103,7 @@ class RedisActiniaInterface(RedisBaseInterface):
 
         try:
             actinia_template = pickle.loads(
-                self.redis_server.hget(
+                self.kvdb_server.hget(
                     self.actinia_template_id_hash_prefix + actinia_template_id,
                     "actinia_template",
                 )
@@ -125,7 +125,7 @@ class RedisActiniaInterface(RedisBaseInterface):
             True is success, False if actinia_template is not in the database
         """
         keyname = self.actinia_template_id_hash_prefix + actinia_template_id
-        exists = self.redis_server.exists(keyname)
+        exists = self.kvdb_server.exists(keyname)
         if exists == 0 or exists is False:
             return False
 
@@ -135,12 +135,12 @@ class RedisActiniaInterface(RedisBaseInterface):
             "actinia_template": actinia_template_bytes,
         }
 
-        lock = self.redis_server.lock(
+        lock = self.kvdb_server.lock(
             name="update_actinia_template_lock", timeout=1
         )
         lock.acquire()
 
-        self.redis_server.hset(
+        self.kvdb_server.hset(
             self.actinia_template_id_hash_prefix + actinia_template_id,
             mapping=mapping,
         )
@@ -161,16 +161,14 @@ class RedisActiniaInterface(RedisBaseInterface):
         if exists == 0 or exists is False:
             return False
 
-        lock = self.redis_server.lock(
+        lock = self.kvdb_server.lock(
             name="delete_actinia_template_lock", timeout=1
         )
         lock.acquire()
         # Delete the entry from the actinia_template id database
-        self.redis_server.hdel(
-            self.actinia_template_id_db, actinia_template_id
-        )
+        self.kvdb_server.hdel(self.actinia_template_id_db, actinia_template_id)
         # Delete the actual actinia_template entry
-        self.redis_server.delete(
+        self.kvdb_server.delete(
             self.actinia_template_id_hash_prefix + actinia_template_id
         )
         lock.release()
@@ -186,7 +184,7 @@ class RedisActiniaInterface(RedisBaseInterface):
             A list of all actinia_template ids in the database
         """
         values = []
-        list = self.redis_server.hkeys(self.actinia_template_id_db)
+        list = self.kvdb_server.hkeys(self.actinia_template_id_db)
         for entry in list:
             entry = entry.decode()
             values.append(entry)
@@ -201,10 +199,10 @@ class RedisActiniaInterface(RedisBaseInterface):
             bool:
             True is actinia_template exists, False otherwise
         """
-        return self.redis_server.exists(
+        return self.kvdb_server.exists(
             self.actinia_template_id_hash_prefix + actinia_template_id
         )
 
 
-# Create the Redis interface instance
-redis_actinia_interface = RedisActiniaInterface()
+# Create the Kvdb interface instance
+kvdb_actinia_interface = KvdbActiniaInterface()

@@ -25,21 +25,21 @@ __maintainer__ = "__mundialis__"
 
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
-from actinia_stac_plugin.core.common import connectRedis
+from actinia_stac_plugin.core.common import connectKvdb
 
 
 def createStacCatalogList():
-    connectRedis()
-    exist = redis_actinia_interface.exists("result-catalog")
+    connectKvdb()
+    exist = kvdb_actinia_interface.exists("result-catalog")
 
     if not exist:
         raise BadRequest(
             "No processes implemented or stored as STAC in Actinia"
         )
 
-    catalog = redis_actinia_interface.read("result-catalog")
+    catalog = kvdb_actinia_interface.read("result-catalog")
 
     return catalog

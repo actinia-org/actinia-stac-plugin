@@ -26,19 +26,19 @@ __maintainer__ = "__mundialis__"
 import re
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
-from actinia_stac_plugin.core.common import connectRedis, defaultInstance
+from actinia_stac_plugin.core.common import connectKvdb, defaultInstance
 
 
 def createStacItemList():
-    connectRedis()
-    exist = redis_actinia_interface.exists("stac_instances")
+    connectKvdb()
+    exist = kvdb_actinia_interface.exists("stac_instances")
 
     if not exist:
         defaultInstance()
-        redis_actinia_interface.create(
+        kvdb_actinia_interface.create(
             "stac_instances",
             {
                 "defaultStac": {
@@ -47,45 +47,45 @@ def createStacItemList():
             },
         )
 
-    instances = redis_actinia_interface.read("stac_instances")
+    instances = kvdb_actinia_interface.read("stac_instances")
 
     return instances
 
 
 def addInstance2User(jsonparameters):
     """
-    Add the STAC Collection to redis
+    Add the STAC Collection to kvdb
         1. Update the Collection to the initial list GET /stac
-        2. Store the JSON as a new variable in redis
+        2. Store the JSON as a new variable in kvdb
     """
-    # Initializing Redis
-    connectRedis()
+    # Initializing Kvdb
+    connectKvdb()
 
     # Splitting the inputs
     stac_instance_id = jsonparameters["stac_instance_id"]
     # Verifying the existence of the instances - Adding the item to the Default List
-    list_instances_exist = redis_actinia_interface.exists("stac_instances")
+    list_instances_exist = kvdb_actinia_interface.exists("stac_instances")
     if not list_instances_exist:
         defaultInstance()
 
-    stac_instance_exist = redis_actinia_interface.exists(stac_instance_id)
+    stac_instance_exist = kvdb_actinia_interface.exists(stac_instance_id)
 
     if not stac_instance_exist:
-        redis_actinia_interface.create(stac_instance_id, {})
+        kvdb_actinia_interface.create(stac_instance_id, {})
 
-        instances_list = redis_actinia_interface.read("stac_instances")
+        instances_list = kvdb_actinia_interface.read("stac_instances")
         instances_list[stac_instance_id] = {
             "path": "stac."
             + stac_instance_id
             + ".rastercube.<stac_collection_id>"
         }
 
-        list_of_instances_updated = redis_actinia_interface.update(
+        list_of_instances_updated = kvdb_actinia_interface.update(
             "stac_instances", instances_list
         )
 
         if list_of_instances_updated:
-            response = redis_actinia_interface.read(stac_instance_id)
+            response = kvdb_actinia_interface.read(stac_instance_id)
         else:
             raise BadRequest("Check the stac_instance_id given")
 
