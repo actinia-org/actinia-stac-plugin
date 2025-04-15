@@ -25,19 +25,19 @@ __maintainer__ = "__mundialis__"
 
 from werkzeug.exceptions import BadRequest
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
-from actinia_stac_plugin.core.common import connectRedis
+from actinia_stac_plugin.core.common import connectKvdb
 
 
 def getStacItem(item: str, item_id: str):
-    connectRedis()
-    exist = redis_actinia_interface.exists(item)
+    connectKvdb()
+    exist = kvdb_actinia_interface.exists(item)
 
     if not exist:
         raise BadRequest("No Item found with the provided parameters")
 
-    item = redis_actinia_interface.read(item)
+    item = kvdb_actinia_interface.read(item)
 
     return item

@@ -15,7 +15,7 @@ ENV DEFAULT_CONFIG_PATH /etc/default/actinia_stac_test
 # DL3013 # Pin versions in pip
 # DL3018: Pin versions in apk add
 # hadolint ignore=DL3013,DL3018
-RUN apk add --no-cache redis && \
+RUN apk add --no-cache valkey valkey-cli && \
     pip3 install --no-cache-dir iniconfig colorlog pwgen pytest pytest-cov
 
 # uninstall actinia core from FROM-image
@@ -32,7 +32,7 @@ COPY . /src/actinia-stac-plugin/
 
 WORKDIR /src/actinia-stac-plugin/
 
-RUN chmod a+x tests_with_redis.sh
+RUN chmod a+x tests_with_kvdb.sh
 
 RUN make install
 

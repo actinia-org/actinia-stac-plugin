@@ -24,19 +24,19 @@ __license__ = "GPLv3"
 __maintainer__ = "__mundialis__"
 
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
-from actinia_stac_plugin.core.common import connectRedis, defaultInstance
+from actinia_stac_plugin.core.common import connectKvdb, defaultInstance
 
 
 def createStacItemList():
-    connectRedis()
-    exist = redis_actinia_interface.exists("stac_instances")
+    connectKvdb()
+    exist = kvdb_actinia_interface.exists("stac_instances")
 
     if not exist:
         defaultInstance()
-        redis_actinia_interface.create(
+        kvdb_actinia_interface.create(
             "stac_instances",
             {
                 "defaultStac": {
@@ -45,6 +45,6 @@ def createStacItemList():
             },
         )
 
-    instances = redis_actinia_interface.read("stac_instances")
+    instances = kvdb_actinia_interface.read("stac_instances")
 
     return instances

@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
-# start redis server
-redis-server &
+# start valkey server
+valkey-server &
 sleep 1
-redis-cli ping
+valkey-cli ping
 
 # start webhook server
 webhook-server --host "0.0.0.0" --port "5005" &

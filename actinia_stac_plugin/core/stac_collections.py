@@ -30,12 +30,12 @@ import requests
 from werkzeug.exceptions import BadRequest
 from actinia_api import URL_PREFIX
 
-from actinia_stac_plugin.core.stac_redis_interface import (
-    redis_actinia_interface,
+from actinia_stac_plugin.core.stac_kvdb_interface import (
+    kvdb_actinia_interface,
 )
 from actinia_stac_plugin.core.common import (
     collectionValidation,
-    connectRedis,
+    connectKvdb,
     defaultInstance,
     readStacCollection,
     resolveCollectionURL,
@@ -43,14 +43,14 @@ from actinia_stac_plugin.core.common import (
 
 
 def StacCollectionsList():
-    connectRedis()
+    connectKvdb()
     stac_inventary = {"collections": []}
-    exist = redis_actinia_interface.exists("stac_instances")
+    exist = kvdb_actinia_interface.exists("stac_instances")
 
     if exist:
-        instances = redis_actinia_interface.read("stac_instances")
+        instances = kvdb_actinia_interface.read("stac_instances")
         for k, v in instances.items():
-            collections = redis_actinia_interface.read(k)
+            collections = kvdb_actinia_interface.read(k)
             for i, j in collections.items():
                 stac = readStacCollection(k, i)
                 try:
@@ -58,14 +58,14 @@ def StacCollectionsList():
                 except Exception:
                     stac = stac
                 # if response is slow (especially with growing collections),
-                # it might be an option to use pickle to store json in redis
+                # it might be an option to use pickle to store json in kvdb
                 json_collection = json.loads(stac)
                 json_collection["id"] = i
                 stac_inventary["collections"].append(json_collection)
     else:
         collections = defaultInstance()
         stac_inventary["defaultStac"] = collections
-        redis_actinia_interface.create(
+        kvdb_actinia_interface.create(
             "stac_instances",
             {
                 "defaultStac": {
@@ -79,12 +79,12 @@ def StacCollectionsList():
 
 def addStac2User(jsonparameters):
     """
-    Add the STAC Collection to redis
+    Add the STAC Collection to kvdb
         1. Update the Collection to the initial list GET /stac
-        2. Store the JSON as a new variable in redis
+        2. Store the JSON as a new variable in kvdb
     """
-    # Initializing Redis
-    connectRedis()
+    # Initializing Kvdb
+    connectKvdb()
 
     # Splitting the inputs
     stac_instance_id = jsonparameters["stac_instance_id"]
@@ -93,11 +93,11 @@ def addStac2User(jsonparameters):
     stac_collection_id = jsonparameters["stac_collection_id"]
 
     # Verifying the existence of the instances - Adding the item to the Default List
-    list_instances_exist = redis_actinia_interface.exists("stac_instances")
+    list_instances_exist = kvdb_actinia_interface.exists("stac_instances")
     if not list_instances_exist:
         defaultInstance()
 
-    stac_instance_exist = redis_actinia_interface.exists(stac_instance_id)
+    stac_instance_exist = kvdb_actinia_interface.exists(stac_instance_id)
 
     if not stac_instance_exist:
         raise BadRequest("No Instance name matched")
@@ -112,25 +112,25 @@ def addStac2User(jsonparameters):
         stac_unique_id = (
             "stac." + stac_instance_id + ".rastercube." + stac_collection_id
         )
-        redis_actinia_interface.create(
+        kvdb_actinia_interface.create(
             stac_unique_id, stac_json_collection.content
         )
 
-        defaultJson = redis_actinia_interface.read(stac_instance_id)
+        defaultJson = kvdb_actinia_interface.read(stac_instance_id)
 
         defaultJson[stac_unique_id] = {
             "root": stac_root,
             "href": URL_PREFIX[1:] + "/stac/collections/" + stac_unique_id,
         }
 
-        instance_updated = redis_actinia_interface.update(
+        instance_updated = kvdb_actinia_interface.update(
             stac_instance_id, defaultJson
         )
 
         if instance_updated:
             response = {
                 "message": "The STAC Collection has been added successfully",
-                "StacCollection": redis_actinia_interface.read(
+                "StacCollection": kvdb_actinia_interface.read(
                     stac_instance_id
                 ),
             }
