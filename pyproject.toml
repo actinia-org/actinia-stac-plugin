@@ -32,6 +32,7 @@ keywords = [
     "stac",
 ]
 dependencies = [
+    "actinia-api>=3.7.0",
     "colorlog>=4.2.1",
     "Flask",
     "Flask-Cors",
@@ -39,6 +40,7 @@ dependencies = [
     "flask-restful-swagger-2",
     "python-json-logger",
     "rasterio",
+    "stac-validator>=2.2.0",
 ]
 
 [project.optional-dependencies]
