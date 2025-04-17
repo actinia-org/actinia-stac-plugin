@@ -1,3 +1,69 @@
 [build-system]
-requires = ["setuptools>=40.6.0", "wheel"]
+requires      = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "actinia-stac-plugin"
+version = "0.3.0"
+description = "A (RESTFUL) Flask application which implements STAC collections into actinia"
+readme = "README.md"
+authors = [
+    { name = "Jorge Herrera"},
+    { name = "Carmen Tawalika"},
+    { name = "Marc Jansen"},
+    { name = "Lina Krisztian"},
+    { name = "Markus Neteler"},
+    { name = "Markus Metz"},
+    { name = "Anika Weinmann"},
+]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.8"
+keywords = [
+    "processing",
+    "earth observation",
+    "cloud-based processing",
+    "rest api",
+    "gis",
+    "grass gis",
+    "osgeo",
+    "stac",
+]
+dependencies = [
+    "actinia-api>=3.7.0",
+    "colorlog>=4.2.1",
+    "Flask",
+    "Flask-Cors",
+    "Flask-RESTful",
+    "flask-restful-swagger-2",
+    "python-json-logger",
+    "rasterio",
+    "stac-validator>=2.2.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pwgen",
+]
+
+[project.urls]
+Homepage = "https://github.com/mundialis/actinia-stac-plugin"
+Tutorial = "https://mundialis.github.io/actinia_core"
+API_Docs = "https://redocly.github.io/redoc/?url=https://actinia.mundialis.de/latest/swagger.json"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov actinia_stac_plugin --cov-report html --verbose --tb=line -x --pdb"
+testpaths = [
+    "tests",
+]
