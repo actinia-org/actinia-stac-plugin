@@ -26,7 +26,7 @@ __maintainer__ = "__mundialis__"
 
 from flask import make_response
 from flask_restful_swagger_2 import swagger
-from actinia_core.rest.base.resource_base import ResourceBase
+from actinia_rest_lib.resource_base import ResourceBase
 
 
 from actinia_stac_plugin.apidocs import stac_catalogs_docs

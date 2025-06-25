@@ -24,6 +24,6 @@ COPY . /src/actinia-stac-plugin/
 WORKDIR /src/actinia-stac-plugin/
 RUN chmod a+x tests_with_kvdb.sh
 
-RUN make install
+RUN pip install .
 
 RUN make test
