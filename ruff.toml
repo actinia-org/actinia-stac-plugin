@@ -188,6 +188,7 @@ lint.ignore = [
     "UP035",
 ]
 
-# [lint.per-file-ignores]
-# Define file-specific linting rule ignores
-# "lib_dop/r_dop_import_lib.py" = ["ERA001", "PLR2004"]
+[lint.per-file-ignores]
+"src/actinia_stac_plugin/__init__.py" = [
+    "RUF067",
+]

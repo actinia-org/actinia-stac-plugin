@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Test code for STAC module api endpoints
 """
+
 __author__ = "Jorge Herrera"
 __copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
@@ -35,7 +36,6 @@ from actinia_core.core.common.app import flask_app
 from actinia_core.core.common.config import global_config
 from actinia_core.core.common.user import ActiniaUser
 from werkzeug.datastructures import Headers
-
 
 # actinia-stac-plugin endpoints are included as defined in actinia_core
 # config

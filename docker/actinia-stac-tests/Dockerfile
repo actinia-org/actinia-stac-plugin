@@ -6,9 +6,9 @@ FROM mundialis/actinia-core:latest AS actinia_test
 LABEL authors="Carmen Tawalika,Anika Weinmann"
 LABEL maintainer="tawalika@mundialis.de,weinmann@mundialis.de"
 
-ENV ACTINIA_CUSTOM_TEST_CFG /etc/default/actinia_stac_test
+ENV ACTINIA_CUSTOM_TEST_CFG=/etc/default/actinia_stac_test
 # TODO do not set DEFAULT_CONFIG_PATH if this is fixed
-ENV DEFAULT_CONFIG_PATH /etc/default/actinia_stac_test
+ENV DEFAULT_CONFIG_PATH=/etc/default/actinia_stac_test
 
 # install things only for tests
 # DL3013 # Pin versions in pip
@@ -24,6 +24,6 @@ COPY . /src/actinia-stac-plugin/
 WORKDIR /src/actinia-stac-plugin/
 RUN chmod a+x tests_with_kvdb.sh
 
-RUN pip install .
+RUN pip3 install .
 
 RUN make test

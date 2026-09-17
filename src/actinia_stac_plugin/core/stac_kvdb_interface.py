@@ -20,6 +20,7 @@ Kvdb interface
 This file is not yet fitted to STAC plugin usability,
 however, the file will be adjusted in further steps of the development.
 """
+
 __author__ = "Carmen Tawalika, Jorge Herrera"
 __copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
