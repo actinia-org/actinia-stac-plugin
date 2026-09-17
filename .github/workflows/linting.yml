@@ -19,3 +19,8 @@ jobs:
       VALIDATE_HTML: false
       VALIDATE_CSS: false
       VALIDATE_BASH_EXEC: false
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
