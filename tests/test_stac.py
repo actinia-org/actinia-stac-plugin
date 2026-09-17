@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Test code for STAC module api endpoints
 """
+
 __author__ = "Jorge Herrera"
 __copyright__ = "2018-2022 mundialis GmbH & Co. KG"
 __license__ = "GPLv3"
